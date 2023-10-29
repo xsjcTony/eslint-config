@@ -1,0 +1,62 @@
+{
+  "name": "@aelita/eslint-config",
+  "type": "module",
+  "version": "1.0.0",
+  "packageManager": "pnpm@8.9.2",
+  "description": "Aelita's ESLint config",
+  "author": "Aelita <https://github.com/xsjcTony>",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "aelita"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "build": "tsup src/index.ts --format esm,cjs --clean --dts",
+    "release": "bumpp && pnpm publish",
+    "compile": "tsc --noEmit",
+    "preview": "eslint-flat-config-viewer"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  },
+  "dependencies": {
+    "@antfu/eslint-define-config": "^1.23.0-2",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "eslint-config-flat-gitignore": "^0.1.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-import-resolver-node": "^0.3.9",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-playwright": "^0.18.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "local-pkg": "^0.5.0",
+    "globals": "^13.23.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.44.6",
+    "@types/node": "^20.8.9",
+    "eslint": "^8.52.0",
+    "bumpp": "^9.2.0",
+    "eslint-flat-config-viewer": "^0.1.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}
