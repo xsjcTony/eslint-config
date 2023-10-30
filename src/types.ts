@@ -40,21 +40,21 @@ export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
 }
 
 
-export interface OptionsComponentExts {
+export interface OptionsComponentExtensions {
   /**
    * Additional extensions for components.
    *
    * @example ['vue']
    * @default []
    */
-  componentExts?: string[]
+  componentExtensions?: string[]
 }
 
-export interface OptionsTypeScriptParserOptions {
+export interface OptionsTypeScriptParserOptionsOverride {
   /**
    * Additional parser options for TypeScript.
    */
-  parserOptions?: Partial<ParserOptions>
+  parserOptionsOverride?: Partial<ParserOptions>
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -62,22 +62,18 @@ export interface OptionsTypeScriptWithTypes {
    * When this options is provided, type aware rules will be enabled.
    * @see https://typescript-eslint.io/linting/typed-linting/
    */
-  tsconfigPath?: string
+  tsconfigPath?: string | string[]
 }
 
 export interface OptionsHasTypeScript {
   typescript?: boolean
 }
 
-export interface OptionsOverrides {
-  overrides?: ConfigItem['rules']
-}
-
 export interface OptionsIsInEditor {
   isInEditor?: boolean
 }
 
-export interface OptionsConfig extends OptionsComponentExts {
+export interface OptionsConfig extends OptionsComponentExtensions {
   /**
    * Enable gitignore support.
    *
@@ -95,7 +91,7 @@ export interface OptionsConfig extends OptionsComponentExts {
    *
    * @default auto-detect based on the dependencies
    */
-  typescript?: boolean | OptionsTypeScriptWithTypes | OptionsTypeScriptParserOptions
+  typescript?: boolean | (OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptionsOverride)
 
   /**
    * Enable React related rules.
@@ -125,5 +121,8 @@ export interface OptionsConfig extends OptionsComponentExts {
     typescript?: ConfigItem['rules']
     react?: ConfigItem['rules']
     vue?: ConfigItem['rules']
+    import?: ConfigItem['rules'] & {
+      typescript?: ConfigItem['rules']
+    }
   }
 }

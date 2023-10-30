@@ -1,91 +1,46 @@
 import globals from 'globals'
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs'
-import { pluginImport } from '../plugins'
-import type { ConfigItem, OptionsOverrides } from '../types'
+import type { ConfigItem, OptionsConfig } from '../types'
 
 
-type JavascriptOptions = OptionsOverrides
+interface JavascriptOptions {
+  overrides?: NonNullable<OptionsConfig['overrides']>['javascript']
+}
 
 
 const javascriptRules: ConfigItem['rules'] = {
-  'block-spacing': ['error', 'always'],
-  'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+  curly: ['error', 'multi-or-nest', 'consistent'],
   camelcase: ['error', { properties: 'always', ignoreDestructuring: false }],
-  'comma-dangle': ['error', 'never'],
-  'comma-spacing': ['error', { before: false, after: true }],
-  'comma-style': ['error', 'last'],
-  'computed-property-spacing': ['error', 'never'],
-  'eol-last': ['error', 'always'],
-  'func-call-spacing': ['error', 'never'],
-  indent: ['error', 2, { SwitchCase: 1, ignoreComments: false }],
-  'key-spacing': [
-    'error',
-    {
-      beforeColon: false,
-      afterColon: true,
-      mode: 'strict'
-    }
-  ],
-  'keyword-spacing': ['error', { before: true, after: true }],
   'new-cap': [
     'error',
     {
       newIsCap: true,
-      capIsNew: false,
+      capIsNew: true,
       properties: true
     }
   ],
-  'new-parens': ['error', 'always'],
-  'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
   'no-console': ['error', { allow: ['warn', 'error'] }],
-  'no-multiple-empty-lines': ['error', { max: 2 }],
   'no-multi-assign': 'error',
   'one-var': ['error', 'never'],
   'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-  semi: ['error', 'never'],
   'no-unexpected-multiline': 'error',
-  'space-before-blocks': ['error', 'always'],
-  'space-before-function-paren': [
-    'error',
-    {
-      anonymous: 'never',
-      named: 'never',
-      asyncArrow: 'always'
-    }
-  ],
-  'space-infix-ops': ['error', { int32Hint: false }],
   'prefer-const': ['error', { destructuring: 'all' }],
   'no-const-assign': 'error',
   'no-var': 'error',
   'no-object-constructor': 'error',
   'object-shorthand': ['error', 'always'],
-  'quote-props': ['error', 'as-needed', { keywords: true }],
   'no-prototype-builtins': 'error',
   'no-array-constructor': 'error',
-  quotes: [
-    'error',
-    'single',
-    {
-      avoidEscape: true,
-      allowTemplateLiterals: true
-    }
-  ],
   'prefer-template': 'error',
-  'template-curly-spacing': ['error', 'never'],
   'no-eval': ['error', { allowIndirect: false }],
   'no-useless-escape': 'error',
   'no-new-func': 'error',
-  'wrap-iife': ['error', 'outside'],
   'prefer-rest-params': 'error',
   'no-loop-func': 'error',
   'prefer-spread': 'error',
   'function-paren-newline': ['error', 'multiline'],
   'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
-  'arrow-spacing': ['error', { before: true, after: true }],
-  'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
   'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: true }],
-  'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }
-  ],
   'no-useless-constructor': 'error',
   'no-dupe-class-members': 'error',
   'no-duplicate-imports': ['error', { includeExports: true }],
@@ -102,8 +57,62 @@ const javascriptRules: ConfigItem['rules'] = {
   ],
   eqeqeq: ['error', 'always'],
   'no-with': 'error',
-  'object-curly-spacing': ['error', 'always'],
+  'default-param-last': 'error',
+  'no-else-return': ['error', { allowElseIf: false }],
+  'no-implied-eval': 'error',
+  'no-loss-of-precision': 'error'
+}
+
+
+const javascriptStylisticRules: ConfigItem['rules'] = {
+  'array-bracket-newline': ['error', { multiline: true }],
+  'array-bracket-spacing': ['error', 'never'],
+  'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
+  'arrow-spacing': ['error', { before: true, after: true }],
+  'block-spacing': ['error', 'always'],
+  'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+  'comma-dangle': ['error', 'never'],
+  'comma-spacing': ['error', { before: false, after: true }],
+  'comma-style': ['error', 'last'],
+  'computed-property-spacing': ['error', 'never'],
+  'eol-last': ['error', 'always'],
+  'func-call-spacing': ['error', 'never'],
+  'generator-star-spacing': ['error', 'after'],
+  indent: ['error', 2, { SwitchCase: 1, ignoreComments: false }],
+  'jsx-quotes': ['error', 'prefer-double'],
+  'key-spacing': [
+    'error',
+    {
+      beforeColon: false,
+      afterColon: true,
+      mode: 'strict'
+    }
+  ],
+  'keyword-spacing': ['error', { before: true, after: true }],
   'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+  'new-parens': ['error', 'always'],
+  'newline-per-chained-call': ['error', { ignoreChainWithDepth: 3 }],
+  'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }],
+  'no-extra-parens': [
+    'error',
+    'all',
+    {
+      ignoreJSX: 'multi-line',
+      nestedBinaryExpressions: false
+    }
+  ],
+  'no-extra-semi': 'error',
+  'no-floating-decimal': 'error',
+  'no-multi-spaces': ['error', { ignoreEOLComments: true }],
+  'no-multiple-empty-lines': ['error', { max: 2 }],
+  'no-tabs': ['error', { allowIndentationTabs: false }],
+  'no-trailing-spaces': ['error', { ignoreComments: false, skipBlankLines: false }],
+  'no-whitespace-before-property': 'error',
+  'nonblock-statement-body-position': ['error', 'below'],
+  'object-curly-newline': ['error', { multiline: true }],
+  'object-curly-spacing': ['error', 'always'],
+  'one-var-declaration-per-line': ['error', 'always'],
+  'operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
   'padding-line-between-statements': [
     'error',
     { blankLine: 'always', prev: '*', next: 'class' },
@@ -113,59 +122,35 @@ const javascriptRules: ConfigItem['rules'] = {
     { blankLine: 'always', prev: '*', next: 'iife' },
     { blankLine: 'always', prev: 'iife', next: '*' }
   ],
-  'no-multi-spaces': ['error', { ignoreEOLComments: true }],
-  'default-param-last': 'error',
-  'no-else-return': ['error', { allowElseIf: false }],
-  'operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
-  'no-whitespace-before-property': 'error',
-  'array-bracket-spacing': ['error', 'never'],
-  'no-extra-parens': [
+  'quote-props': ['error', 'as-needed', { keywords: true }],
+  quotes: [
     'error',
-    'all',
+    'single',
     {
-      ignoreJSX: 'multi-line',
-      nestedBinaryExpressions: false
+      avoidEscape: true,
+      allowTemplateLiterals: true
     }
   ],
-  'no-implied-eval': 'error',
-  'no-loss-of-precision': 'error'
-}
-
-
-const pluginImportRules: ConfigItem['rules'] = {
-  'import/first': 'error',
-  'import/no-webpack-loader-syntax': 'error',
-  'import/newline-after-import': [
+  'rest-spread-spacing': ['error', 'never'],
+  semi: ['error', 'never'],
+  'space-before-blocks': ['error', 'always'],
+  'space-before-function-paren': [
     'error',
     {
-      count: 2,
-      // @ts-expect-error - type is not up-to-date
-      exactCount: true,
-      considerComments: true
+      anonymous: 'never',
+      named: 'never',
+      asyncArrow: 'always'
     }
   ],
-  'import/extensions': ['error', 'ignorePackages'],
-  'import/order': [
-    'error',
-    {
-      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
-      pathGroups: [
-        {
-          pattern: '/src/**',
-          group: 'internal'
-        }
-      ],
-      'newlines-between': 'ignore',
-      alphabetize: {
-        order: 'asc',
-        caseInsensitive: true
-      },
-      warnOnUnassignedImports: false
-    }
-  ],
-  'import/named': 'error',
-  'import/no-mutable-exports': 'error',
-  'import/no-duplicates': ['error', { considerQueryString: true }]
+  'space-in-parens': ['error', 'never'],
+  'space-infix-ops': ['error', { int32Hint: false }],
+  'space-unary-ops': ['error', { words: true, nonwords: false }],
+  'spaced-comment': ['error', 'always', { exceptions: ['-', '+', '*'], markers: ['/'] }],
+  'switch-colon-spacing': ['error', { before: false, after: true }],
+  'template-curly-spacing': ['error', 'never'],
+  'template-tag-spacing': ['error', 'never'],
+  'wrap-iife': ['error', 'inside', { functionPrototypeMethods: false }],
+  'yield-star-spacing': ['error', 'after']
 }
 
 
@@ -195,12 +180,9 @@ export const javascript = ({ overrides }: JavascriptOptions = {}): ConfigItem[] 
     linterOptions: {
       reportUnusedDisableDirectives: true
     },
-    plugins: {
-      'import': pluginImport
-    },
     rules: {
       ...javascriptRules,
-      ...pluginImportRules,
+      ...javascriptStylisticRules,
       ...overrides
     }
   },

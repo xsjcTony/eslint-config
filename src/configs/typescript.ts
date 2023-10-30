@@ -1,19 +1,23 @@
+import { cwd as processCwd } from 'node:process'
 import { GLOB_SRC } from '../globs'
+import { parserTypescript } from '../parsers'
 import { pluginTypescript } from '../plugins'
 import type {
   ConfigItem,
-  OptionsComponentExts,
-  OptionsOverrides,
-  OptionsTypeScriptParserOptions,
+  OptionsComponentExtensions,
+  OptionsConfig,
+  OptionsTypeScriptParserOptionsOverride,
   OptionsTypeScriptWithTypes
 } from '../types'
 
 
 type TypescriptOptions =
-  & OptionsComponentExts
-  & OptionsOverrides
+  & OptionsComponentExtensions
   & OptionsTypeScriptWithTypes
-  & OptionsTypeScriptParserOptions
+  & OptionsTypeScriptParserOptionsOverride
+  & {
+    overrides?: NonNullable<OptionsConfig['overrides']>['typescript']
+  }
 
 
 const typescriptRules: ConfigItem['rules'] = {
@@ -468,16 +472,11 @@ const typescriptStylisticRules: ConfigItem['rules'] = {
 }
 
 
-const pluginImportTypescriptRules: ConfigItem['rules'] = {
-  'import/extensions': ['error', 'ignorePackages', { ts: 'never', tsx: 'never' }]
-}
-
-
 export const typescript = ({
-  componentExts = [],
-  overrides = {},
-  parserOptions = {},
-  tsconfigPath
+  componentExtensions = [],
+  tsconfigPath,
+  parserOptionsOverride = {},
+  overrides = {}
 }: TypescriptOptions = {}): ConfigItem[] => [
   {
     name: 'aelita:typescript:setup',
@@ -495,9 +494,52 @@ export const typescript = ({
     }
   },
   {
+    name: 'aelita:typescript',
     files: [
       GLOB_SRC,
-      ...componentExts.map(ext => `**/*.${ext}`)
-    ]
+      ...componentExtensions.map(ext => `**/*.${ext}`)
+    ],
+    languageOptions: {
+      parser: parserTypescript,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+        // @ts-expect-error - type does not contain `null`
+        jsxPragma: null,
+        ...tsconfigPath && {
+          project: Array.isArray(tsconfigPath) ? tsconfigPath : [tsconfigPath],
+          tsconfigRootDir: processCwd()
+        },
+        ...parserOptionsOverride
+      }
+    },
+    rules: {
+      ...typescriptRules,
+      ...typescriptStylisticRules,
+      ...tsconfigPath && typeAwareTypescriptRules,
+      ...overrides
+    }
+  },
+  {
+    name: 'aelita:typescript:dts-overrides',
+    files: ['**/*.d.ts'],
+    rules: {
+      'ts/no-unused-vars': 'off'
+    }
+  },
+  {
+    name: 'aelita:typescript:test-overrides',
+    files: ['**/*.{test,spec}.ts?(x)'],
+    rules: {
+      'ts/no-empty-function': 'off'
+    }
+  },
+  {
+    name: 'aelita:typescript:javascript-overrides',
+    files: ['**/*.?(c)js'],
+    rules: {
+      'ts/no-require-imports': 'off'
+    }
   }
 ]

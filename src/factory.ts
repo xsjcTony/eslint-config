@@ -1,8 +1,9 @@
 import { existsSync } from 'node:fs'
 import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
-import { ignores, javascript } from './configs'
+import { ignores, javascript, importConfig } from './configs'
 import type { ConfigItem, OptionsConfig } from './types'
+import { typescript } from './configs/typescript'
 
 
 const VUE_PACKAGES = [
@@ -33,10 +34,10 @@ export const aelita = (
     isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
     vue: enableVue = VUE_PACKAGES.some(i => isPackageExists(i)),
     react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
-    typescript: enableTypeScript = isPackageExists('typescript'),
+    typescript: enableTypescript = isPackageExists('typescript'),
     gitignore: enableGitignore = true,
     overrides = {},
-    componentExts = []
+    componentExtensions = []
   } = options
 
 
@@ -53,12 +54,25 @@ export const aelita = (
 
   configs.push(
     ignores(),
-    javascript({ overrides: overrides.javascript })
+    javascript({ overrides: overrides.javascript }),
+    importConfig({ overrides: overrides.import, typescript: !!enableTypescript })
   )
 
 
   if (enableVue)
-    componentExts.push('vue')
+    componentExtensions.push('vue')
 
 
+  if (enableTypescript) {
+    configs.push(typescript({
+      ...typeof enableTypescript !== 'boolean' && enableTypescript,
+      componentExtensions,
+      overrides: overrides.typescript
+    }))
+  }
+
+
+  if (enableVue) {
+
+  }
 }
