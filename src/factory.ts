@@ -55,7 +55,11 @@ export const aelita = (
   configs.push(
     ignores(),
     javascript({ overrides: overrides.javascript }),
-    importConfig({ overrides: overrides.import, typescript: !!enableTypescript })
+    importConfig({
+      overrides: overrides.import,
+      typescript: !!enableTypescript,
+      vue: !!enableVue
+    })
   )
 
 

@@ -1,17 +1,21 @@
 import { pluginImport } from '../plugins'
-import type { ConfigItem, OptionsConfig } from '../types'
+import type { ConfigItem, OptionsConfig, OptionsHasTypeScript } from '../types'
 
 
-interface ImportOptions {
+interface ImportOptions extends OptionsHasTypeScript {
+  vue?: boolean
   overrides?: NonNullable<OptionsConfig['overrides']>['import']
-  typescript?: boolean
 }
 
 
-const importRules: ConfigItem['rules'] = {
+const importRules = (vue: boolean): ConfigItem['rules'] => ({
   'import/first': 'error',
   'import/no-webpack-loader-syntax': 'error',
-  'import/extensions': ['error', 'ignorePackages'],
+  'import/extensions': [
+    'error',
+    'ignorePackages',
+    { js: 'never', jsx: 'never', ...vue && { vue: 'always' } }
+  ],
   'import/order': [
     'error',
     {
@@ -34,12 +38,16 @@ const importRules: ConfigItem['rules'] = {
   'import/no-mutable-exports': 'error',
   'import/no-duplicates': ['error', { considerQueryString: true }],
   'import/no-self-import': 'error'
-}
+})
 
 
-const importTypescriptRules: ConfigItem['rules'] = {
-  'import/extensions': ['error', 'ignorePackages', { ts: 'never', tsx: 'never' }]
-}
+const importTypescriptRules = (vue: boolean): ConfigItem['rules'] => ({
+  'import/extensions': [
+    'error',
+    'ignorePackages',
+    { ts: 'never', tsx: 'never', ...vue && { vue: 'always' } }
+  ]
+})
 
 
 const importStylisticRules: ConfigItem['rules'] = {
@@ -55,7 +63,7 @@ const importStylisticRules: ConfigItem['rules'] = {
 }
 
 
-export const importConfig = ({ typescript = false, overrides }: ImportOptions): ConfigItem[] => [
+export const importConfig = ({ typescript = false, vue = false, overrides }: ImportOptions): ConfigItem[] => [
   {
     name: 'aelita:import',
     plugins: {
@@ -64,17 +72,24 @@ export const importConfig = ({ typescript = false, overrides }: ImportOptions): 
     settings: {
       ...typescript && {
         'import/parsers': {
-          '@typescript-eslint/parser': ['.ts', '.tsx']
+          '@typescript-eslint/parser': ['.ts', '.tsx', ...vue ? ['.vue'] : []]
         }
       },
       'import/resolver': {
-        node: { extensions: ['.js', '.jsx', ...typescript ? ['.ts', '.tsx'] : []] },
+        node: {
+          extensions: [
+            '.js',
+            '.jsx',
+            ...typescript ? ['.ts', '.tsx'] : [],
+            ...vue ? ['.vue'] : []
+          ]
+        },
         ...typescript && { typescript: true }
       }
     },
     rules: {
-      ...importRules,
-      ...typescript && importTypescriptRules,
+      ...importRules(vue),
+      ...typescript && importTypescriptRules(vue),
       ...importStylisticRules,
       ...overrides,
       ...typescript && overrides?.typescript

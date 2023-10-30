@@ -388,16 +388,8 @@ module.exports = {
     '@typescript-eslint/object-curly-spacing': ['error', 'always'],
     '@typescript-eslint/padding-line-between-statements': [
       'error',
-      { blankLine: 'always', prev: '*', next: 'class' },
-      { blankLine: 'always', prev: 'class', next: '*' },
-      { blankLine: 'always', prev: '*', next: 'function' },
-      { blankLine: 'always', prev: 'function', next: '*' },
-      { blankLine: 'always', prev: '*', next: 'iife' },
-      { blankLine: 'always', prev: 'iife', next: '*' },
-      { blankLine: 'always', prev: '*', next: 'interface' },
-      { blankLine: 'always', prev: 'interface', next: '*' },
-      { blankLine: 'always', prev: '*', next: 'type' },
-      { blankLine: 'always', prev: 'type', next: '*' }
+      { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife', 'interface'] },
+      { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' }
     ],
     '@typescript-eslint/prefer-as-const': 'error',
     '@typescript-eslint/prefer-for-of': 'error',

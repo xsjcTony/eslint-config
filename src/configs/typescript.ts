@@ -422,16 +422,8 @@ const typescriptStylisticRules: ConfigItem['rules'] = {
   'padding-line-between-statements': 'off',
   'ts/padding-line-between-statements': [
     'error',
-    { blankLine: 'always', prev: '*', next: 'class' },
-    { blankLine: 'always', prev: 'class', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'function' },
-    { blankLine: 'always', prev: 'function', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'iife' },
-    { blankLine: 'always', prev: 'iife', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'interface' },
-    { blankLine: 'always', prev: 'interface', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'type' },
-    { blankLine: 'always', prev: 'type', next: '*' }
+    { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife', 'interface'] },
+    { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' }
   ],
 
   quotes: 'off',
@@ -507,6 +499,7 @@ export const typescript = ({
         sourceType: 'module',
         // @ts-expect-error - type does not contain `null`
         jsxPragma: null,
+        extraFileExtensions: componentExtensions.map(ext => `.${ext}`),
         ...tsconfigPath && {
           project: Array.isArray(tsconfigPath) ? tsconfigPath : [tsconfigPath],
           tsconfigRootDir: processCwd()

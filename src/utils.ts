@@ -10,8 +10,8 @@ export function combine(...configs: (ConfigItem | ConfigItem[])[]): ConfigItem[]
 
 
 export const renameRules = (rules: Record<string, any>, from: string, to: string): Record<string, any> =>
-  Object.fromEntries(Object.entries(rules).map(([key, value]) => {
-    if (key.startsWith(from))
-      return [to + key.slice(from.length), value]
-    return [key, value]
-  }))
+  Object.fromEntries(
+    Object.entries(rules).map(([key, value]) => key.startsWith(from)
+      ? [to + key.slice(from.length), value]
+      : [key, value])
+  )

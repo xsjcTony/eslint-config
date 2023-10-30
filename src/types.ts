@@ -73,6 +73,22 @@ export interface OptionsIsInEditor {
   isInEditor?: boolean
 }
 
+export interface OptionsVue {
+  globalComponents?: string[]
+}
+
+type LooseJavascriptRulesDict = FlatESLintConfigItem<MergeIntersection<EslintRules>, false>['rules']
+type LooseTypescriptRulesDict = FlatESLintConfigItem<
+  RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'>,
+  false
+>['rules']
+type LooseReactRulesDict = FlatESLintConfigItem<
+  MergeIntersection<ReactRules & RenamePrefix<ReactHooksRules, 'react-hooks/', 'hooks/'>>,
+  false
+>['rules']
+type LooseVueRulesDict = FlatESLintConfigItem<MergeIntersection<VueRules>, false>['rules']
+type LooseImportRulesDict = FlatESLintConfigItem<MergeIntersection<ImportRules>, false>['rules']
+
 export interface OptionsConfig extends OptionsComponentExtensions {
   /**
    * Enable gitignore support.
@@ -105,7 +121,7 @@ export interface OptionsConfig extends OptionsComponentExtensions {
    *
    * @default auto-detect based on the dependencies
    */
-  vue?: boolean
+  vue?: boolean | OptionsVue
 
   /**
    * Control to disable some rules in editors.
@@ -117,12 +133,12 @@ export interface OptionsConfig extends OptionsComponentExtensions {
    * Provide overrides for rules for each integration.
    */
   overrides?: {
-    javascript?: ConfigItem['rules']
-    typescript?: ConfigItem['rules']
-    react?: ConfigItem['rules']
-    vue?: ConfigItem['rules']
-    import?: ConfigItem['rules'] & {
-      typescript?: ConfigItem['rules']
+    javascript?: LooseJavascriptRulesDict
+    typescript?: LooseTypescriptRulesDict
+    react?: LooseReactRulesDict
+    vue?: LooseVueRulesDict
+    import?: LooseImportRulesDict & {
+      typescript?: LooseTypescriptRulesDict
     }
   }
 }

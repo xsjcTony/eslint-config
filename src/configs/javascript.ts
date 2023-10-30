@@ -115,12 +115,8 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
   'operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
   'padding-line-between-statements': [
     'error',
-    { blankLine: 'always', prev: '*', next: 'class' },
-    { blankLine: 'always', prev: 'class', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'function' },
-    { blankLine: 'always', prev: 'function', next: '*' },
-    { blankLine: 'always', prev: '*', next: 'iife' },
-    { blankLine: 'always', prev: 'iife', next: '*' }
+    { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife'] },
+    { blankLine: 'always', prev: ['class', 'function', 'iife'], next: '*' }
   ],
   'quote-props': ['error', 'as-needed', { keywords: true }],
   quotes: [
