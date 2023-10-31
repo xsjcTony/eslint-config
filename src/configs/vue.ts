@@ -37,12 +37,6 @@ const vueRules = (options: OptionsVue): ConfigItem['rules'] => ({
   'vue/no-multiple-objects-in-class': 'error',
   'vue/no-ref-object-reactivity-loss': 'error',
   'vue/no-required-prop-with-default': ['error', { autofix: true }],
-  'vue/no-restricted-block': options.restrictedBlocks?.length
-    ? ['error', ...options.restrictedBlocks]
-    : 'off',
-  'vue/no-restricted-html-elements': options.restrictedElements?.length
-    ? ['error', ...options.restrictedElements]
-    : 'off',
   'vue/no-restricted-v-bind': 'error',
   'vue/no-root-v-if': 'error',
   'vue/no-setup-props-reactivity-loss': 'error',

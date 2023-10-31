@@ -84,14 +84,6 @@ export interface OptionsVue {
    * This will be combined with `globalComponents`.
    */
   extraGlobalComponentsWithRegex?: string[]
-  /**
-   * For `vue/no-restricted-block` rule, can also be a regex like `'/forbidden/'`.
-   */
-  restrictedBlocks?: (string | { element: string; message?: string })[]
-  /**
-   * For `vue/no-restricted-html-elements` rule.
-   */
-  restrictedElements?: string[]
 }
 
 type LooseJavascriptRulesDict = FlatESLintConfigItem<MergeIntersection<EslintRules>, false>['rules']
