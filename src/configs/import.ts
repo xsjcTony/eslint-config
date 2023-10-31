@@ -8,7 +8,7 @@ interface ImportOptions extends OptionsHasTypeScript {
 }
 
 
-const importRules = (vue: boolean): ConfigItem['rules'] => ({
+const importRules = ({ vue }: ImportOptions): ConfigItem['rules'] => ({
   'import/first': 'error',
   'import/no-webpack-loader-syntax': 'error',
   'import/extensions': [
@@ -41,7 +41,7 @@ const importRules = (vue: boolean): ConfigItem['rules'] => ({
 })
 
 
-const importTypescriptRules = (vue: boolean): ConfigItem['rules'] => ({
+const importTypescriptRules = ({ vue }: ImportOptions): ConfigItem['rules'] => ({
   'import/extensions': [
     'error',
     'ignorePackages',
@@ -63,36 +63,40 @@ const importStylisticRules: ConfigItem['rules'] = {
 }
 
 
-export const importConfig = ({ typescript = false, vue = false, overrides }: ImportOptions): ConfigItem[] => [
-  {
-    name: 'aelita:import',
-    plugins: {
-      'import': pluginImport
-    },
-    settings: {
-      ...typescript && {
-        'import/parsers': {
-          '@typescript-eslint/parser': ['.ts', '.tsx', ...vue ? ['.vue'] : []]
+export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
+  const { typescript = false, vue = false, overrides } = options
+
+  return [
+    {
+      name: 'aelita:import',
+      plugins: {
+        'import': pluginImport
+      },
+      settings: {
+        ...typescript && {
+          'import/parsers': {
+            '@typescript-eslint/parser': ['.ts', '.tsx', ...vue ? ['.vue'] : []]
+          }
+        },
+        'import/resolver': {
+          node: {
+            extensions: [
+              '.js',
+              '.jsx',
+              ...typescript ? ['.ts', '.tsx'] : [],
+              ...vue ? ['.vue'] : []
+            ]
+          },
+          ...typescript && { typescript: true }
         }
       },
-      'import/resolver': {
-        node: {
-          extensions: [
-            '.js',
-            '.jsx',
-            ...typescript ? ['.ts', '.tsx'] : [],
-            ...vue ? ['.vue'] : []
-          ]
-        },
-        ...typescript && { typescript: true }
+      rules: {
+        ...importRules(options),
+        ...typescript && importTypescriptRules(options),
+        ...importStylisticRules,
+        ...overrides,
+        ...typescript && overrides?.typescript
       }
-    },
-    rules: {
-      ...importRules(vue),
-      ...typescript && importTypescriptRules(vue),
-      ...importStylisticRules,
-      ...overrides,
-      ...typescript && overrides?.typescript
     }
-  }
-]
+  ]
+}
