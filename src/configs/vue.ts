@@ -95,7 +95,30 @@ const vueTypeScriptRules: ConfigItem['rules'] = {
 
 
 const vueDefaultOverrideRules: ConfigItem['rules'] = {
-
+  'vue/no-arrow-functions-in-watch': 'off',
+  'vue/no-reserved-component-names': [
+    'error',
+    {
+      disallowVueBuiltInComponents: true,
+      disallowVue3BuiltInComponents: true
+    }
+  ],
+  'vue/no-shared-component-data': 'off',
+  'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
+  'vue/html-quotes': ['error', 'double', { avoidEscape: true }],
+  'vue/html-self-closing': [
+    'error',
+    {
+      html: {
+        'void': 'always',
+        normal: 'always',
+        component: 'always'
+      },
+      svg: 'always',
+      math: 'always'
+    }
+  ],
+  'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }]
 }
 
 
@@ -133,6 +156,7 @@ const vueStylisticRules: ConfigItem['rules'] = {
   'vue/html-comment-indent': ['error', 2],
   'vue/padding-line-between-blocks': ['error', 'always'],
 
+  // TODO: check whether there's any side effect that this is turned off by suggestion
   indent: 'off',
   'vue/script-indent': [
     'error',
