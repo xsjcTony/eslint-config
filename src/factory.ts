@@ -2,8 +2,10 @@ import { existsSync } from 'node:fs'
 import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
 import { ignores, javascript, importConfig } from './configs'
-import type { ConfigItem, OptionsConfig } from './types'
 import { typescript } from './configs/typescript'
+import { vue } from './configs/vue'
+import { combine } from './utils'
+import type { ConfigItem, OptionsConfig } from './types'
 
 
 const VUE_PACKAGES = [
@@ -26,9 +28,9 @@ const REACT_PACKAGES = [
  * Construct an array of ESLint flat config items.
  */
 export const aelita = (
-  options: OptionsConfig & ConfigItem = {},
+  options: OptionsConfig = {},
   ...userConfigs: (ConfigItem | ConfigItem[])[]
-) => {
+): ConfigItem[] => {
 
   const {
     isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
@@ -56,9 +58,9 @@ export const aelita = (
     ignores(),
     javascript({ overrides: overrides.javascript }),
     importConfig({
-      overrides: overrides.import,
       typescript: !!enableTypescript,
-      vue: !!enableVue
+      vue: !!enableVue,
+      overrides: overrides.import
     })
   )
 
@@ -77,6 +79,13 @@ export const aelita = (
 
 
   if (enableVue) {
-
+    configs.push(vue({
+      ...typeof enableVue !== 'boolean' && enableVue,
+      typescript: !!enableTypescript,
+      overrides: overrides.vue
+    }))
   }
+
+
+  return combine(...configs, ...userConfigs)
 }
