@@ -46,6 +46,9 @@ export const aelita = (
   const configs: ConfigItem[][] = []
 
 
+  /**
+   * Gitignore
+   */
   if (enableGitignore) {
     if (typeof enableGitignore === 'boolean')
       existsSync('.gitignore') && configs.push([gitignore()])
@@ -54,6 +57,13 @@ export const aelita = (
   }
 
 
+  if (enableVue)
+    componentExtensions.push('vue')
+
+
+  /**
+   * ESLintignore, Javascript, Import
+   */
   configs.push(
     ignores(),
     javascript({ overrides: overrides.javascript }),
@@ -65,10 +75,9 @@ export const aelita = (
   )
 
 
-  if (enableVue)
-    componentExtensions.push('vue')
-
-
+  /**
+   * Typescript
+   */
   if (enableTypescript) {
     configs.push(typescript({
       ...typeof enableTypescript !== 'boolean' && enableTypescript,
@@ -78,12 +87,23 @@ export const aelita = (
   }
 
 
+  /**
+   * Vue 3
+   */
   if (enableVue) {
     configs.push(vue({
       ...typeof enableVue !== 'boolean' && enableVue,
       typescript: !!enableTypescript,
       overrides: overrides.vue
     }))
+  }
+
+
+  /**
+   * React 18
+   */
+  if (enableReact) {
+    config.push(/* TODO: React */)
   }
 
 
