@@ -16,6 +16,7 @@ const vueRules = (options: OptionsVue): ConfigItem['rules'] => ({
   ...pluginVue.configs['vue3-recommended'].rules,
 
 
+  // Uncategorized
   'vue/component-api-style': ['error', ['script-setup', 'composition']],
   'vue/component-name-in-template-casing': [
     'error',
@@ -84,7 +85,19 @@ const vueRules = (options: OptionsVue): ConfigItem['rules'] => ({
   ],
   'vue/v-for-delimiter-style': ['error', 'in'],
   'vue/v-on-handler-style': ['error', ['method', 'inline-function'], { ignoreIncludesComment: false }],
-  'vue/valid-define-options': 'error'
+  'vue/valid-define-options': 'error',
+
+  // Extension Rules
+  'vue/camelcase': ['error', { properties: 'always', ignoreDestructuring: false }],
+  'vue/dot-notation': ['error', { allowKeywords: false }],
+  'vue/eqeqeq': ['error', 'always', { 'null': 'ignore' }],
+  'vue/no-console': ['error', { allow: ['warn', 'error'] }],
+  'vue/no-constant-condition': ['error', { checkLoops: false }],
+  'vue/no-empty-pattern': ['error', { allowObjectPatternsAsParameters: false }],
+  'vue/no-loss-of-precision': 'error',
+  'vue/no-useless-concat': 'error',
+  'vue/object-shorthand': ['error', 'always'],
+  'vue/prefer-template': 'error'
 })
 
 
@@ -95,6 +108,7 @@ const vueTypeScriptRules: ConfigItem['rules'] = {
 
 
 const vueDefaultOverrideRules: ConfigItem['rules'] = {
+  // Priority A: Essential
   'vue/no-arrow-functions-in-watch': 'off',
   'vue/no-reserved-component-names': [
     'error',
@@ -105,6 +119,8 @@ const vueDefaultOverrideRules: ConfigItem['rules'] = {
   ],
   'vue/no-shared-component-data': 'off',
   'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
+
+  // Priority B: Strongly Recommended
   'vue/html-quotes': ['error', 'double', { avoidEscape: true }],
   'vue/html-self-closing': [
     'error',
@@ -118,7 +134,28 @@ const vueDefaultOverrideRules: ConfigItem['rules'] = {
       math: 'always'
     }
   ],
-  'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }]
+  'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }],
+  'vue/multiline-html-element-content-newline': [
+    'error',
+    {
+      ignoreWhenEmpty: true,
+      allowEmptyLines: false,
+      ignores: []
+    }
+  ],
+  'vue/singleline-html-element-content-newline': 'off',
+  'vue/v-slot-style': [
+    'error',
+    {
+      'default': 'shorthand',
+      named: 'shorthand',
+      atComponent: 'shorthand'
+    }
+  ],
+  'vue/v-on-event-hyphenation': ['error', 'always', { autofix: true, ignore: [] }],
+
+  // Priority C: Recommended
+  'vue/order-in-components': 'off'
 }
 
 
@@ -166,7 +203,38 @@ const vueStylisticRules: ConfigItem['rules'] = {
       switchCase: 1,
       ignores: []
     }
-  ]
+  ],
+
+
+  // Extension Rules
+  'vue/array-bracket-newline': ['error', { multiline: true }],
+  'vue/array-bracket-spacing': ['error', 'never'],
+  'vue/arrow-spacing': ['error', { before: true, after: true }],
+  'vue/block-spacing': ['error', 'always'],
+  'vue/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+  'vue/comma-dangle': ['error', 'never'],
+  'vue/comma-spacing': ['error', { before: false, after: true }],
+  'vue/comma-style': ['error', 'last'],
+  'vue/dot-location': ['error', 'property'],
+  'vue/func-call-spacing': ['error', 'never'],
+  'vue/key-spacing': ['error', { beforeColon: false, afterColon: true, mode: 'strict' }],
+  'vue/keyword-spacing': ['error', { before: true, after: true }],
+  'vue/no-extra-parens': [
+    'error',
+    'all',
+    {
+      ignoreJSX: 'multi-line',
+      nestedBinaryExpressions: false
+    }
+  ],
+  'vue/object-curly-newline': ['error', { multiline: true }],
+  'vue/object-curly-spacing': ['error', 'always'],
+  'vue/operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
+  'vue/quote-props': ['error', 'as-needed', { keywords: true }],
+  'vue/space-in-parens': ['error', 'never'],
+  'vue/space-infix-ops': ['error', { int32Hint: false }],
+  'vue/space-unary-ops': ['error', { words: true, nonwords: false }],
+  'vue/template-curly-spacing': ['error', 'never']
 }
 
 

@@ -11,6 +11,7 @@ interface JavascriptOptions {
 const javascriptRules: ConfigItem['rules'] = {
   curly: ['error', 'multi-or-nest', 'consistent'],
   camelcase: ['error', { properties: 'always', ignoreDestructuring: false }],
+  'dot-notation': ['error', { allowKeywords: false }],
   'new-cap': [
     'error',
     {
@@ -26,12 +27,14 @@ const javascriptRules: ConfigItem['rules'] = {
   'no-unexpected-multiline': 'error',
   'prefer-const': ['error', { destructuring: 'all' }],
   'no-const-assign': 'error',
+  'no-constant-condition': ['error', { checkLoops: false }],
   'no-var': 'error',
   'no-object-constructor': 'error',
   'object-shorthand': ['error', 'always'],
   'no-prototype-builtins': 'error',
   'no-array-constructor': 'error',
   'prefer-template': 'error',
+  'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: false }],
   'no-eval': ['error', { allowIndirect: false }],
   'no-useless-escape': 'error',
   'no-new-func': 'error',
@@ -41,6 +44,7 @@ const javascriptRules: ConfigItem['rules'] = {
   'function-paren-newline': ['error', 'multiline'],
   'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
   'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: true }],
+  'no-useless-concat': 'error',
   'no-useless-constructor': 'error',
   'no-dupe-class-members': 'error',
   'no-duplicate-imports': ['error', { includeExports: true }],
@@ -55,7 +59,7 @@ const javascriptRules: ConfigItem['rules'] = {
       destructuredArrayIgnorePattern: '^_'
     }
   ],
-  eqeqeq: ['error', 'always'],
+  eqeqeq: ['error', 'always', { 'null': 'ignore' }],
   'no-with': 'error',
   'default-param-last': 'error',
   'no-else-return': ['error', { allowElseIf: false }],
@@ -75,19 +79,13 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
   'comma-spacing': ['error', { before: false, after: true }],
   'comma-style': ['error', 'last'],
   'computed-property-spacing': ['error', 'never'],
+  'dot-location': ['error', 'property'],
   'eol-last': ['error', 'always'],
   'func-call-spacing': ['error', 'never'],
   'generator-star-spacing': ['error', 'after'],
   indent: ['error', 2, { SwitchCase: 1, ignoreComments: false }],
   'jsx-quotes': ['error', 'prefer-double'],
-  'key-spacing': [
-    'error',
-    {
-      beforeColon: false,
-      afterColon: true,
-      mode: 'strict'
-    }
-  ],
+  'key-spacing': ['error', { beforeColon: false, afterColon: true, mode: 'strict' }],
   'keyword-spacing': ['error', { before: true, after: true }],
   'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
   'new-parens': ['error', 'always'],

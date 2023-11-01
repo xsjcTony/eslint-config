@@ -236,6 +236,18 @@ const typescriptRules: ConfigItem['rules'] = {
 const typeAwareTypescriptRules: ConfigItem['rules'] = {
   'ts/await-thenable': 'error',
   'ts/consistent-type-exports': ['error', { fixMixedExportsWithInlineTypeSpecifier: false }],
+
+  'dot-notation': 'off',
+  'ts/dot-notation': [
+    'error',
+    {
+      allowKeywords: false,
+      allowPrivateClassPropertyAccess: false,
+      allowProtectedClassPropertyAccess: false,
+      allowIndexSignaturePropertyAccess: false
+    }
+  ],
+
   'ts/no-duplicate-type-constituents': [
     'error',
     {
