@@ -1,6 +1,6 @@
 import { GLOB_VUE } from '../globs'
 import { parserVue, parserTypescript } from '../parsers'
-import { pluginVue } from '../plugins'
+import { pluginVue, pluginVueAccessibility } from '../plugins'
 import type { ConfigItem, OptionsConfig, OptionsHasTypeScript, OptionsVue } from '../types'
 
 
@@ -238,14 +238,88 @@ const vueStylisticRules: ConfigItem['rules'] = {
 }
 
 
+const vueAccessibilityRules = ({
+  altText,
+  anchorHasContent,
+  formControlHasLabel,
+  headingHasContent,
+  interactiveSupportsFocus,
+  labelHasFor
+}: NonNullable<Exclude<OptionsVue['accessibility'], false>>): ConfigItem['rules'] => ({
+  'vue-a11y/alt-text': [
+    'error',
+    {
+      elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
+      img: altText?.img,
+      object: altText?.object,
+      area: altText?.area,
+      'input[type="image"]': altText?.['input[type="image"]'] ?? []
+    }
+  ],
+  'vue-a11y/anchor-has-content': [
+    'error',
+    {
+      components: anchorHasContent?.extraComponents,
+      accessibleChildren: anchorHasContent?.accessibleChildren,
+      accessibleDirectives: anchorHasContent?.accessibleDirectives
+    }
+  ],
+  'vue-a11y/aria-props': 'error',
+  'vue-a11y/aria-role': ['error', { ignoreNonDOM: true }],
+  'vue-a11y/aria-unsupported-elements': 'error',
+  'vue-a11y/click-events-have-key-events': 'error',
+  'vue-a11y/form-control-has-label': [
+    'error',
+    {
+      labelComponents: formControlHasLabel?.extraLabelComponents,
+      controlComponents: formControlHasLabel?.extraControlComponents
+    }
+  ],
+  'vue-a11y/heading-has-content': [
+    'error',
+    {
+      components: headingHasContent?.extraComponents,
+      accessibleChildren: headingHasContent?.accessibleChildren,
+      accessibleDirectives: headingHasContent?.accessibleDirectives
+    }
+  ],
+  'vue-a11y/iframe-has-title': 'error',
+  'vue-a11y/interactive-supports-focus': [
+    'error',
+    {
+      tabbable: [
+        'button',
+        'checkbox',
+        'link',
+        'searchbox',
+        'spinbutton',
+        'switch',
+        'textbox',
+        ...interactiveSupportsFocus?.extraTabbableElements ?? []
+      ]
+    }
+  ],
+  'vue-a11y/label-has-for': [
+    'error',
+    {
+      components: labelHasFor?.extraComponents,
+      controlComponents: labelHasFor?.extraControlComponents,
+      required: labelHasFor?.required ?? { every: ['nesting', 'id'] },
+      allowChildren: labelHasFor?.allowChildren ?? false
+    }
+  ]
+})
+
+
 export const vue = (options: VueOptions = {}): ConfigItem[] => {
-  const { typescript = false, overrides } = options
+  const { typescript = false, accessibility = {}, overrides } = options
 
   return [
     {
       name: 'aelita:vue:setup',
       plugins: {
-        vue: pluginVue
+        vue: pluginVue,
+        ...accessibility && { 'vue-a11y': pluginVueAccessibility }
       }
     },
     {
@@ -275,7 +349,9 @@ export const vue = (options: VueOptions = {}): ConfigItem[] => {
         ...typescript && vueTypeScriptRules,
         ...vueDefaultOverrideRules,
         ...vueStylisticRules,
-        ...overrides
+        ...!!accessibility && vueAccessibilityRules(accessibility),
+        ...overrides,
+        ...!!accessibility && overrides?.accessibility
       }
     }
   ]

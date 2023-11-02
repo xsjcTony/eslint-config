@@ -73,7 +73,82 @@ export interface OptionsIsInEditor {
   isInEditor?: boolean
 }
 
+
+interface VueAccessibilityOptions {
+  /**
+   * For `vue-a11y/alt-text` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/alt-text.html
+   */
+  altText?: {
+    extraElements?: string[]
+    img?: string[]
+    object?: string[]
+    area?: string[]
+    'input[type="image"]'?: string[]
+  }
+
+  /**
+   * For `vue-a11y/anchor-has-content` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/anchor-has-content.html
+   */
+  anchorHasContent?: {
+    extraComponents?: string[]
+    accessibleChildren?: string[]
+    accessibleDirectives?: string[]
+  }
+
+  /**
+   * For `vue-a11y/form-control-has-label` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/form-control-has-label.html
+   */
+  formControlHasLabel?: {
+    extraLabelComponents?: string[]
+    extraControlComponents?: string[]
+  }
+
+  /**
+   * For `vue-a11y/heading-has-content` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/heading-has-content.html
+   */
+  headingHasContent?: {
+    extraComponents?: string[]
+    accessibleChildren?: string[]
+    accessibleDirectives?: string[]
+  }
+
+  /**
+   * For `vue-a11y/interactive-supports-focus` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/interactive-supports-focus.html
+   */
+  interactiveSupportsFocus?: {
+    extraTabbableElements?: string[]
+  }
+
+  /**
+   * For `vue-a11y/label-has-for` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/label-has-for.html
+   */
+  labelHasFor?: {
+    extraComponents?: string[]
+    extraControlComponents?: string[]
+    required?: 'nesting' | 'id' | { some: ('nesting' | 'id')[] } | { every: ('nesting' | 'id')[] }
+    allowChildren?: boolean
+  }
+}
+
 export interface OptionsVue {
+  /**
+   * Whether to enable `eslint-plugin-vuejs-a11y` rules.
+   *
+   * @default {}
+   */
+  accessibility?: false | VueAccessibilityOptions
   /**
    * Global component names, array of `string` only.
    */
@@ -145,9 +220,11 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     javascript?: LooseJavascriptRulesDict
     typescript?: LooseTypescriptRulesDict
     react?: LooseReactRulesDict
-    vue?: LooseVueRulesDict
+    vue?: LooseVueRulesDict & {
+      accessibility?: ConfigItem['rules']
+    }
     import?: LooseImportRulesDict & {
-      typescript?: LooseTypescriptRulesDict
+      typescript?: LooseImportRulesDict
     }
   }
 }

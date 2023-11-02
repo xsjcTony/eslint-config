@@ -8,6 +8,18 @@ import { combine } from './utils'
 import type { ConfigItem, OptionsConfig } from './types'
 
 
+const flatConfigProps: (keyof ConfigItem)[] = [
+  'files',
+  'ignores',
+  'languageOptions',
+  'linterOptions',
+  'processor',
+  'plugins',
+  'rules',
+  'settings',
+]
+
+
 const VUE_PACKAGES = [
   'vue',
   'nuxt',
@@ -28,7 +40,7 @@ const REACT_PACKAGES = [
  * Construct an array of ESLint flat config items.
  */
 export const aelita = (
-  options: OptionsConfig = {},
+  options: OptionsConfig & ConfigItem = {},
   ...userConfigs: (ConfigItem | ConfigItem[])[]
 ): ConfigItem[] => {
 
@@ -105,6 +117,19 @@ export const aelita = (
   if (enableReact) {
     config.push(/* TODO: React */)
   }
+
+
+  /**
+   * Flat config object
+   */
+  const fusedConfig = flatConfigProps.reduce<ConfigItem>((acc, key) => {
+    if (key in options)
+      acc[key] = options[key] as any
+    return acc
+  }, {})
+
+  if (Object.keys(fusedConfig).length)
+    configs.push([fusedConfig])
 
 
   return combine(...configs, ...userConfigs)
