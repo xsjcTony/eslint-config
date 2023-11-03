@@ -244,7 +244,10 @@ const vueAccessibilityRules = ({
   formControlHasLabel,
   headingHasContent,
   interactiveSupportsFocus,
-  labelHasFor
+  labelHasFor,
+  mediaHasCaption,
+  noDistractingElements,
+  noRedundantRoles
 }: NonNullable<Exclude<OptionsVue['accessibility'], false>>): ConfigItem['rules'] => ({
   'vue-a11y/alt-text': [
     'error',
@@ -307,7 +310,18 @@ const vueAccessibilityRules = ({
       required: labelHasFor?.required ?? { every: ['nesting', 'id'] },
       allowChildren: labelHasFor?.allowChildren ?? false
     }
-  ]
+  ],
+  'vue-a11y/media-has-caption': ['error', { ...mediaHasCaption }],
+  'vue-a11y/mouse-events-have-key-events': 'error',
+  'vue-a11y/no-access-key': 'error',
+  'vue-a11y/no-distracting-elements': [
+    'error',
+    { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
+  ],
+  'vue-a11y/no-redundant-roles': ['error', noRedundantRoles?.extraExceptions],
+  'vue-a11y/no-static-element-interactions': 'error',
+  'vue-a11y/role-has-required-aria-props': 'error',
+  'vue-a11y/tabindex-no-positive': 'error'
 })
 
 

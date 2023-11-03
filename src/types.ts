@@ -140,6 +140,35 @@ interface VueAccessibilityOptions {
     required?: 'nesting' | 'id' | { some: ('nesting' | 'id')[] } | { every: ('nesting' | 'id')[] }
     allowChildren?: boolean
   }
+
+  /**
+   * For `vue-a11y/media-has-caption` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/media-has-caption.html
+   */
+  mediaHasCaption?: {
+    audio?: string[]
+    video?: string[]
+    track?: string[]
+  }
+
+  /**
+   * For `vue-a11y/no-distracting-elements` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/no-distracting-elements.html
+   */
+  noDistractingElements?: {
+    extraDistractingElements?: string[]
+  }
+
+  /**
+   * For `vue-a11y/no-redundant-roles` rule.
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/rules/no-redundant-roles.html
+   */
+  noRedundantRoles?: {
+    extraExceptions?: Record<string, string[]>
+  }
 }
 
 export interface OptionsVue {
