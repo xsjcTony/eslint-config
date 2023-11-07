@@ -1,12 +1,7 @@
 import { GLOB_VUE } from '../globs'
 import { parserVue, parserTypescript } from '../parsers'
 import { pluginVue, pluginVueAccessibility } from '../plugins'
-import type { ConfigItem, OptionsConfig, OptionsHasTypeScript, OptionsVue } from '../types'
-
-
-interface VueOptions extends OptionsHasTypeScript, OptionsVue {
-  overrides?: NonNullable<OptionsConfig['overrides']>['vue']
-}
+import type { ConfigItem, OptionsVue } from '../types'
 
 
 const vueRules = (options: OptionsVue): ConfigItem['rules'] => ({
@@ -325,7 +320,7 @@ const vueAccessibilityRules = ({
 })
 
 
-export const vue = (options: VueOptions = {}): ConfigItem[] => {
+export const vue = (options: OptionsVue = {}): ConfigItem[] => {
   const { typescript = false, accessibility = {}, overrides } = options
 
   return [
@@ -333,7 +328,7 @@ export const vue = (options: VueOptions = {}): ConfigItem[] => {
       name: 'aelita:vue:setup',
       plugins: {
         vue: pluginVue,
-        ...accessibility && { 'vue-a11y': pluginVueAccessibility }
+        ...!!accessibility && { 'vue-a11y': pluginVueAccessibility }
       }
     },
     {

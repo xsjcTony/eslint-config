@@ -6,6 +6,7 @@ import { typescript } from './configs/typescript'
 import { vue } from './configs/vue'
 import { combine } from './utils'
 import type { ConfigItem, OptionsConfig } from './types'
+import { react } from './configs/react'
 
 
 const flatConfigProps: (keyof ConfigItem)[] = [
@@ -115,7 +116,11 @@ export const aelita = (
    * React 18
    */
   if (enableReact) {
-    config.push(/* TODO: React */)
+    configs.push(react({
+      ...typeof enableReact !== 'boolean' && enableReact,
+      typescript: !!enableTypescript,
+      overrides: overrides.react
+    }))
   }
 
 

@@ -7,7 +7,8 @@ import type {
   EslintRules,
   VueRules,
   ReactRules,
-  ReactHooksRules
+  ReactHooksRules,
+  JsxA11yRules
 } from '@antfu/eslint-define-config'
 import type { ParserOptions } from '@typescript-eslint/parser'
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore'
@@ -171,17 +172,24 @@ interface VueAccessibilityOptions {
   }
 }
 
-export interface OptionsVue {
+export interface OptionsVue extends OptionsHasTypeScript {
   /**
    * Whether to enable `eslint-plugin-vuejs-a11y` rules.
    *
    * @default {}
    */
   accessibility?: false | VueAccessibilityOptions
+
+  /**
+   * Rule overwrites
+   */
+  overrides?: NonNullable<OptionsConfig['overrides']>['vue']
+
   /**
    * Global component names, array of `string` only.
    */
   globalComponents?: string[]
+
   /**
    * Extra global component names, array of `RegExp`.
    *
@@ -190,17 +198,86 @@ export interface OptionsVue {
   extraGlobalComponentsWithRegex?: string[]
 }
 
+
+export interface OptionsReact extends OptionsHasTypeScript {
+  /**
+   * Whether to enable `eslint-plugin-jsx-a11y` rules.
+   */
+  accessibility?: false | {}
+
+  /**
+   * Rule overwrites
+   */
+  overrides?: NonNullable<OptionsConfig['overrides']>['react']
+
+  /**
+   * React settings
+   *
+   * @see https://github.com/jsx-eslint/eslint-plugin-react#configuration-legacy-eslintrc-
+   */
+  settings?: {
+    createClass?: string
+    pragma?: string
+    fragment?: string
+    /**
+     * @default 'detect'
+     */
+    version?: string
+    flowVersion?: string
+  }
+
+  /**
+   * Wrapper function on props.
+   */
+  propWrapperFunctions?: (
+    | string
+    | { property: string; object?: string }
+    | { property: string; exact: true }
+  )[]
+
+  /**
+   * Wrapper function on component.
+   */
+  componentWrapperFunctions?: (
+    | string
+    | { property: string; object?: string }
+  )[]
+
+  /**
+   * Additional form components.
+   */
+  formComponents?: (string | { name: string; formAttribute: string })[]
+
+  /**
+   * Additional link components.
+   */
+  linkComponents?: (string | { name: string; linkAttribute: string })[]
+
+  /**
+   * Optional settings for rules.
+   */
+  ruleOptions?: {
+    /**
+     * For `react/boolean-prop-naming` rule.
+     */
+    extraPropTypeNames?: [string, ...string[]]
+  }
+}
+
+
 type LooseJavascriptRulesDict = FlatESLintConfigItem<MergeIntersection<EslintRules>, false>['rules']
 type LooseTypescriptRulesDict = FlatESLintConfigItem<
   RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'>,
   false
 >['rules']
 type LooseReactRulesDict = FlatESLintConfigItem<
-  MergeIntersection<ReactRules & RenamePrefix<ReactHooksRules, 'react-hooks/', 'hooks/'>>,
+  MergeIntersection<ReactRules & ReactHooksRules>,
   false
 >['rules']
+type LooseJsxA11yDict = FlatESLintConfigItem<MergeIntersection<JsxA11yRules>, false>['rules']
 type LooseVueRulesDict = FlatESLintConfigItem<MergeIntersection<VueRules>, false>['rules']
 type LooseImportRulesDict = FlatESLintConfigItem<MergeIntersection<ImportRules>, false>['rules']
+
 
 export interface OptionsConfig extends OptionsComponentExtensions {
   /**
@@ -227,7 +304,7 @@ export interface OptionsConfig extends OptionsComponentExtensions {
    *
    * @default auto-detect based on the dependencies
    */
-  react?: boolean
+  react?: boolean | OptionsReact
 
   /**
    * Enable Vue support.
@@ -248,7 +325,9 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   overrides?: {
     javascript?: LooseJavascriptRulesDict
     typescript?: LooseTypescriptRulesDict
-    react?: LooseReactRulesDict
+    react?: LooseReactRulesDict & {
+      accessibility?: LooseJsxA11yDict
+    }
     vue?: LooseVueRulesDict & {
       accessibility?: ConfigItem['rules']
     }
