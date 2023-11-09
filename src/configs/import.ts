@@ -55,7 +55,7 @@ const importStylisticRules: ConfigItem['rules'] = {
     'error',
     {
       count: 2,
-      // @ts-expect-error - type is not up-to-date
+      // @ts-expect-error - type definition is not up-to-date
       exactCount: true,
       considerComments: true
     }

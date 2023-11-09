@@ -21,7 +21,7 @@ export type Rules = MergeIntersection<
   & EslintRules
   & VueRules
   & ReactRules
-  & RenamePrefix<ReactHooksRules, 'react-hooks/', 'hooks/'>
+  & ReactHooksRules
 >
 
 
@@ -199,11 +199,15 @@ export interface OptionsVue extends OptionsHasTypeScript {
 }
 
 
+interface JsxAccessibilityOptions {
+
+}
+
 export interface OptionsReact extends OptionsHasTypeScript {
   /**
    * Whether to enable `eslint-plugin-jsx-a11y` rules.
    */
-  accessibility?: false | {}
+  accessibility?: false | JsxAccessibilityOptions
 
   /**
    * Rule overwrites
@@ -259,8 +263,67 @@ export interface OptionsReact extends OptionsHasTypeScript {
   ruleOptions?: {
     /**
      * For `react/boolean-prop-naming` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/boolean-prop-naming.md
      */
-    extraPropTypeNames?: [string, ...string[]]
+    booleanPropNaming?: {
+      extraPropTypeNames?: [string, ...string[]]
+    }
+
+    /**
+     * For `react/jsx-no-script-url` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-script-url.md
+     */
+    jsxNoScriptUrl?: {
+      extraComponentNameAndProps?: { name: string; props: string[] }[]
+    }
+
+    /**
+     * For `react/jsx-pascal-case` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
+     */
+    jsxPascalCase?: {
+      ignore?: [string]
+    }
+
+    /**
+     * For `react/no-unescaped-entities` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unescaped-entities.md
+     */
+    noUnescapedEntities?: {
+      extraForbiddenCharacters?: (string | { char: string; alternatives?: string[] })[]
+    }
+
+    /**
+     * For `react/no-unknown-property` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
+     */
+    noUnknownProperty?: {
+      ignoredProperties?: string[]
+    }
+
+    /**
+     * For `react/style-prop-object` rule.
+     *
+     * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
+     */
+    stylePropObject?: {
+      allowedComponents?: string[]
+    }
+
+
+    /**
+     * For `react-hooks/exhaustive-deps` rule.
+     *
+     * @see https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
+     */
+    reactHooksExhaustiveDeps?: {
+      additionalHooks?: string
+    }
   }
 }
 
