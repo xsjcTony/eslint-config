@@ -248,10 +248,7 @@ const vueAccessibilityRules = ({
     'error',
     {
       elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
-      img: altText?.img,
-      object: altText?.object,
-      area: altText?.area,
-      'input[type="image"]': altText?.['input[type="image"]'] ?? []
+      ...altText?.elementMapping
     }
   ],
   'vue-a11y/anchor-has-content': [

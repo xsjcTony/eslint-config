@@ -22,6 +22,7 @@ export type Rules = MergeIntersection<
   & VueRules
   & ReactRules
   & ReactHooksRules
+  & JsxA11yRules
 >
 
 
@@ -83,10 +84,13 @@ interface VueAccessibilityOptions {
    */
   altText?: {
     extraElements?: string[]
-    img?: string[]
-    object?: string[]
-    area?: string[]
-    'input[type="image"]'?: string[]
+    elementMapping?: {
+      img?: string[]
+      object?: string[]
+      area?: string[]
+      'input[type="image"]'?: string[]
+      [el: string]: any
+    }
   }
 
   /**
@@ -200,7 +204,33 @@ export interface OptionsVue extends OptionsHasTypeScript {
 
 
 interface JsxAccessibilityOptions {
+  /**
+   * For `jsx-a11y/alt-text` rule.
+   *
+   * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/alt-text.md
+   */
+  altText?: {
+    extraElements?: string[]
+    elementMapping?: {
+      img?: string[]
+      object?: string[]
+      area?: string[]
+      'input[type="image"]'?: string[]
+      [el: string]: any
+    }
+  }
 
+  /**
+   * For `jsx-a11y/anchor-is-valid` rule.
+   *
+   * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/anchor-is-valid.md
+   */
+  anchorIsValid?: {
+    aspects?: [
+      'noHref' | 'invalidHref' | 'preferButton',
+      ...('noHref' | 'invalidHref' | 'preferButton')[]
+    ]
+  }
 }
 
 export interface OptionsReact extends OptionsHasTypeScript {

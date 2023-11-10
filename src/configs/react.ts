@@ -213,11 +213,41 @@ const reactHooksRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>):
 })
 
 
-const jsxAccessibilityRules = ({
+const jsxAccessibilityRules = ({ linkComponents, accessibility }: OptionsReact): ConfigItem['rules'] => {
+  if (!accessibility)
+    return {}
 
-}: NonNullable<Exclude<OptionsReact['accessibility'], false>>): ConfigItem['rules'] => ({
+  const extraLinkComponents = linkComponents
+    ?.map(comp => typeof comp === 'string' ? comp : comp.name)
+  const extraLinkComponentAttributes = linkComponents
+    ?.filter(comp => typeof comp !== 'string')
+    ?.map(comp =>
+      (comp as Exclude<NonNullable<OptionsReact['linkComponents']>[number], string>).linkAttribute)
 
-})
+  const {
+    altText,
+    anchorIsValid
+  } = accessibility
+
+  return {
+    'jsx-a11y/alt-text': [
+      'error',
+      {
+        elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
+        ...altText?.elementMapping
+      }
+    ],
+    'jsx-a11y/anchor-has-content': ['error', { components: extraLinkComponents }],
+    'jsx-a11y/anchor-is-valid': [
+      'error',
+      {
+        components: extraLinkComponents,
+        specialLink: extraLinkComponentAttributes,
+        aspects: anchorIsValid?.aspects ?? ['noHref', 'invalidHref', 'preferButton']
+      }
+    ]
+  }
+}
 
 
 export const react = (options: OptionsReact = {}): ConfigItem[] => {
@@ -258,7 +288,7 @@ export const react = (options: OptionsReact = {}): ConfigItem[] => {
         ...reactStylisticRules,
         ...jsxStylisticRules,
         ...reactHooksRules(ruleOptions),
-        ...!!accessibility && jsxAccessibilityRules(accessibility),
+        ...!!accessibility && jsxAccessibilityRules(options),
         ...overrides,
         ...!!accessibility && overrides?.accessibility
       }
