@@ -438,8 +438,8 @@ export const react = (options: OptionsReact = {}): ConfigItem[] => {
         ...jsxStylisticRules,
         ...reactHooksRules(ruleOptions),
         ...!!accessibility && jsxAccessibilityRules(options),
-        ...overrides,
-        ...!!accessibility && overrides?.accessibility
+        ...overrides?.react,
+        ...!!accessibility && overrides?.jsxA11y
       }
     }
   ]

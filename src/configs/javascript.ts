@@ -48,7 +48,7 @@ const javascriptRules: ConfigItem['rules'] = {
   'no-useless-constructor': 'error',
   'no-dupe-class-members': 'error',
   'no-duplicate-imports': ['error', { includeExports: true }],
-  'no-iterator': 'warn',
+  'no-iterator': 'error',
   'no-undef': ['error', { 'typeof': true }],
   'no-unused-vars': [
     'error',
@@ -178,8 +178,8 @@ export const javascript = ({ overrides }: JavascriptOptions = {}): ConfigItem[] 
     }
   },
   {
-    files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
     name: 'aelita:javascript:scripts-override',
+    files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
     rules: {
       'no-console': 'off'
     }

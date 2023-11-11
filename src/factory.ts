@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
 import { ignores, javascript, importConfig } from './configs'
+import { playwright } from './configs/playwright'
 import { react } from './configs/react'
 import { typescript } from './configs/typescript'
 import { vue } from './configs/vue'
@@ -50,6 +51,7 @@ export const aelita = (
     vue: enableVue = VUE_PACKAGES.some(i => isPackageExists(i)),
     react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
     typescript: enableTypescript = isPackageExists('typescript'),
+    playwright: enablePlaywright = isPackageExists('@playwright/test'),
     gitignore: enableGitignore = true,
     overrides = {},
     componentExtensions = []
@@ -83,7 +85,10 @@ export const aelita = (
     importConfig({
       typescript: !!enableTypescript,
       vue: !!enableVue,
-      overrides: overrides['import']
+      overrides: {
+        'import': overrides['import'],
+        importTypescript: overrides.importTypescript
+      }
     })
   )
 
@@ -107,7 +112,10 @@ export const aelita = (
     configs.push(vue({
       ...typeof enableVue !== 'boolean' && enableVue,
       typescript: !!enableTypescript,
-      overrides: overrides.vue
+      overrides: {
+        vue: overrides.vue,
+        vueAccessibility: overrides.vueAccessibility
+      }
     }))
   }
 
@@ -119,7 +127,20 @@ export const aelita = (
     configs.push(react({
       ...typeof enableReact !== 'boolean' && enableReact,
       typescript: !!enableTypescript,
-      overrides: overrides.react
+      overrides: {
+        react: overrides.react,
+        jsxA11y: overrides.jsxA11y
+      }
+    }))
+  }
+
+
+  /**
+   * Playwright
+   */
+  if (enablePlaywright) {
+    configs.push(playwright({
+      overrides: overrides.playwright
     }))
   }
 

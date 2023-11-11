@@ -4,7 +4,10 @@ import type { ConfigItem, OptionsConfig, OptionsHasTypeScript } from '../types'
 
 interface ImportOptions extends OptionsHasTypeScript {
   vue?: boolean
-  overrides?: NonNullable<OptionsConfig['overrides']>['import']
+  overrides?: {
+    import?: NonNullable<OptionsConfig['overrides']>['import']
+    importTypescript?: NonNullable<OptionsConfig['overrides']>['importTypescript']
+  }
 }
 
 
@@ -94,8 +97,8 @@ export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
         ...importRules(options),
         ...typescript && importTypescriptRules(options),
         ...importStylisticRules,
-        ...overrides,
-        ...typescript && overrides?.typescript
+        ...overrides?.['import'],
+        ...typescript && overrides?.importTypescript
       }
     }
   ]

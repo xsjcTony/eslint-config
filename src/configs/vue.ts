@@ -356,8 +356,8 @@ export const vue = (options: OptionsVue = {}): ConfigItem[] => {
         ...vueDefaultOverrideRules,
         ...vueStylisticRules,
         ...!!accessibility && vueAccessibilityRules(accessibility),
-        ...overrides,
-        ...!!accessibility && overrides?.accessibility
+        ...overrides?.vue,
+        ...!!accessibility && overrides?.vueAccessibility
       }
     }
   ]

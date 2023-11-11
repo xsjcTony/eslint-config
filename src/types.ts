@@ -222,7 +222,10 @@ export interface OptionsVue extends OptionsHasTypeScript {
   /**
    * Rule overwrites
    */
-  overrides?: NonNullable<OptionsConfig['overrides']>['vue']
+  overrides?: {
+    vue?: NonNullable<OptionsConfig['overrides']>['vue']
+    vueAccessibility?: NonNullable<OptionsConfig['overrides']>['vueAccessibility']
+  }
 
   /**
    * Global component names, array of `string` only.
@@ -449,7 +452,10 @@ export interface OptionsReact extends OptionsHasTypeScript {
   /**
    * Rule overwrites
    */
-  overrides?: NonNullable<OptionsConfig['overrides']>['react']
+  overrides?: {
+    react?: NonNullable<OptionsConfig['overrides']>['react']
+    jsxA11y?: NonNullable<OptionsConfig['overrides']>['jsxA11y']
+  }
 
   /**
    * React settings
@@ -619,6 +625,13 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   vue?: boolean | OptionsVue
 
   /**
+   * Enable Playwright support
+   *
+   * @default auto-detect based on the dependencies
+   */
+  playwright?: boolean
+
+  /**
    * Control to disable some rules in editors.
    * @default auto-detect based on the process.env
    */
@@ -630,14 +643,12 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   overrides?: {
     javascript?: LooseJavascriptRulesDict
     typescript?: LooseTypescriptRulesDict
-    react?: LooseReactRulesDict & {
-      accessibility?: LooseJsxA11yDict
-    }
-    vue?: LooseVueRulesDict & {
-      accessibility?: ConfigItem['rules']
-    }
-    import?: LooseImportRulesDict & {
-      typescript?: LooseImportRulesDict
-    }
+    react?: LooseReactRulesDict
+    jsxA11y?: LooseJsxA11yDict
+    vue?: LooseVueRulesDict
+    vueAccessibility?: ConfigItem['rules']
+    import?: LooseImportRulesDict
+    importTypescript?: LooseImportRulesDict
+    playwright?: ConfigItem['rules']
   }
 }

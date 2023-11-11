@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "types": ["@types/node"],
-    "noEmit": true,
+    "noEmit": false,
     "allowJs": true,
     "composite": true
   },
