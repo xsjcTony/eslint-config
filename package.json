@@ -1,12 +1,12 @@
 {
   "name": "@aelita/eslint-config",
   "type": "module",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "packageManager": "pnpm@8.9.2",
   "description": "Aelita's ESLint config",
   "author": "Aelita <https://github.com/xsjcTony>",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/xsjcTony/eslint-config",
   "keywords": [
     "eslint",
     "eslint-config",
