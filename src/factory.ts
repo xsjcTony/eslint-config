@@ -41,7 +41,7 @@ const REACT_PACKAGES = [
 /**
  * Construct an array of ESLint flat config items.
  */
-export const aelita = (
+export const defineConfig = (
   options: OptionsConfig & ConfigItem = {},
   ...userConfigs: (ConfigItem | ConfigItem[])[]
 ): ConfigItem[] => {

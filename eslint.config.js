@@ -1,8 +1,8 @@
 // @ts-check
-import aelita, { GLOB_SRC } from './dist/index.js'
+import defineConfig, { GLOB_SRC } from './dist/index.js'
 
 
-export default aelita(
+export default defineConfig(
   {
     typescript: {
       tsconfigPath: ['./tsconfig.json', './tsconfig.node.js.json']

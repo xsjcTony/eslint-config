@@ -1,4 +1,4 @@
-import { aelita } from './factory'
+import { defineConfig } from './factory'
 
 
 export * from './factory'
@@ -9,4 +9,4 @@ export * from './configs'
 export type * from './types'
 
 
-export default aelita
+export default defineConfig
