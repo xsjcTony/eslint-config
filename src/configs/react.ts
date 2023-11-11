@@ -136,9 +136,7 @@ const jsxTypeScriptRules: ConfigItem['rules'] = {
 }
 
 
-const reactStylisticRules: ConfigItem['rules'] = {
-  'react/self-closing-comp': ['error', { html: true, component: true }]
-}
+const reactStylisticRules: ConfigItem['rules'] = { 'react/self-closing-comp': ['error', { html: true, component: true }] }
 
 
 const jsxStylisticRules: ConfigItem['rules'] = {
@@ -213,7 +211,11 @@ const reactHooksRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>):
 })
 
 
-const jsxAccessibilityRules = ({ linkComponents, accessibility }: OptionsReact): ConfigItem['rules'] => {
+const jsxAccessibilityRules = ({
+  linkComponents,
+  imageComponents,
+  accessibility
+}: OptionsReact): ConfigItem['rules'] => {
   if (!accessibility)
     return {}
 
@@ -226,7 +228,23 @@ const jsxAccessibilityRules = ({ linkComponents, accessibility }: OptionsReact):
 
   const {
     altText,
-    anchorIsValid
+    anchorIsValid,
+    ariaRole,
+    autocompleteValid,
+    controlHasAssociatedLabel,
+    headingHasContent,
+    imgRedundantAlt,
+    interactiveSupportsFocus,
+    labelHasAssociatedControl,
+    mediaHasCaption,
+    noAutofocus,
+    noDistractingElements,
+    noInteractiveElementToNoninteractiveRole,
+    noNoninteractiveElementInteractions,
+    noNoninteractiveElementToInteractiveRole,
+    noNoninteractiveTabindex,
+    noRedundantRoles,
+    noStaticElementInteractions
   } = accessibility
 
   return {
@@ -234,6 +252,7 @@ const jsxAccessibilityRules = ({ linkComponents, accessibility }: OptionsReact):
       'error',
       {
         elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
+        img: imageComponents,
         ...altText?.elementMapping
       }
     ],
@@ -245,7 +264,137 @@ const jsxAccessibilityRules = ({ linkComponents, accessibility }: OptionsReact):
         specialLink: extraLinkComponentAttributes,
         aspects: anchorIsValid?.aspects ?? ['noHref', 'invalidHref', 'preferButton']
       }
-    ]
+    ],
+    'jsx-a11y/aria-activedescendant-has-tabindex': 'error',
+    'jsx-a11y/aria-props': 'error',
+    'jsx-a11y/aria-proptypes': 'error',
+    'jsx-a11y/aria-role': [
+      'error',
+      {
+        allowedInvalidRoles: ariaRole?.allowedInvalidRoles,
+        ignoreNonDOM: true
+      }
+    ],
+    'jsx-a11y/aria-unsupported-elements': 'error',
+    'jsx-a11y/autocomplete-valid': ['error', { inputComponents: autocompleteValid?.extraInputComponents }],
+    'jsx-a11y/click-events-have-key-events': 'error',
+    'jsx-a11y/control-has-associated-label': ['error', { ...controlHasAssociatedLabel }],
+    'jsx-a11y/heading-has-content': ['error', { components: headingHasContent?.extraComponents }],
+    'jsx-a11y/html-has-lang': 'error',
+    'jsx-a11y/iframe-has-title': 'error',
+    'jsx-a11y/img-redundant-alt': [
+      'error',
+      {
+        components: imageComponents,
+        words: imgRedundantAlt?.extraCheckedWords
+      }
+    ],
+    'jsx-a11y/interactive-supports-focus': [
+      'error',
+      {
+        tabbable: [
+          'button',
+          'checkbox',
+          'link',
+          'searchbox',
+          'spinbutton',
+          'switch',
+          'textbox',
+          ...interactiveSupportsFocus?.extraTabbableElements ?? []
+        ]
+      }
+    ],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      labelHasAssociatedControl ?? {}
+    ],
+    'jsx-a11y/lang': 'error',
+    'jsx-a11y/media-has-caption': ['error', { ...mediaHasCaption }],
+    'jsx-a11y/mouse-events-have-key-events': [
+      'error',
+      {
+        hoverInHandlers: [
+          'onMouseOver',
+          'onMouseEnter',
+          'onPointerOver',
+          'onPointerEnter'
+        ],
+        hoverOutHandlers: [
+          'onMouseOut',
+          'onMouseLeave',
+          'onPointerOut',
+          'onPointerLeave'
+        ]
+      }
+    ],
+    'jsx-a11y/no-access-key': 'error',
+    'jsx-a11y/no-aria-hidden-on-focusable': 'error',
+    ...noAutofocus && { 'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }] },
+    'jsx-a11y/no-distracting-elements': [
+      'error',
+      // @ts-expect-error - type definition is incorrect
+      { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
+    ],
+    'jsx-a11y/no-interactive-element-to-noninteractive-role': [
+      'error',
+      {
+        tr: ['none', 'presentation'],
+        ...noInteractiveElementToNoninteractiveRole
+      }
+    ],
+    'jsx-a11y/no-noninteractive-element-interactions': [
+      'error',
+      {
+        handlers: [
+          'onClick',
+          'onMouseDown',
+          'onMouseUp',
+          'onKeyPress',
+          'onKeyDown',
+          'onKeyUp',
+          ...noNoninteractiveElementInteractions?.extraHandlers ?? []
+        ]
+      }
+    ],
+    'jsx-a11y/no-noninteractive-element-to-interactive-role': [
+      'error',
+      {
+        ul: ['listbox', 'menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
+        ol: ['listbox', 'menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
+        li: ['menuitem', 'option', 'row', 'tab', 'treeitem'],
+        table: ['grid'],
+        td: ['gridcell'],
+        ...noNoninteractiveElementToInteractiveRole
+      }
+    ],
+    'jsx-a11y/no-noninteractive-tabindex': [
+      'error',
+      {
+        tags: noNoninteractiveTabindex?.tags,
+        roles: ['tabpanel', ...noNoninteractiveTabindex?.extraRoles ?? []],
+        allowExpressionValues: noNoninteractiveTabindex?.allowExpressionValues ?? true
+      }
+    ],
+    'jsx-a11y/no-redundant-roles': ['error', { nav: ['navigation'], ...noRedundantRoles }],
+    'jsx-a11y/no-static-element-interactions': [
+      'error',
+      {
+        handlers: [
+          'onClick',
+          'onMouseDown',
+          'onMouseUp',
+          'onKeyPress',
+          'onKeyDown',
+          'onKeyUp',
+          ...noStaticElementInteractions?.extraHandlers ?? []
+        ],
+        allowExpressionValues: noStaticElementInteractions?.allowExpressionValues ?? true
+      }
+    ],
+    'jsx-a11y/role-has-required-aria-props': 'error',
+    'jsx-a11y/role-supports-aria-props': 'error',
+    'jsx-a11y/scope': 'error',
+    'jsx-a11y/tabindex-no-positive': 'error'
   }
 }
 

@@ -41,9 +41,9 @@ const javascriptRules: ConfigItem['rules'] = {
   'prefer-rest-params': 'error',
   'no-loop-func': 'error',
   'prefer-spread': 'error',
-  'function-paren-newline': ['error', 'multiline'],
+  'function-paren-newline': ['error', 'consistent'],
   'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
-  'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: true }],
+  'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: false }],
   'no-useless-concat': 'error',
   'no-useless-constructor': 'error',
   'no-dupe-class-members': 'error',
@@ -69,7 +69,6 @@ const javascriptRules: ConfigItem['rules'] = {
 
 
 const javascriptStylisticRules: ConfigItem['rules'] = {
-  'array-bracket-newline': ['error', { multiline: true }],
   'array-bracket-spacing': ['error', 'never'],
   'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
   'arrow-spacing': ['error', { before: true, after: true }],
@@ -90,7 +89,6 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
   'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
   'new-parens': ['error', 'always'],
   'newline-per-chained-call': ['error', { ignoreChainWithDepth: 3 }],
-  'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }],
   'no-extra-parens': [
     'error',
     'all',
@@ -107,7 +105,6 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
   'no-trailing-spaces': ['error', { ignoreComments: false, skipBlankLines: false }],
   'no-whitespace-before-property': 'error',
   'nonblock-statement-body-position': ['error', 'below'],
-  'object-curly-newline': ['error', { multiline: true }],
   'object-curly-spacing': ['error', 'always'],
   'one-var-declaration-per-line': ['error', 'always'],
   'operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],

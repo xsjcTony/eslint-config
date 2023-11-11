@@ -23,7 +23,7 @@ type TypescriptOptions =
 const typescriptRules: ConfigItem['rules'] = {
   'ts/adjacent-overload-signatures': 'error',
   'ts/array-type': ['error', { 'default': 'array', readonly: 'array' }],
-  '@typescript-eslint/ban-ts-comment': [
+  'ts/ban-ts-comment': [
     'error',
     {
       'ts-expect-error': 'allow-with-description',
@@ -345,20 +345,6 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
     }
   ],
   'ts/return-await': ['error', 'always'],
-  'ts/strict-boolean-expressions': [
-    'error',
-    {
-      allowString: true,
-      allowNumber: true,
-      allowNullableObject: true,
-      allowNullableBoolean: false,
-      allowNullableString: false,
-      allowNullableNumber: false,
-      allowNullableEnum: false,
-      allowAny: false,
-      allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false
-    }
-  ],
   'ts/switch-exhaustiveness-check': 'error',
   'ts/unbound-method': ['error', { ignoreStatic: false }]
 }

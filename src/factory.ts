@@ -2,11 +2,11 @@ import { existsSync } from 'node:fs'
 import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
 import { ignores, javascript, importConfig } from './configs'
+import { react } from './configs/react'
 import { typescript } from './configs/typescript'
 import { vue } from './configs/vue'
 import { combine } from './utils'
 import type { ConfigItem, OptionsConfig } from './types'
-import { react } from './configs/react'
 
 
 const flatConfigProps: (keyof ConfigItem)[] = [
@@ -17,7 +17,7 @@ const flatConfigProps: (keyof ConfigItem)[] = [
   'processor',
   'plugins',
   'rules',
-  'settings',
+  'settings'
 ]
 
 
@@ -83,7 +83,7 @@ export const aelita = (
     importConfig({
       typescript: !!enableTypescript,
       vue: !!enableVue,
-      overrides: overrides.import
+      overrides: overrides['import']
     })
   )
 

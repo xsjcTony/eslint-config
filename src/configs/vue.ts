@@ -202,7 +202,6 @@ const vueStylisticRules: ConfigItem['rules'] = {
 
 
   // Extension Rules
-  'vue/array-bracket-newline': ['error', { multiline: true }],
   'vue/array-bracket-spacing': ['error', 'never'],
   'vue/arrow-spacing': ['error', { before: true, after: true }],
   'vue/block-spacing': ['error', 'always'],
@@ -222,7 +221,6 @@ const vueStylisticRules: ConfigItem['rules'] = {
       nestedBinaryExpressions: false
     }
   ],
-  'vue/object-curly-newline': ['error', { multiline: true }],
   'vue/object-curly-spacing': ['error', 'always'],
   'vue/operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
   'vue/quote-props': ['error', 'as-needed', { keywords: true }],
@@ -241,6 +239,7 @@ const vueAccessibilityRules = ({
   interactiveSupportsFocus,
   labelHasFor,
   mediaHasCaption,
+  noAutofocus,
   noDistractingElements,
   noRedundantRoles
 }: NonNullable<Exclude<OptionsVue['accessibility'], false>>): ConfigItem['rules'] => ({
@@ -306,6 +305,7 @@ const vueAccessibilityRules = ({
   'vue-a11y/media-has-caption': ['error', { ...mediaHasCaption }],
   'vue-a11y/mouse-events-have-key-events': 'error',
   'vue-a11y/no-access-key': 'error',
+  ...noAutofocus && { 'vue-a11y/no-autofocus': ['error', { ignoreNonDOM: true }] },
   'vue-a11y/no-distracting-elements': [
     'error',
     { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
