@@ -220,14 +220,6 @@ export interface OptionsVue extends OptionsHasTypeScript {
   accessibility?: false | VueAccessibilityOptions
 
   /**
-   * Rule overwrites
-   */
-  overrides?: {
-    vue?: NonNullable<OptionsConfig['overrides']>['vue']
-    vueAccessibility?: NonNullable<OptionsConfig['overrides']>['vueAccessibility']
-  }
-
-  /**
    * Global component names, array of `string` only.
    */
   globalComponents?: string[]
@@ -450,14 +442,6 @@ export interface OptionsReact extends OptionsHasTypeScript {
   accessibility?: false | JsxAccessibilityOptions
 
   /**
-   * Rule overwrites
-   */
-  overrides?: {
-    react?: NonNullable<OptionsConfig['overrides']>['react']
-    jsxA11y?: NonNullable<OptionsConfig['overrides']>['jsxA11y']
-  }
-
-  /**
    * React settings
    *
    * @see https://github.com/jsx-eslint/eslint-plugin-react#configuration-legacy-eslintrc-
@@ -576,6 +560,11 @@ export interface OptionsReact extends OptionsHasTypeScript {
 }
 
 
+export interface OptionsUnocss {
+  attributify?: boolean
+}
+
+
 type LooseJavascriptRulesDict = FlatESLintConfigItem<MergeIntersection<EslintRules>, false>['rules']
 type LooseTypescriptRulesDict = FlatESLintConfigItem<
   RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'>,
@@ -611,7 +600,7 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   typescript?: boolean | (OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptionsOverride)
 
   /**
-   * Enable React related rules.
+   * Enable React support.
    *
    * @default auto-detect based on the dependencies
    */
@@ -625,11 +614,16 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   vue?: boolean | OptionsVue
 
   /**
-   * Enable Playwright support
+   * Enable Playwright support.
    *
    * @default auto-detect based on the dependencies
    */
   playwright?: boolean
+
+  /**
+   * Enable Unocss support.
+   */
+  unocss?: boolean | OptionsUnocss
 
   /**
    * Control to disable some rules in editors.
@@ -650,5 +644,6 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     import?: LooseImportRulesDict
     importTypescript?: LooseImportRulesDict
     playwright?: ConfigItem['rules']
+    unocss?: ConfigItem['rules']
   }
 }

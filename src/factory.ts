@@ -5,6 +5,7 @@ import { ignores, javascript, importConfig } from './configs'
 import { playwright } from './configs/playwright'
 import { react } from './configs/react'
 import { typescript } from './configs/typescript'
+import { unocss } from './configs/unocss'
 import { vue } from './configs/vue'
 import { combine } from './utils'
 import type { ConfigItem, OptionsConfig } from './types'
@@ -52,6 +53,7 @@ export const defineConfig = (
     react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
     typescript: enableTypescript = isPackageExists('typescript'),
     playwright: enablePlaywright = isPackageExists('@playwright/test'),
+    unocss: enableUnocss = isPackageExists('unocss'),
     gitignore: enableGitignore = true,
     overrides = {},
     componentExtensions = []
@@ -141,6 +143,17 @@ export const defineConfig = (
   if (enablePlaywright) {
     configs.push(playwright({
       overrides: overrides.playwright
+    }))
+  }
+
+
+  /**
+   * Unocss
+   */
+  if (enableUnocss) {
+    configs.push(unocss({
+      ...typeof enableUnocss !== 'boolean' && enableUnocss,
+      overrides: overrides.unocss
     }))
   }
 

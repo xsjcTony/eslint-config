@@ -1,10 +1,18 @@
 import { GLOB_VUE } from '../globs'
 import { parserVue, parserTypescript } from '../parsers'
 import { pluginVue, pluginVueAccessibility } from '../plugins'
-import type { ConfigItem, OptionsVue } from '../types'
+import type { OptionsConfig, ConfigItem, OptionsVue } from '../types'
 
 
-const vueRules = (options: OptionsVue): ConfigItem['rules'] => ({
+interface VueOptions extends OptionsVue {
+  overrides?: {
+    vue?: NonNullable<OptionsConfig['overrides']>['vue']
+    vueAccessibility?: NonNullable<OptionsConfig['overrides']>['vueAccessibility']
+  }
+}
+
+
+const vueRules = (options: VueOptions): ConfigItem['rules'] => ({
   ...pluginVue.configs.base.rules,
   ...pluginVue.configs['vue3-essential'].rules,
   ...pluginVue.configs['vue3-strongly-recommended'].rules,
@@ -242,7 +250,7 @@ const vueAccessibilityRules = ({
   noAutofocus,
   noDistractingElements,
   noRedundantRoles
-}: NonNullable<Exclude<OptionsVue['accessibility'], false>>): ConfigItem['rules'] => ({
+}: NonNullable<Exclude<VueOptions['accessibility'], false>>): ConfigItem['rules'] => ({
   'vue-a11y/alt-text': [
     'error',
     {
@@ -317,7 +325,7 @@ const vueAccessibilityRules = ({
 })
 
 
-export const vue = (options: OptionsVue = {}): ConfigItem[] => {
+export const vue = (options: VueOptions = {}): ConfigItem[] => {
   const { typescript = false, accessibility = {}, overrides } = options
 
   return [

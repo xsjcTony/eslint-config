@@ -1,9 +1,17 @@
 import { GLOB_SRC } from '../globs'
 import { pluginJsxA11y, pluginReact, pluginReactHooks } from '../plugins'
-import type { ConfigItem, OptionsReact } from '../types'
+import type { OptionsConfig, ConfigItem, OptionsReact } from '../types'
 
 
-const reactRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>): ConfigItem['rules'] => ({
+interface ReactOptions extends OptionsReact {
+  overrides?: {
+    react?: NonNullable<OptionsConfig['overrides']>['react']
+    jsxA11y?: NonNullable<OptionsConfig['overrides']>['jsxA11y']
+  }
+}
+
+
+const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
   'react/boolean-prop-naming': [
     'warn',
     {
@@ -75,7 +83,7 @@ const reactRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>): Conf
 })
 
 
-const jsxRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>): ConfigItem['rules'] => ({
+const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
   'react/jsx-boolean-value': ['error', 'never'],
   'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
   'react/jsx-fragments': ['error', 'syntax'],
@@ -202,7 +210,7 @@ const jsxStylisticRules: ConfigItem['rules'] = {
 }
 
 
-const reactHooksRules = (ruleOptions: NonNullable<OptionsReact['ruleOptions']>): ConfigItem['rules'] => ({
+const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
   'react-hooks/rules-of-hooks': 'error',
   'react-hooks/exhaustive-deps': [
     'warn',
@@ -215,7 +223,7 @@ const jsxAccessibilityRules = ({
   linkComponents,
   imageComponents,
   accessibility
-}: OptionsReact): ConfigItem['rules'] => {
+}: ReactOptions): ConfigItem['rules'] => {
   if (!accessibility)
     return {}
 
@@ -224,7 +232,7 @@ const jsxAccessibilityRules = ({
   const extraLinkComponentAttributes = linkComponents
     ?.filter(comp => typeof comp !== 'string')
     ?.map(comp =>
-      (comp as Exclude<NonNullable<OptionsReact['linkComponents']>[number], string>).linkAttribute)
+      (comp as Exclude<NonNullable<ReactOptions['linkComponents']>[number], string>).linkAttribute)
 
   const {
     altText,
@@ -399,7 +407,7 @@ const jsxAccessibilityRules = ({
 }
 
 
-export const react = (options: OptionsReact = {}): ConfigItem[] => {
+export const react = (options: ReactOptions = {}): ConfigItem[] => {
   const {
     typescript = false,
     ruleOptions = {},
