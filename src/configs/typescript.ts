@@ -290,6 +290,7 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
   'ts/no-unnecessary-qualifier': 'error',
   'ts/no-unnecessary-type-assertion': 'error',
   'ts/no-unnecessary-type-constraint': 'error',
+  'ts/no-unsafe-unary-minus': 'error',
   'ts/prefer-includes': 'error',
   'ts/prefer-nullish-coalescing': [
     'error',
@@ -483,8 +484,12 @@ export const typescript = ({
     languageOptions: {
       parser: parserTypescript,
       parserOptions: {
+        // https://github.com/antfu/eslint-config/issues/320
+        // @ts-expect-error - type conflict in `parserOptions` interface
         ecmaVersion: 'latest',
+        // @ts-expect-error - type conflict in `parserOptions` interface
         ecmaFeatures: { jsx: true },
+        // @ts-expect-error - type conflict in `parserOptions` interface
         sourceType: 'module',
         // @ts-expect-error - type does not contain `null`
         jsxPragma: null,
