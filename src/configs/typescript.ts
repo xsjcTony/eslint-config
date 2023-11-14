@@ -117,13 +117,6 @@ const typescriptRules: ConfigItem['rules'] = {
   'ts/no-array-constructor': 'error',
 
   'ts/no-confusing-non-null-assertion': 'error',
-  'ts/no-confusing-void-expression': [
-    'error',
-    {
-      ignoreArrowShorthand: false,
-      ignoreVoidOperator: true
-    }
-  ],
 
   'no-dupe-class-members': 'off',
 
@@ -248,6 +241,13 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
     }
   ],
 
+  'ts/no-confusing-void-expression': [
+    'error',
+    {
+      ignoreArrowShorthand: false,
+      ignoreVoidOperator: true
+    }
+  ],
   'ts/no-duplicate-type-constituents': [
     'error',
     {
