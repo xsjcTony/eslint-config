@@ -47,7 +47,6 @@ const javascriptRules: ConfigItem['rules'] = {
   'no-useless-concat': 'error',
   'no-useless-constructor': 'error',
   'no-dupe-class-members': 'error',
-  'no-duplicate-imports': ['error', { includeExports: true }],
   'no-iterator': 'error',
   'no-undef': ['error', { 'typeof': true }],
   'no-unused-vars': [
