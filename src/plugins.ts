@@ -13,4 +13,4 @@ export * as pluginReactHooks from 'eslint-plugin-react-hooks'
 export { default as pluginJsxA11y } from 'eslint-plugin-jsx-a11y'
 // @ts-expect-error - no dts file available
 export { default as pluginPlaywright } from 'eslint-plugin-playwright'
-export { default as pluginUnocss } from '@unocss/eslint-config'
+export { default as pluginUnocss } from '@unocss/eslint-plugin'

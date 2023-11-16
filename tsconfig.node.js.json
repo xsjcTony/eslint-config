@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "types": ["@types/node"],
-    "noEmit": false,
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "composite": true
+    "strict": true
   },
-  "extends": "./tsconfig.json",
   "include": [
     "eslint.config.js"
   ]

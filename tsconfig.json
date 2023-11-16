@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "baseUrl": ".",
     "module": "es2020",
     "moduleResolution": "Bundler",
     "strict": true,
@@ -12,8 +11,5 @@
     "**/*.ts",
     "./docs/.vitepress/**/*.ts",
     "./docs/.vitepress/**/*.vue"
-  ],
-  "references": [
-    { "path": "./tsconfig.node.js.json" }
   ]
 }

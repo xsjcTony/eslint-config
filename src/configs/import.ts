@@ -66,6 +66,11 @@ const importStylisticRules: ConfigItem['rules'] = {
 }
 
 
+const importTypescriptStylisticRules: ConfigItem['rules'] = {
+  'import/consistent-type-specifier-style': ['error', 'prefer-top-level']
+}
+
+
 export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
   const { typescript = false, vue = false, overrides } = options
 
@@ -97,6 +102,7 @@ export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
         ...importRules(options),
         ...typescript && importTypescriptRules(options),
         ...importStylisticRules,
+        ...typescript && importTypescriptStylisticRules,
         ...overrides?.['import'],
         ...typescript && overrides?.importTypescript
       }
