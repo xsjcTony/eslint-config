@@ -31,7 +31,10 @@
     "release": "bumpp && pnpm publish",
     "compile": "tsc --noEmit",
     "preview": "eslint-flat-config-viewer",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "eslint": ">=8.0.0"
@@ -61,7 +64,10 @@
     "bumpp": "^9.2.0",
     "eslint": "^8.53.0",
     "eslint-flat-config-viewer": "^0.1.1",
+    "sass": "^1.69.5",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitepress": "1.0.0-rc.25",
+    "vue": "^3.3.8"
   }
 }

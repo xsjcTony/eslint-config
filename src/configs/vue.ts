@@ -91,7 +91,15 @@ const vueRules = (options: VueOptions): ConfigItem['rules'] => ({
   'vue/valid-define-options': 'error',
 
   // Extension Rules
-  'vue/camelcase': ['error', { properties: 'always', ignoreDestructuring: false }],
+  'vue/camelcase': [
+    'error',
+    {
+      properties: 'never',
+      ignoreDestructuring: true,
+      ignoreImports: false,
+      ignoreGlobals: false
+    }
+  ],
   'vue/dot-notation': ['error', { allowKeywords: false }],
   'vue/eqeqeq': ['error', 'always', { 'null': 'ignore' }],
   'vue/no-console': ['error', { allow: ['warn', 'error'] }],

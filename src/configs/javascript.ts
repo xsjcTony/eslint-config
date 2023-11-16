@@ -10,7 +10,15 @@ interface JavascriptOptions {
 
 const javascriptRules: ConfigItem['rules'] = {
   curly: ['error', 'multi-or-nest', 'consistent'],
-  camelcase: ['error', { properties: 'always', ignoreDestructuring: false }],
+  camelcase: [
+    'error',
+    {
+      properties: 'never',
+      ignoreDestructuring: true,
+      ignoreImports: false,
+      ignoreGlobals: false
+    }
+  ],
   'dot-notation': ['error', { allowKeywords: false }],
   'new-cap': [
     'error',
