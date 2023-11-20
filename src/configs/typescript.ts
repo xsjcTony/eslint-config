@@ -348,7 +348,8 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
     }
   ],
   'ts/return-await': ['error', 'always'],
-  'ts/switch-exhaustiveness-check': 'error',
+  // @ts-expect-error - type definition is not up-to-date
+  'ts/switch-exhaustiveness-check': ['error', { requireDefaultForNonUnion: true }],
   'ts/unbound-method': ['error', { ignoreStatic: false }]
 }
 
