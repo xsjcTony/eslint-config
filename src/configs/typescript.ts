@@ -174,6 +174,8 @@ const typescriptRules: ConfigItem['rules'] = {
       allowedNames: []
     }
   ],
+
+  'no-unused-vars': 'off',
   'ts/no-unused-vars': [
     'error',
     {
