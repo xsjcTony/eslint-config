@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
+    "checkJs": true,
     "strict": true
   },
   "include": [

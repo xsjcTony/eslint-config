@@ -556,6 +556,16 @@ export interface OptionsReact extends OptionsHasTypeScript {
     reactHooksExhaustiveDeps?: {
       additionalHooks?: string
     }
+
+
+    /**
+     * For `react-refresh/only-export-components` rule.
+     *
+     * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh#allowexportnames-v044
+     */
+    fastRefresh?: {
+      allowedExportNames?: string[]
+    }
   }
 }
 

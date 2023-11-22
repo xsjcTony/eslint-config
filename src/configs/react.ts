@@ -1,5 +1,5 @@
-import { GLOB_SRC } from '../globs'
-import { pluginJsxA11y, pluginReact, pluginReactHooks } from '../plugins'
+import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
+import { pluginJsxA11y, pluginReact, pluginReactHooks, pluginReactRefresh } from '../plugins'
 import type { OptionsConfig, ConfigItem, OptionsReact } from '../types'
 
 
@@ -448,6 +448,23 @@ export const react = (options: ReactOptions = {}): ConfigItem[] => {
         ...!!accessibility && jsxAccessibilityRules(options),
         ...overrides?.react,
         ...!!accessibility && overrides?.jsxA11y
+      }
+    },
+    {
+      name: 'aelita:react:fast-refresh',
+      files: [GLOB_JSX, GLOB_TSX],
+      plugins: {
+        'react-refresh': pluginReactRefresh
+      },
+      rules: {
+        'react-refresh/only-export-components': [
+          'warn',
+          {
+            checkJS: false,
+            allowConstantExport: true,
+            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames
+          }
+        ]
       }
     }
   ]
