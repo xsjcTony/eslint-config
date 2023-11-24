@@ -1,5 +1,5 @@
 import { cwd as processCwd } from 'node:process'
-import { GLOB_SRC } from '../globs'
+import { GLOB_DTS, GLOB_SRC } from '../globs'
 import { parserTypescript } from '../parsers'
 import { pluginTypescript } from '../plugins'
 import type {
@@ -513,9 +513,10 @@ export const typescript = ({
   },
   {
     name: 'aelita:typescript:dts-overrides',
-    files: ['**/*.d.ts'],
+    files: [GLOB_DTS],
     rules: {
-      'ts/no-unused-vars': 'off'
+      'ts/no-unused-vars': 'off',
+      'ts/consistent-indexed-object-style': 'off'
     }
   },
   {
