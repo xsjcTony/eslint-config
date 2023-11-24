@@ -49,7 +49,8 @@ const importTypescriptRules = ({ vue }: ImportOptions): ConfigItem['rules'] => (
     'error',
     'ignorePackages',
     { ts: 'never', tsx: 'never', ...vue && { vue: 'always' } }
-  ]
+  ],
+  'import/named': 'off'
 })
 
 
