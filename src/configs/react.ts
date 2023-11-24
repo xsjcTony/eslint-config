@@ -222,7 +222,7 @@ const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>):
 const jsxAccessibilityRules = ({
   linkComponents,
   imageComponents,
-  accessibility
+  accessibility = {}
 }: ReactOptions): ConfigItem['rules'] => {
   if (!accessibility)
     return {}
