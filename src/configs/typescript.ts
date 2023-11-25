@@ -236,7 +236,7 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
   'ts/dot-notation': [
     'error',
     {
-      allowKeywords: false,
+      allowKeywords: true,
       allowPrivateClassPropertyAccess: false,
       allowProtectedClassPropertyAccess: false,
       allowIndexSignaturePropertyAccess: false

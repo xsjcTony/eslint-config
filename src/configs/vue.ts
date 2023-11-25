@@ -100,7 +100,7 @@ const vueRules = (options: VueOptions): ConfigItem['rules'] => ({
       ignoreGlobals: false
     }
   ],
-  'vue/dot-notation': ['error', { allowKeywords: false }],
+  'vue/dot-notation': ['error', { allowKeywords: true }],
   'vue/eqeqeq': ['error', 'always', { 'null': 'ignore' }],
   'vue/no-console': ['error', { allow: ['warn', 'error'] }],
   'vue/no-constant-condition': ['error', { checkLoops: false }],

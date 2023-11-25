@@ -19,7 +19,7 @@ const javascriptRules: ConfigItem['rules'] = {
       ignoreGlobals: false
     }
   ],
-  'dot-notation': ['error', { allowKeywords: false }],
+  'dot-notation': ['error', { allowKeywords: true }],
   'new-cap': [
     'error',
     {
