@@ -1,4 +1,4 @@
-import { GLOB_SRC } from '../globs'
+import { GLOB_PLAYWRIGHT } from '../globs'
 import { pluginPlaywright } from '../plugins'
 import type { ConfigItem, OptionsConfig } from '../types'
 
@@ -46,7 +46,7 @@ const playwrightRules: ConfigItem['rules'] = {
 export const playwright = ({ overrides }: PlaywrightOptions): ConfigItem[] => [
   {
     name: 'aelita:playwright',
-    files: [GLOB_SRC],
+    files: [GLOB_PLAYWRIGHT],
     plugins: {
       playwright: pluginPlaywright
     },
