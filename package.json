@@ -27,8 +27,8 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "pnpm typecheck && tsup",
-    "release": "pnpm build && bumpp && pnpm publish",
+    "build": "tsup",
+    "release": "pnpm typecheck && pnpm build && bumpp",
     "typecheck": "tsc --noEmit",
     "preview": "eslint-flat-config-viewer",
     "lint": "eslint .",

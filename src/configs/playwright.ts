@@ -4,6 +4,7 @@ import type { ConfigItem, OptionsConfig } from '../types'
 
 
 interface PlaywrightOptions {
+  files?: string[]
   overrides?: NonNullable<OptionsConfig['overrides']>['playwright']
 }
 
@@ -43,10 +44,10 @@ const playwrightRules: ConfigItem['rules'] = {
 }
 
 
-export const playwright = ({ overrides }: PlaywrightOptions): ConfigItem[] => [
+export const playwright = ({ files, overrides }: PlaywrightOptions): ConfigItem[] => [
   {
     name: 'aelita:playwright',
-    files: [GLOB_PLAYWRIGHT],
+    files: [...files ?? GLOB_PLAYWRIGHT],
     plugins: {
       playwright: pluginPlaywright
     },
