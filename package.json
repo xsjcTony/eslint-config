@@ -7,6 +7,10 @@
   "author": "Aelita <https://github.com/xsjcTony>",
   "license": "MIT",
   "homepage": "https://github.com/xsjcTony/eslint-config",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xsjcTony/eslint-config"
+  },
   "keywords": [
     "eslint",
     "eslint-config",
