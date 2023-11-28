@@ -88,7 +88,7 @@ export const importConfig = async (options: ImportOptions = {}): Promise<FlatCon
   return [
     {
       name: 'aelita:import',
-      files,
+      ...files && files,
       plugins: {
         // @ts-expect-error - no dts file available
         'import': await interopDefault(import('eslint-plugin-import'))

@@ -155,7 +155,7 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
 export const javascript = ({ files, overrides }: JavascriptOptions = {}): FlatConfigItem[] => [
   {
     name: 'aelita:javascript',
-    files,
+    ...files && files,
     languageOptions: {
       ecmaVersion: 'latest',
       globals: {

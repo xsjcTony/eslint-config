@@ -62,7 +62,8 @@ export const defineConfig = async (
     unocss: enableUnocss = isPackageExists('unocss'),
     gitignore: enableGitignore = true,
     overrides = {},
-    componentExtensions = []
+    componentExtensions = [],
+    filesOverride = {}
   } = options
 
 
@@ -91,14 +92,18 @@ export const defineConfig = async (
    */
   configs.push(
     ignores(),
-    javascript({ overrides: overrides.javascript }),
+    javascript({
+      overrides: overrides.javascript,
+      files: filesOverride.javascript
+    }),
     importConfig({
       typescript: !!enableTypescript,
       vue: !!enableVue,
       overrides: {
         'import': overrides.import,
         importTypescript: overrides.importTypescript
-      }
+      },
+      files: filesOverride.import
     })
   )
 
@@ -110,7 +115,8 @@ export const defineConfig = async (
     configs.push(typescript({
       ...typeof enableTypescript !== 'boolean' && enableTypescript,
       componentExtensions,
-      overrides: overrides.typescript
+      overrides: overrides.typescript,
+      files: filesOverride.typescript
     }))
   }
 
@@ -125,7 +131,8 @@ export const defineConfig = async (
       overrides: {
         vue: overrides.vue,
         vueAccessibility: overrides.vueAccessibility
-      }
+      },
+      files: filesOverride.vue
     }))
   }
 
@@ -140,7 +147,8 @@ export const defineConfig = async (
       overrides: {
         react: overrides.react,
         jsxA11y: overrides.jsxA11y
-      }
+      },
+      files: filesOverride.react
     }))
   }
 
@@ -150,7 +158,8 @@ export const defineConfig = async (
    */
   if (enablePlaywright) {
     configs.push(playwright({
-      overrides: overrides.playwright
+      overrides: overrides.playwright,
+      files: filesOverride.playwright
     }))
   }
 
@@ -161,7 +170,8 @@ export const defineConfig = async (
   if (enableUnocss) {
     configs.push(unocss({
       ...typeof enableUnocss !== 'boolean' && enableUnocss,
-      overrides: overrides.unocss
+      overrides: overrides.unocss,
+      files: filesOverride.unocss
     }))
   }
 

@@ -585,7 +585,7 @@ export interface OptionsReact extends OptionsHasTypeScript, OptionsFiles {
 }
 
 
-export interface OptionsUnocss extends OptionsFiles {
+export interface OptionsUnocss {
   attributify?: boolean
 }
 
@@ -670,5 +670,18 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     importTypescript?: LooseImportRulesDict
     playwright?: FlatConfigItem['rules']
     unocss?: FlatConfigItem['rules']
+  }
+
+  /**
+   * Customize `files`
+   */
+  filesOverride?: {
+    import?: string[]
+    javascript?: string[]
+    typescript?: string[]
+    vue?: string[]
+    react?: string[]
+    unocss?: string[]
+    playwright?: string[]
   }
 }

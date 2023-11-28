@@ -1,8 +1,8 @@
 import { interopDefault } from '../utils'
-import type { OptionsConfig, FlatConfigItem, OptionsUnocss } from '../types'
+import type { OptionsConfig, FlatConfigItem, OptionsUnocss, OptionsFiles } from '../types'
 
 
-interface UnocssOptions extends OptionsUnocss {
+interface UnocssOptions extends OptionsUnocss, OptionsFiles {
   overrides?: NonNullable<OptionsConfig['overrides']>['unocss']
 }
 
@@ -21,7 +21,7 @@ export const unocss = async ({
 }: UnocssOptions): Promise<FlatConfigItem[]> => [
   {
     name: 'aelita:playwright',
-    files,
+    ...files && files,
     plugins: {
       unocss: await interopDefault(import('@unocss/eslint-plugin'))
     },
