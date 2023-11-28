@@ -1,6 +1,6 @@
 import globals from 'globals'
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs'
-import type { ConfigItem, OptionsConfig, OptionsFiles } from '../types'
+import type { FlatConfigItem, OptionsConfig, OptionsFiles } from '../types'
 
 
 interface JavascriptOptions extends OptionsFiles {
@@ -8,7 +8,7 @@ interface JavascriptOptions extends OptionsFiles {
 }
 
 
-const javascriptRules: ConfigItem['rules'] = {
+const javascriptRules: FlatConfigItem['rules'] = {
   curly: ['error', 'multi-or-nest', 'consistent'],
   camelcase: [
     'error',
@@ -75,7 +75,7 @@ const javascriptRules: ConfigItem['rules'] = {
 }
 
 
-const javascriptStylisticRules: ConfigItem['rules'] = {
+const javascriptStylisticRules: FlatConfigItem['rules'] = {
   'array-bracket-spacing': ['error', 'never'],
   'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
   'arrow-spacing': ['error', { before: true, after: true }],
@@ -152,7 +152,7 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
 }
 
 
-export const javascript = ({ files, overrides }: JavascriptOptions = {}): ConfigItem[] => [
+export const javascript = ({ files, overrides }: JavascriptOptions = {}): FlatConfigItem[] => [
   {
     name: 'aelita:javascript',
     files,

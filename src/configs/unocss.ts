@@ -1,6 +1,5 @@
-import { GLOB_SRC } from '../globs'
-import { pluginUnocss } from '../plugins'
-import type { OptionsConfig, ConfigItem, OptionsUnocss } from '../types'
+import { interopDefault } from '../utils'
+import type { OptionsConfig, FlatConfigItem, OptionsUnocss } from '../types'
 
 
 interface UnocssOptions extends OptionsUnocss {
@@ -8,19 +7,23 @@ interface UnocssOptions extends OptionsUnocss {
 }
 
 
-const unocssRules = (attributify: UnocssOptions['attributify']): ConfigItem['rules'] => ({
+const unocssRules = (attributify: UnocssOptions['attributify']): FlatConfigItem['rules'] => ({
   'unocss/order': 'error',
   ...attributify && { 'unocss/attributify': 'error' },
   'unocss/blocklist': 'error'
 })
 
 
-export const unocss = ({ files = [GLOB_SRC], attributify, overrides }: UnocssOptions): ConfigItem[] => [
+export const unocss = async ({
+  files,
+  attributify,
+  overrides
+}: UnocssOptions): Promise<FlatConfigItem[]> => [
   {
     name: 'aelita:playwright',
     files,
     plugins: {
-      unocss: pluginUnocss
+      unocss: await interopDefault(import('@unocss/eslint-plugin'))
     },
     rules: {
       ...unocssRules(attributify),

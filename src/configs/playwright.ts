@@ -1,6 +1,6 @@
 import { GLOB_PLAYWRIGHT } from '../globs'
-import { pluginPlaywright } from '../plugins'
-import type { ConfigItem, OptionsConfig, OptionsFiles } from '../types'
+import { interopDefault } from '../utils'
+import type { FlatConfigItem, OptionsConfig, OptionsFiles } from '../types'
 
 
 interface PlaywrightOptions extends OptionsFiles {
@@ -8,7 +8,7 @@ interface PlaywrightOptions extends OptionsFiles {
 }
 
 
-const playwrightRules: ConfigItem['rules'] = {
+const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/no-conditional-in-test': 'warn',
   'playwright/no-element-handle': 'error',
   'playwright/no-eval': 'error',
@@ -43,12 +43,16 @@ const playwrightRules: ConfigItem['rules'] = {
 }
 
 
-export const playwright = ({ files = [GLOB_PLAYWRIGHT], overrides }: PlaywrightOptions): ConfigItem[] => [
+export const playwright = async ({
+  files = [GLOB_PLAYWRIGHT],
+  overrides
+}: PlaywrightOptions): Promise<FlatConfigItem[]> => [
   {
     name: 'aelita:playwright',
     files,
     plugins: {
-      playwright: pluginPlaywright
+      // @ts-expect-error - no dts file available
+      playwright: await interopDefault(import('eslint-plugin-playwright'))
     },
     rules: {
       ...playwrightRules,

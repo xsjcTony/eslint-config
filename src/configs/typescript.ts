@@ -1,9 +1,8 @@
 import { cwd as processCwd } from 'node:process'
 import { GLOB_DTS, GLOB_SRC } from '../globs'
-import { parserTypescript } from '../parsers'
-import { pluginTypescript } from '../plugins'
+import { interopDefault, toArray } from '../utils'
 import type {
-  ConfigItem,
+  FlatConfigItem,
   OptionsComponentExtensions,
   OptionsConfig,
   OptionsFiles,
@@ -22,7 +21,7 @@ type TypescriptOptions =
   }
 
 
-const typescriptRules: ConfigItem['rules'] = {
+const typescriptRules: FlatConfigItem['rules'] = {
   'ts/adjacent-overload-signatures': 'error',
   'ts/array-type': ['error', { 'default': 'array', readonly: 'array' }],
   'ts/ban-ts-comment': [
@@ -230,7 +229,7 @@ const typescriptRules: ConfigItem['rules'] = {
 }
 
 
-const typeAwareTypescriptRules: ConfigItem['rules'] = {
+const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   'ts/await-thenable': 'error',
   'ts/consistent-type-exports': ['error', { fixMixedExportsWithInlineTypeSpecifier: false }],
 
@@ -356,7 +355,7 @@ const typeAwareTypescriptRules: ConfigItem['rules'] = {
 }
 
 
-const typescriptStylisticRules: ConfigItem['rules'] = {
+const typescriptStylisticRules: FlatConfigItem['rules'] = {
   'block-spacing': 'off',
   'ts/block-spacing': ['error', 'always'],
 
@@ -468,72 +467,81 @@ const typescriptStylisticRules: ConfigItem['rules'] = {
 }
 
 
-export const typescript = ({
+export const typescript = async ({
   componentExtensions = [],
   files,
   tsconfigPath,
   parserOptionsOverride = {},
   overrides = {}
-}: TypescriptOptions = {}): ConfigItem[] => [
-  {
-    name: 'aelita:typescript:setup',
-    plugins: {
-      ts: pluginTypescript
-    }
-  },
-  {
-    name: 'aelita:typescript',
-    files: files ?? [
-      GLOB_SRC,
-      ...componentExtensions.map(ext => `**/*.${ext}`)
-    ],
-    languageOptions: {
-      parser: parserTypescript,
-      parserOptions: {
-        // https://github.com/antfu/eslint-config/issues/320
-        // @ts-expect-error - type conflict in `parserOptions` interface
-        ecmaVersion: 'latest',
-        // @ts-expect-error - type conflict in `parserOptions` interface
-        ecmaFeatures: { jsx: true },
-        // @ts-expect-error - type conflict in `parserOptions` interface
-        sourceType: 'module',
-        // @ts-expect-error - type does not contain `null`
-        jsxPragma: null,
-        extraFileExtensions: componentExtensions.map(ext => `.${ext}`),
-        ...tsconfigPath && {
-          project: Array.isArray(tsconfigPath) ? tsconfigPath : [tsconfigPath],
-          tsconfigRootDir: processCwd()
-        },
-        ...parserOptionsOverride
+}: TypescriptOptions = {}): Promise<FlatConfigItem[]> => {
+
+  const [pluginTypescript, parserTypescript] = await Promise.all([
+    interopDefault(import('@typescript-eslint/eslint-plugin')),
+    interopDefault(import('@typescript-eslint/parser'))
+  ] as const)
+
+
+  return [
+    {
+      name: 'aelita:typescript:setup',
+      plugins: {
+        ts: pluginTypescript
       }
     },
-    rules: {
-      ...typescriptRules,
-      ...typescriptStylisticRules,
-      ...tsconfigPath && typeAwareTypescriptRules,
-      ...overrides
+    {
+      name: 'aelita:typescript',
+      files: files ?? [
+        GLOB_SRC,
+        ...componentExtensions.map(ext => `**/*.${ext}`)
+      ],
+      languageOptions: {
+        parser: parserTypescript,
+        parserOptions: {
+          // https://github.com/antfu/eslint-config/issues/320
+          // @ts-expect-error - type conflict in `parserOptions` interface
+          ecmaVersion: 'latest',
+          // @ts-expect-error - type conflict in `parserOptions` interface
+          ecmaFeatures: { jsx: true },
+          // @ts-expect-error - type conflict in `parserOptions` interface
+          sourceType: 'module',
+          // @ts-expect-error - type does not contain `null`
+          jsxPragma: null,
+          extraFileExtensions: componentExtensions.map(ext => `.${ext}`),
+          ...tsconfigPath && {
+            project: toArray(tsconfigPath),
+            tsconfigRootDir: processCwd()
+          },
+          ...parserOptionsOverride
+        }
+      },
+      rules: {
+        ...typescriptRules,
+        ...typescriptStylisticRules,
+        ...tsconfigPath && typeAwareTypescriptRules,
+        ...overrides
+      }
+    },
+    {
+      name: 'aelita:typescript:dts-overrides',
+      files: [GLOB_DTS],
+      rules: {
+        'ts/no-unused-vars': 'off',
+        'ts/consistent-indexed-object-style': 'off'
+      }
+    },
+    {
+      name: 'aelita:typescript:test-overrides',
+      files: ['**/*.{test,spec}.ts?(x)'],
+      rules: {
+        'ts/no-empty-function': 'off'
+      }
+    },
+    {
+      name: 'aelita:typescript:javascript-overrides',
+      files: ['**/*.?(c)js'],
+      rules: {
+        'ts/no-require-imports': 'off'
+      }
     }
-  },
-  {
-    name: 'aelita:typescript:dts-overrides',
-    files: [GLOB_DTS],
-    rules: {
-      'ts/no-unused-vars': 'off',
-      'ts/consistent-indexed-object-style': 'off'
-    }
-  },
-  {
-    name: 'aelita:typescript:test-overrides',
-    files: ['**/*.{test,spec}.ts?(x)'],
-    rules: {
-      'ts/no-empty-function': 'off'
-    }
-  },
-  {
-    name: 'aelita:typescript:javascript-overrides',
-    files: ['**/*.?(c)js'],
-    rules: {
-      'ts/no-require-imports': 'off'
-    }
-  }
-]
+  ]
+}

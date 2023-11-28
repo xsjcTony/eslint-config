@@ -1,7 +1,6 @@
 import { GLOB_VUE } from '../globs'
-import { parserVue, parserTypescript } from '../parsers'
-import { pluginVue, pluginVueAccessibility } from '../plugins'
-import type { OptionsConfig, ConfigItem, OptionsVue } from '../types'
+import { interopDefault } from '../utils'
+import type { OptionsConfig, FlatConfigItem, OptionsVue } from '../types'
 
 
 interface VueOptions extends OptionsVue {
@@ -12,7 +11,7 @@ interface VueOptions extends OptionsVue {
 }
 
 
-const vueRules = (options: VueOptions): ConfigItem['rules'] => ({
+const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] => ({
   ...pluginVue.configs.base.rules,
   ...pluginVue.configs['vue3-essential'].rules,
   ...pluginVue.configs['vue3-strongly-recommended'].rules,
@@ -112,13 +111,13 @@ const vueRules = (options: VueOptions): ConfigItem['rules'] => ({
 })
 
 
-const vueTypeScriptRules: ConfigItem['rules'] = {
+const vueTypeScriptRules: FlatConfigItem['rules'] = {
   'vue/require-typed-object-prop': 'error',
   'vue/require-typed-ref': 'error'
 }
 
 
-const vueDefaultOverrideRules: ConfigItem['rules'] = {
+const vueDefaultOverrideRules: FlatConfigItem['rules'] = {
   // Priority A: Essential
   'vue/no-arrow-functions-in-watch': 'off',
   'vue/no-reserved-component-names': [
@@ -170,7 +169,7 @@ const vueDefaultOverrideRules: ConfigItem['rules'] = {
 }
 
 
-const vueStylisticRules: ConfigItem['rules'] = {
+const vueStylisticRules: FlatConfigItem['rules'] = {
   'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
   'vue/block-tag-newline': [
     'error',
@@ -258,7 +257,7 @@ const vueAccessibilityRules = ({
   noAutofocus,
   noDistractingElements,
   noRedundantRoles
-}: NonNullable<Exclude<VueOptions['accessibility'], false>>): ConfigItem['rules'] => ({
+}: NonNullable<Exclude<VueOptions['accessibility'], false>>): FlatConfigItem['rules'] => ({
   'vue-a11y/alt-text': [
     'error',
     {
@@ -333,7 +332,8 @@ const vueAccessibilityRules = ({
 })
 
 
-export const vue = (options: VueOptions = {}): ConfigItem[] => {
+export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> => {
+
   const {
     files = [GLOB_VUE],
     typescript = false,
@@ -341,12 +341,23 @@ export const vue = (options: VueOptions = {}): ConfigItem[] => {
     overrides
   } = options
 
+
+  const [pluginVue, parserVue] = await Promise.all([
+    // @ts-expect-error - no dts file available
+    interopDefault(import('eslint-plugin-vue')),
+    interopDefault(import('vue-eslint-parser'))
+  ] as const)
+
+
   return [
     {
       name: 'aelita:vue:setup',
       plugins: {
         vue: pluginVue,
-        ...!!accessibility && { 'vue-a11y': pluginVueAccessibility }
+        ...!!accessibility && {
+          // @ts-expect-error - no dts file available
+          'vue-a11y': await interopDefault(import('eslint-plugin-vuejs-accessibility'))
+        }
       }
     },
     {
@@ -367,12 +378,12 @@ export const vue = (options: VueOptions = {}): ConfigItem[] => {
           },
           extraFileExtensions: ['.vue'],
           // @ts-expect-error - type definition issue with `parserOptions.parser`
-          parser: typescript ? parserTypescript : void 0
+          parser: typescript ? await interopDefault(import('@typescript-eslint/parser')) : void 0
         }
       },
       processor: pluginVue.processors['.vue'],
       rules: {
-        ...vueRules(options),
+        ...vueRules(pluginVue, options),
         ...typescript && vueTypeScriptRules,
         ...vueDefaultOverrideRules,
         ...vueStylisticRules,

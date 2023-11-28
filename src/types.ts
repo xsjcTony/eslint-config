@@ -1,4 +1,5 @@
 import type {
+  RuleConfig,
   FlatESLintConfigItem,
   MergeIntersection,
   RenamePrefix,
@@ -11,11 +12,18 @@ import type {
   JsxA11yRules
 } from '@antfu/eslint-define-config'
 import type { ParserOptions } from '@typescript-eslint/parser'
+import type { Linter } from 'eslint'
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore'
 
 
-// TODO: implement this
-export type Rules = MergeIntersection<
+export type Awaitable<T> = T | Promise<T>
+
+
+export type WrapRuleConfig<T extends Record<string, any>> = {
+  [K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>
+}
+
+export type Rules = WrapRuleConfig<MergeIntersection<
   & RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'>
   & ImportRules
   & EslintRules
@@ -23,10 +31,10 @@ export type Rules = MergeIntersection<
   & ReactRules
   & ReactHooksRules
   & JsxA11yRules
->
+>>
 
 
-export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
+export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
   /**
    * Custom name of each config item
    */
@@ -40,6 +48,9 @@ export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
    */
   plugins?: Record<string, any>
 }
+
+
+export type UserConfigItem = FlatConfigItem | Linter.FlatConfig
 
 
 export interface OptionsComponentExtensions {
@@ -654,10 +665,10 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     react?: LooseReactRulesDict
     jsxA11y?: LooseJsxA11yDict
     vue?: LooseVueRulesDict
-    vueAccessibility?: ConfigItem['rules']
+    vueAccessibility?: FlatConfigItem['rules']
     import?: LooseImportRulesDict
     importTypescript?: LooseImportRulesDict
-    playwright?: ConfigItem['rules']
-    unocss?: ConfigItem['rules']
+    playwright?: FlatConfigItem['rules']
+    unocss?: FlatConfigItem['rules']
   }
 }

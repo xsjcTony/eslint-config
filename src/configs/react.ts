@@ -1,6 +1,6 @@
 import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
-import { pluginJsxA11y, pluginReact, pluginReactHooks, pluginReactRefresh } from '../plugins'
-import type { OptionsConfig, ConfigItem, OptionsReact } from '../types'
+import { interopDefault } from '../utils'
+import type { OptionsConfig, FlatConfigItem, OptionsReact } from '../types'
 
 
 interface ReactOptions extends OptionsReact {
@@ -11,7 +11,7 @@ interface ReactOptions extends OptionsReact {
 }
 
 
-const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
+const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
   'react/boolean-prop-naming': [
     'warn',
     {
@@ -83,7 +83,7 @@ const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Conf
 })
 
 
-const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
+const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
   'react/jsx-boolean-value': ['error', 'never'],
   'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
   'react/jsx-fragments': ['error', 'syntax'],
@@ -132,22 +132,22 @@ const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Config
 })
 
 
-const reactTypeScriptRules: ConfigItem['rules'] = {
+const reactTypeScriptRules: FlatConfigItem['rules'] = {
   'react/no-typos': 'off',
   'react/no-unknown-property': 'off'
 }
 
 
-const jsxTypeScriptRules: ConfigItem['rules'] = {
+const jsxTypeScriptRules: FlatConfigItem['rules'] = {
   'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
   'react/jsx-no-leaked-render': 'off'
 }
 
 
-const reactStylisticRules: ConfigItem['rules'] = { 'react/self-closing-comp': ['error', { html: true, component: true }] }
+const reactStylisticRules: FlatConfigItem['rules'] = { 'react/self-closing-comp': ['error', { html: true, component: true }] }
 
 
-const jsxStylisticRules: ConfigItem['rules'] = {
+const jsxStylisticRules: FlatConfigItem['rules'] = {
   'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
   'react/jsx-closing-tag-location': 'error',
   'react/jsx-curly-brace-presence': [
@@ -210,7 +210,7 @@ const jsxStylisticRules: ConfigItem['rules'] = {
 }
 
 
-const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): ConfigItem['rules'] => ({
+const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
   'react-hooks/rules-of-hooks': 'error',
   'react-hooks/exhaustive-deps': [
     'warn',
@@ -223,7 +223,7 @@ const jsxAccessibilityRules = ({
   linkComponents,
   imageComponents,
   accessibility = {}
-}: ReactOptions): ConfigItem['rules'] => {
+}: ReactOptions): FlatConfigItem['rules'] => {
   if (!accessibility)
     return {}
 
@@ -407,7 +407,8 @@ const jsxAccessibilityRules = ({
 }
 
 
-export const react = (options: ReactOptions = {}): ConfigItem[] => {
+export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[]> => {
+
   const {
     files = [GLOB_SRC],
     typescript = false,
@@ -416,13 +417,31 @@ export const react = (options: ReactOptions = {}): ConfigItem[] => {
     overrides
   } = options
 
+
+  const [
+    pluginReact,
+    pluginReactHooks,
+    pluginReactRefresh
+  ] = await Promise.all([
+    // @ts-expect-error - no dts file available
+    interopDefault(import('eslint-plugin-react')),
+    // @ts-expect-error - no dts file available
+    interopDefault(import('eslint-plugin-react-hooks')),
+    // @ts-expect-error - no dts file available
+    interopDefault(import('eslint-plugin-react-refresh'))
+  ] as const)
+
+
   return [
     {
       name: 'aelita:react:setup',
       plugins: {
         react: pluginReact,
         'react-hooks': pluginReactHooks,
-        ...!!accessibility && { 'jsx-a11y': pluginJsxA11y }
+        ...!!accessibility && {
+          // @ts-expect-error - no dts file available
+          'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y'))
+        }
       }
     },
     {

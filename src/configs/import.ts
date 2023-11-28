@@ -1,5 +1,10 @@
-import { pluginImport } from '../plugins'
-import type { ConfigItem, OptionsConfig, OptionsFiles, OptionsHasTypeScript } from '../types'
+import { interopDefault } from '../utils'
+import type {
+  FlatConfigItem,
+  OptionsConfig,
+  OptionsFiles,
+  OptionsHasTypeScript
+} from '../types'
 
 
 interface ImportOptions extends OptionsHasTypeScript, OptionsFiles {
@@ -11,7 +16,7 @@ interface ImportOptions extends OptionsHasTypeScript, OptionsFiles {
 }
 
 
-const importRules = ({ vue }: ImportOptions): ConfigItem['rules'] => ({
+const importRules = ({ vue }: ImportOptions): FlatConfigItem['rules'] => ({
   'import/first': 'error',
   'import/no-webpack-loader-syntax': 'error',
   'import/extensions': [
@@ -44,7 +49,7 @@ const importRules = ({ vue }: ImportOptions): ConfigItem['rules'] => ({
 })
 
 
-const importTypescriptRules = ({ vue }: ImportOptions): ConfigItem['rules'] => ({
+const importTypescriptRules = ({ vue }: ImportOptions): FlatConfigItem['rules'] => ({
   'import/extensions': [
     'error',
     'ignorePackages',
@@ -54,7 +59,7 @@ const importTypescriptRules = ({ vue }: ImportOptions): ConfigItem['rules'] => (
 })
 
 
-const importStylisticRules: ConfigItem['rules'] = {
+const importStylisticRules: FlatConfigItem['rules'] = {
   'import/newline-after-import': [
     'error',
     {
@@ -67,12 +72,12 @@ const importStylisticRules: ConfigItem['rules'] = {
 }
 
 
-const importTypescriptStylisticRules: ConfigItem['rules'] = {
+const importTypescriptStylisticRules: FlatConfigItem['rules'] = {
   'import/consistent-type-specifier-style': ['error', 'prefer-top-level']
 }
 
 
-export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
+export const importConfig = async (options: ImportOptions = {}): Promise<FlatConfigItem[]> => {
   const {
     typescript = false,
     vue = false,
@@ -85,7 +90,8 @@ export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
       name: 'aelita:import',
       files,
       plugins: {
-        'import': pluginImport
+        // @ts-expect-error - no dts file available
+        'import': await interopDefault(import('eslint-plugin-import'))
       },
       settings: {
         ...typescript && {

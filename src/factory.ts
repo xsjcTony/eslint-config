@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs'
-import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
 import {
   ignores,
@@ -13,11 +12,11 @@ import {
 } from './configs'
 
 
-import { combine } from './utils'
-import type { ConfigItem, OptionsConfig } from './types'
+import { combine, interopDefault } from './utils'
+import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types'
 
 
-const flatConfigProps: (keyof ConfigItem)[] = [
+const flatConfigProps: (keyof FlatConfigItem)[] = [
   'files',
   'ignores',
   'languageOptions',
@@ -48,10 +47,10 @@ const REACT_PACKAGES = [
 /**
  * Construct an array of ESLint flat config items.
  */
-export const defineConfig = (
-  options: OptionsConfig & ConfigItem = {},
-  ...userConfigs: (ConfigItem | ConfigItem[])[]
-): ConfigItem[] => {
+export const defineConfig = async (
+  options: OptionsConfig & FlatConfigItem = {},
+  ...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
+): Promise<UserConfigItem[]> => {
 
   const {
     // eslint-disable-next-line ts/no-unused-vars
@@ -67,17 +66,19 @@ export const defineConfig = (
   } = options
 
 
-  const configs: ConfigItem[][] = []
+  const configs: Awaitable<FlatConfigItem[]>[] = []
 
 
   /**
    * Gitignore
    */
   if (enableGitignore) {
-    if (typeof enableGitignore === 'boolean')
-      existsSync('.gitignore') && configs.push([gitignore()])
-    else
-      configs.push([gitignore(enableGitignore)])
+    if (typeof enableGitignore === 'boolean') {
+      existsSync('.gitignore')
+      && configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]))
+    } else {
+      configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]))
+    }
   }
 
 
@@ -168,7 +169,7 @@ export const defineConfig = (
   /**
    * Flat config object
    */
-  const fusedConfig = flatConfigProps.reduce<ConfigItem>((acc, key) => {
+  const fusedConfig = flatConfigProps.reduce<FlatConfigItem>((acc, key) => {
     if (key in options)
       acc[key] = options[key] as any
     return acc
@@ -178,5 +179,5 @@ export const defineConfig = (
     configs.push([fusedConfig])
 
 
-  return combine(...configs, ...userConfigs)
+  return await combine(...configs, ...userConfigs)
 }
