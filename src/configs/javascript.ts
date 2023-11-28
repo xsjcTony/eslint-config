@@ -1,9 +1,9 @@
 import globals from 'globals'
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs'
-import type { ConfigItem, OptionsConfig } from '../types'
+import type { ConfigItem, OptionsConfig, OptionsFiles } from '../types'
 
 
-interface JavascriptOptions {
+interface JavascriptOptions extends OptionsFiles {
   overrides?: NonNullable<OptionsConfig['overrides']>['javascript']
 }
 
@@ -152,9 +152,10 @@ const javascriptStylisticRules: ConfigItem['rules'] = {
 }
 
 
-export const javascript = ({ overrides }: JavascriptOptions = {}): ConfigItem[] => [
+export const javascript = ({ files, overrides }: JavascriptOptions = {}): ConfigItem[] => [
   {
     name: 'aelita:javascript',
+    files,
     languageOptions: {
       ecmaVersion: 'latest',
       globals: {

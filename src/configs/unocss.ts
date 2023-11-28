@@ -8,23 +8,23 @@ interface UnocssOptions extends OptionsUnocss {
 }
 
 
-const unocssRules = ({ attributify }: UnocssOptions): ConfigItem['rules'] => ({
+const unocssRules = (attributify: UnocssOptions['attributify']): ConfigItem['rules'] => ({
   'unocss/order': 'error',
   ...attributify && { 'unocss/attributify': 'error' },
   'unocss/blocklist': 'error'
 })
 
 
-export const unocss = (options: UnocssOptions): ConfigItem[] => [
+export const unocss = ({ files = [GLOB_SRC], attributify, overrides }: UnocssOptions): ConfigItem[] => [
   {
     name: 'aelita:playwright',
-    files: [GLOB_SRC],
+    files,
     plugins: {
       unocss: pluginUnocss
     },
     rules: {
-      ...unocssRules(options),
-      ...options.overrides
+      ...unocssRules(attributify),
+      ...overrides
     }
   }
 ]

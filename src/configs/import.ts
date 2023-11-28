@@ -1,8 +1,8 @@
 import { pluginImport } from '../plugins'
-import type { ConfigItem, OptionsConfig, OptionsHasTypeScript } from '../types'
+import type { ConfigItem, OptionsConfig, OptionsFiles, OptionsHasTypeScript } from '../types'
 
 
-interface ImportOptions extends OptionsHasTypeScript {
+interface ImportOptions extends OptionsHasTypeScript, OptionsFiles {
   vue?: boolean
   overrides?: {
     import?: NonNullable<OptionsConfig['overrides']>['import']
@@ -73,11 +73,17 @@ const importTypescriptStylisticRules: ConfigItem['rules'] = {
 
 
 export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
-  const { typescript = false, vue = false, overrides } = options
+  const {
+    typescript = false,
+    vue = false,
+    overrides,
+    files
+  } = options
 
   return [
     {
       name: 'aelita:import',
+      files,
       plugins: {
         'import': pluginImport
       },

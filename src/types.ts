@@ -75,6 +75,10 @@ export interface OptionsIsInEditor {
   isInEditor?: boolean
 }
 
+export interface OptionsFiles {
+  files?: string[]
+}
+
 
 interface VueAccessibilityOptions {
   /**
@@ -211,7 +215,7 @@ interface VueAccessibilityOptions {
   }
 }
 
-export interface OptionsVue extends OptionsHasTypeScript {
+export interface OptionsVue extends OptionsHasTypeScript, OptionsFiles {
   /**
    * Whether to enable `eslint-plugin-vuejs-a11y` rules.
    *
@@ -435,7 +439,7 @@ interface JsxAccessibilityOptions {
   }
 }
 
-export interface OptionsReact extends OptionsHasTypeScript {
+export interface OptionsReact extends OptionsHasTypeScript, OptionsFiles {
   /**
    * Whether to enable `eslint-plugin-jsx-a11y` rules.
    */
@@ -570,7 +574,7 @@ export interface OptionsReact extends OptionsHasTypeScript {
 }
 
 
-export interface OptionsUnocss {
+export interface OptionsUnocss extends OptionsFiles {
   attributify?: boolean
 }
 

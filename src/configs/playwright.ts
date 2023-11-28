@@ -1,10 +1,9 @@
 import { GLOB_PLAYWRIGHT } from '../globs'
 import { pluginPlaywright } from '../plugins'
-import type { ConfigItem, OptionsConfig } from '../types'
+import type { ConfigItem, OptionsConfig, OptionsFiles } from '../types'
 
 
-interface PlaywrightOptions {
-  files?: string[]
+interface PlaywrightOptions extends OptionsFiles {
   overrides?: NonNullable<OptionsConfig['overrides']>['playwright']
 }
 
@@ -44,10 +43,10 @@ const playwrightRules: ConfigItem['rules'] = {
 }
 
 
-export const playwright = ({ files, overrides }: PlaywrightOptions): ConfigItem[] => [
+export const playwright = ({ files = [GLOB_PLAYWRIGHT], overrides }: PlaywrightOptions): ConfigItem[] => [
   {
     name: 'aelita:playwright',
-    files: [...files ?? GLOB_PLAYWRIGHT],
+    files,
     plugins: {
       playwright: pluginPlaywright
     },

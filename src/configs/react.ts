@@ -409,6 +409,7 @@ const jsxAccessibilityRules = ({
 
 export const react = (options: ReactOptions = {}): ConfigItem[] => {
   const {
+    files = [GLOB_SRC],
     typescript = false,
     ruleOptions = {},
     accessibility = {},
@@ -426,7 +427,7 @@ export const react = (options: ReactOptions = {}): ConfigItem[] => {
     },
     {
       name: 'aelita:react',
-      files: [GLOB_SRC],
+      files,
       settings: {
         react: {
           version: 'detect',

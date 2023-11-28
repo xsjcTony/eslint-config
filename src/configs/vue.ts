@@ -334,7 +334,12 @@ const vueAccessibilityRules = ({
 
 
 export const vue = (options: VueOptions = {}): ConfigItem[] => {
-  const { typescript = false, accessibility = {}, overrides } = options
+  const {
+    files = [GLOB_VUE],
+    typescript = false,
+    accessibility = {},
+    overrides
+  } = options
 
   return [
     {
@@ -346,7 +351,7 @@ export const vue = (options: VueOptions = {}): ConfigItem[] => {
     },
     {
       name: 'aelita:vue',
-      files: [GLOB_VUE],
+      files,
       languageOptions: {
         parser: parserVue,
         parserOptions: {

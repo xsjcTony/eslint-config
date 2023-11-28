@@ -1,12 +1,18 @@
 import { existsSync } from 'node:fs'
 import gitignore from 'eslint-config-flat-gitignore'
 import { isPackageExists } from 'local-pkg'
-import { ignores, javascript, importConfig } from './configs'
-import { playwright } from './configs/playwright'
-import { react } from './configs/react'
-import { typescript } from './configs/typescript'
-import { unocss } from './configs/unocss'
-import { vue } from './configs/vue'
+import {
+  ignores,
+  javascript,
+  importConfig,
+  playwright,
+  react,
+  typescript,
+  unocss,
+  vue
+} from './configs'
+
+
 import { combine } from './utils'
 import type { ConfigItem, OptionsConfig } from './types'
 

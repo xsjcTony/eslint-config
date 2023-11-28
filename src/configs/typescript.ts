@@ -6,6 +6,7 @@ import type {
   ConfigItem,
   OptionsComponentExtensions,
   OptionsConfig,
+  OptionsFiles,
   OptionsTypeScriptParserOptionsOverride,
   OptionsTypeScriptWithTypes
 } from '../types'
@@ -13,6 +14,7 @@ import type {
 
 type TypescriptOptions =
   & OptionsComponentExtensions
+  & OptionsFiles
   & OptionsTypeScriptWithTypes
   & OptionsTypeScriptParserOptionsOverride
   & {
@@ -468,6 +470,7 @@ const typescriptStylisticRules: ConfigItem['rules'] = {
 
 export const typescript = ({
   componentExtensions = [],
+  files,
   tsconfigPath,
   parserOptionsOverride = {},
   overrides = {}
@@ -480,7 +483,7 @@ export const typescript = ({
   },
   {
     name: 'aelita:typescript',
-    files: [
+    files: files ?? [
       GLOB_SRC,
       ...componentExtensions.map(ext => `**/*.${ext}`)
     ],
