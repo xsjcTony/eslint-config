@@ -48,6 +48,7 @@ export const defineConfig = (
 ): ConfigItem[] => {
 
   const {
+    // eslint-disable-next-line ts/no-unused-vars
     isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
     vue: enableVue = VUE_PACKAGES.some(i => isPackageExists(i)),
     react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
@@ -88,7 +89,7 @@ export const defineConfig = (
       typescript: !!enableTypescript,
       vue: !!enableVue,
       overrides: {
-        'import': overrides['import'],
+        'import': overrides.import,
         importTypescript: overrides.importTypescript
       }
     })

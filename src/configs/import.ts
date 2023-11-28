@@ -104,7 +104,7 @@ export const importConfig = (options: ImportOptions = {}): ConfigItem[] => {
         ...typescript && importTypescriptRules(options),
         ...importStylisticRules,
         ...typescript && importTypescriptStylisticRules,
-        ...overrides?.['import'],
+        ...overrides?.import,
         ...typescript && overrides?.importTypescript
       }
     }
