@@ -18,10 +18,11 @@ type TypescriptOptions =
   & OptionsTypeScriptParserOptionsOverride
   & {
     overrides?: NonNullable<OptionsConfig['overrides']>['typescript']
+    projectType?: 'app' | 'lib'
   }
 
 
-const typescriptRules: FlatConfigItem['rules'] = {
+const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatConfigItem['rules'] => ({
   'ts/adjacent-overload-signatures': 'error',
   'ts/array-type': ['error', { 'default': 'array', readonly: 'array' }],
   'ts/ban-ts-comment': [
@@ -85,7 +86,7 @@ const typescriptRules: FlatConfigItem['rules'] = {
       objectLiteralTypeAssertions: 'allow-as-parameter'
     }
   ],
-  'ts/consistent-type-definitions': ['error', 'interface'],
+  'ts/consistent-type-definitions': ['error', projectType === 'app' ? 'type' : 'interface'],
   'ts/consistent-type-imports': [
     'error',
     {
@@ -226,7 +227,7 @@ const typescriptRules: FlatConfigItem['rules'] = {
     }
   ],
   'ts/unified-signatures': 'error'
-}
+})
 
 
 const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
@@ -472,7 +473,8 @@ export const typescript = async ({
   files,
   tsconfigPath,
   parserOptionsOverride = {},
-  overrides = {}
+  overrides = {},
+  projectType = 'app'
 }: TypescriptOptions = {}): Promise<FlatConfigItem[]> => {
 
   const [pluginTypescript, parserTypescript] = await Promise.all([
@@ -515,7 +517,7 @@ export const typescript = async ({
         }
       },
       rules: {
-        ...typescriptRules,
+        ...typescriptRules(projectType),
         ...typescriptStylisticRules,
         ...tsconfigPath && typeAwareTypescriptRules,
         ...overrides
