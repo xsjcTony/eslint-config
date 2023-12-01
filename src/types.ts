@@ -245,6 +245,20 @@ export interface OptionsVue extends OptionsHasTypeScript, OptionsFiles {
    * This will be combined with `globalComponents`.
    */
   extraGlobalComponentsWithRegex?: string[]
+
+  /**
+   * Optional settings for rules.
+   */
+  ruleOptions?: {
+    /**
+     * For `vue/multi-word-component-names` rule.
+     *
+     * @see https://eslint.vuejs.org/rules/multi-word-component-names.html
+     */
+    multiWordComponentNames?: {
+      ignores?: string[]
+    }
+  }
 }
 
 

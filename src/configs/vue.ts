@@ -118,8 +118,12 @@ const vueTypeScriptRules: FlatConfigItem['rules'] = {
 }
 
 
-const vueDefaultOverrideRules: FlatConfigItem['rules'] = {
+const vueDefaultOverrideRules = (ruleOptions: NonNullable<VueOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
   // Priority A: Essential
+  'vue/multi-word-component-names': [
+    'error',
+    { ignores: ruleOptions.multiWordComponentNames?.ignores }
+  ],
   'vue/no-arrow-functions-in-watch': 'off',
   'vue/no-reserved-component-names': [
     'error',
@@ -167,7 +171,7 @@ const vueDefaultOverrideRules: FlatConfigItem['rules'] = {
 
   // Priority C: Recommended
   'vue/order-in-components': 'off'
-}
+})
 
 
 const vueStylisticRules: FlatConfigItem['rules'] = {
@@ -339,7 +343,8 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
     files = [GLOB_VUE],
     typescript = false,
     accessibility = {},
-    overrides
+    overrides,
+    ruleOptions = {}
   } = options
 
 
@@ -386,7 +391,7 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
       rules: {
         ...vueRules(pluginVue, options),
         ...typescript && vueTypeScriptRules,
-        ...vueDefaultOverrideRules,
+        ...vueDefaultOverrideRules(ruleOptions),
         ...vueStylisticRules,
         ...!!accessibility && vueAccessibilityRules(accessibility),
         ...overrides?.vue,
