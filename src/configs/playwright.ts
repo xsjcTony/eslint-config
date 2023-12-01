@@ -39,7 +39,8 @@ const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/no-networkidle': 'error',
   'playwright/no-nested-step': 'error',
   'playwright/prefer-to-contain': 'error',
-  'playwright/prefer-to-have-count': 'error'
+  'playwright/prefer-to-have-count': 'error',
+  'playwright/valid-title': 'error'
 }
 
 

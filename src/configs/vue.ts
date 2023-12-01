@@ -30,7 +30,7 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
     }
   ],
   'vue/custom-event-name-casing': ['error', 'camelCase'],
-  'vue/define-emits-declaration': ['error', 'type-based'],
+  'vue/define-emits-declaration': ['error', 'type-literal'],
   'vue/define-props-declaration': ['error', 'type-based'],
   'vue/html-button-has-type': ['error', { button: true, submit: true, reset: true }],
   'vue/next-tick-style': ['error', 'promise'],
@@ -88,6 +88,7 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
   'vue/v-for-delimiter-style': ['error', 'in'],
   'vue/v-on-handler-style': ['error', ['method', 'inline-function'], { ignoreIncludesComment: false }],
   'vue/valid-define-options': 'error',
+  'vue/no-unused-emit-declarations': 'error',
 
   // Extension Rules
   'vue/camelcase': [
