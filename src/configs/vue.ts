@@ -326,7 +326,7 @@ const vueAccessibilityRules = ({
     'error',
     { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
   ],
-  'vue-a11y/no-redundant-roles': ['error', noRedundantRoles?.extraExceptions],
+  'vue-a11y/no-redundant-roles': ['error', noRedundantRoles?.extraExceptions ?? {}],
   'vue-a11y/no-static-element-interactions': 'error',
   'vue-a11y/role-has-required-aria-props': 'error',
   'vue-a11y/tabindex-no-positive': 'error'
