@@ -464,7 +464,8 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
         }
       }
     }
-  ]
+  ],
+  'ts/no-useless-template-literals': 'error'
 }
 
 
