@@ -52,7 +52,6 @@ export const playwright = async ({
     name: 'aelita:playwright',
     files,
     plugins: {
-      // @ts-expect-error - no dts file available
       playwright: await interopDefault(import('eslint-plugin-playwright'))
     },
     rules: {
