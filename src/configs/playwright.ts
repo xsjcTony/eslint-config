@@ -23,8 +23,8 @@ const playwrightRules: FlatConfigItem['rules'] = {
     'off',
     {
       ignore: ['test.describe'],
-      ignoreTopLevelDescribe: true
-    }
+      ignoreTopLevelDescribe: true,
+    },
   ],
   'playwright/prefer-to-be': 'error',
   'playwright/prefer-to-have-length': 'error',
@@ -32,31 +32,31 @@ const playwrightRules: FlatConfigItem['rules'] = {
     'error',
     {
       minArgs: 1,
-      maxArgs: 2
-    }
+      maxArgs: 2,
+    },
   ],
   'playwright/prefer-web-first-assertions': 'error',
   'playwright/no-networkidle': 'error',
   'playwright/no-nested-step': 'error',
   'playwright/prefer-to-contain': 'error',
   'playwright/prefer-to-have-count': 'error',
-  'playwright/valid-title': 'error'
+  'playwright/valid-title': 'error',
 }
 
 
 export const playwright = async ({
   files = [GLOB_PLAYWRIGHT],
-  overrides
+  overrides,
 }: PlaywrightOptions): Promise<FlatConfigItem[]> => [
   {
     name: 'aelita:playwright',
     files,
     plugins: {
-      playwright: await interopDefault(import('eslint-plugin-playwright'))
+      playwright: await interopDefault(import('eslint-plugin-playwright')),
     },
     rules: {
       ...playwrightRules,
-      ...overrides
-    }
-  }
+      ...overrides,
+    },
+  },
 ]

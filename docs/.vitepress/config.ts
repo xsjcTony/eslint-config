@@ -11,7 +11,7 @@ export default defineConfig({
   title: `Aelita's ESLint Preset`,
   titleTemplate: `:title | Aelita's ESLint Preset`,
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo-with-shadow.svg' }]
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo-with-shadow.svg' }],
   ],
   description: "Aelita's ESLint config preset",
   themeConfig: {
@@ -19,7 +19,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/markdown-examples' },
     ],
 
     sidebar: [
@@ -27,13 +27,13 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+          { text: 'Runtime API Examples', link: '/api-examples' },
+        ],
+      },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
+      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+    ],
+  },
 })

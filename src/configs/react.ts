@@ -18,8 +18,8 @@ const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Flat
       rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
       message: 'BOOLEAN prop ({{ propName }}) should start with "is" or "has" and use camelCase',
       validateNested: false,
-      propTypeNames: ruleOptions.booleanPropNaming?.extraPropTypeNames
-    }
+      propTypeNames: ruleOptions.booleanPropNaming?.extraPropTypeNames,
+    },
   ],
   'react/button-has-type': ['error', { button: true, submit: true, reset: true }],
   'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
@@ -29,8 +29,8 @@ const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Flat
     'error',
     {
       namedComponents: 'arrow-function',
-      unnamedComponents: 'arrow-function'
-    }
+      unnamedComponents: 'arrow-function',
+    },
   ],
   'react/hook-use-state': ['error', { allowDestructuredState: true }],
   'react/no-array-index-key': 'warn',
@@ -49,37 +49,37 @@ const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Flat
       forbid: [
         {
           'char': '>',
-          alternatives: ['&gt;']
+          alternatives: ['&gt;'],
         },
         {
           'char': '"',
-          alternatives: ['&quot;']
+          alternatives: ['&quot;'],
         },
         {
           'char': '\'',
-          alternatives: ['&apos;']
+          alternatives: ['&apos;'],
         },
         {
           'char': '}',
-          alternatives: ['&#125;']
+          alternatives: ['&#125;'],
         },
-        ...ruleOptions.noUnescapedEntities?.extraForbiddenCharacters ?? []
-      ]
-    }
+        ...ruleOptions.noUnescapedEntities?.extraForbiddenCharacters ?? [],
+      ],
+    },
   ],
   'react/no-unknown-property': [
     'error',
     {
       // @ts-expect-error - type definition is not up-to-date
       requireDataLowercase: true,
-      ignore: ruleOptions.noUnknownProperty?.ignoredProperties
-    }
+      ignore: ruleOptions.noUnknownProperty?.ignoredProperties,
+    },
   ],
   'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
   'react/no-unused-prop-types': 'error',
   'react/prop-types': ['error', { skipUndeclared: false }],
   'react/style-prop-object': ['error', { allow: ruleOptions.stylePropObject?.allowedComponents }],
-  'react/void-dom-elements-no-children': 'error'
+  'react/void-dom-elements-no-children': 'error',
 })
 
 
@@ -93,8 +93,8 @@ const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatCo
       checkFragmentShorthand: true,
       // Maybe a breaking change in future: https://github.com/facebook/react/issues/20031#issuecomment-710346866
       checkKeyMustBeforeSpread: true,
-      warnOnDuplicates: true
-    }
+      warnOnDuplicates: true,
+    },
   ],
   'react/jsx-no-comment-textnodes': 'error',
   'react/jsx-no-constructed-context-values': 'error',
@@ -104,8 +104,8 @@ const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatCo
     'error',
     [
       { name: 'Link', props: ['to', 'href'] },
-      ...ruleOptions.jsxNoScriptUrl?.extraComponentNameAndProps ?? []
-    ]
+      ...ruleOptions.jsxNoScriptUrl?.extraComponentNameAndProps ?? [],
+    ],
   ],
   'react/jsx-no-target-blank': [
     'error',
@@ -114,8 +114,8 @@ const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatCo
       enforceDynamicLinks: 'always',
       warnOnSpreadAttributes: true,
       links: true,
-      forms: true
-    }
+      forms: true,
+    },
   ],
   'react/jsx-no-undef': ['error', { allowGlobals: true }],
   'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
@@ -125,22 +125,22 @@ const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatCo
       allowAllCaps: false,
       allowLeadingUnderscore: false,
       allowNamespace: false,
-      ignore: ruleOptions.jsxPascalCase?.ignore
-    }
+      ignore: ruleOptions.jsxPascalCase?.ignore,
+    },
   ],
-  'react/jsx-uses-vars': 'error'
+  'react/jsx-uses-vars': 'error',
 })
 
 
 const reactTypeScriptRules: FlatConfigItem['rules'] = {
   'react/no-typos': 'off',
-  'react/no-unknown-property': 'off'
+  'react/no-unknown-property': 'off',
 }
 
 
 const jsxTypeScriptRules: FlatConfigItem['rules'] = {
   'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
-  'react/jsx-no-leaked-render': 'off'
+  'react/jsx-no-leaked-render': 'off',
 }
 
 
@@ -155,8 +155,8 @@ const jsxStylisticRules: FlatConfigItem['rules'] = {
     {
       props: 'never',
       children: 'never',
-      propElementValues: 'always'
-    }
+      propElementValues: 'always',
+    },
   ],
   'react/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
   'react/jsx-curly-spacing': [
@@ -165,8 +165,8 @@ const jsxStylisticRules: FlatConfigItem['rules'] = {
       when: 'never',
       children: true,
       allowMultiline: false,
-      attributes: true
-    }
+      attributes: true,
+    },
   ],
   'react/jsx-equals-spacing': ['error', 'never'],
   'react/jsx-first-prop-new-line': ['error', 'multiline'],
@@ -183,8 +183,8 @@ const jsxStylisticRules: FlatConfigItem['rules'] = {
       ignoreCase: true,
       noSortAlphabetically: false,
       reservedFirst: true,
-      locale: 'auto'
-    }
+      locale: 'auto',
+    },
   ],
   'react/jsx-tag-spacing': [
     'error',
@@ -192,8 +192,8 @@ const jsxStylisticRules: FlatConfigItem['rules'] = {
       closingSlash: 'never',
       beforeSelfClosing: 'always',
       afterOpening: 'never',
-      beforeClosing: 'never'
-    }
+      beforeClosing: 'never',
+    },
   ],
   'react/jsx-wrap-multilines': [
     'error',
@@ -204,9 +204,9 @@ const jsxStylisticRules: FlatConfigItem['rules'] = {
       arrow: 'parens-new-line',
       condition: 'parens-new-line',
       logical: 'parens-new-line',
-      prop: 'parens-new-line'
-    }
-  ]
+      prop: 'parens-new-line',
+    },
+  ],
 }
 
 
@@ -214,15 +214,15 @@ const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>):
   'react-hooks/rules-of-hooks': 'error',
   'react-hooks/exhaustive-deps': [
     'warn',
-    { additionalHooks: ruleOptions.reactHooksExhaustiveDeps?.additionalHooks }
-  ]
+    { additionalHooks: ruleOptions.reactHooksExhaustiveDeps?.additionalHooks },
+  ],
 })
 
 
 const jsxAccessibilityRules = ({
   linkComponents,
   imageComponents,
-  accessibility = {}
+  accessibility = {},
 }: ReactOptions): FlatConfigItem['rules'] => {
   if (!accessibility)
     return {}
@@ -252,7 +252,7 @@ const jsxAccessibilityRules = ({
     noNoninteractiveElementToInteractiveRole,
     noNoninteractiveTabindex,
     noRedundantRoles,
-    noStaticElementInteractions
+    noStaticElementInteractions,
   } = accessibility
 
   return {
@@ -261,8 +261,8 @@ const jsxAccessibilityRules = ({
       {
         elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
         img: imageComponents,
-        ...altText?.elementMapping
-      }
+        ...altText?.elementMapping,
+      },
     ],
     'jsx-a11y/anchor-has-content': ['error', { components: extraLinkComponents }],
     'jsx-a11y/anchor-is-valid': [
@@ -270,8 +270,8 @@ const jsxAccessibilityRules = ({
       {
         components: extraLinkComponents,
         specialLink: extraLinkComponentAttributes,
-        aspects: anchorIsValid?.aspects ?? ['noHref', 'invalidHref', 'preferButton']
-      }
+        aspects: anchorIsValid?.aspects ?? ['noHref', 'invalidHref', 'preferButton'],
+      },
     ],
     'jsx-a11y/aria-activedescendant-has-tabindex': 'error',
     'jsx-a11y/aria-props': 'error',
@@ -280,8 +280,8 @@ const jsxAccessibilityRules = ({
       'error',
       {
         allowedInvalidRoles: ariaRole?.allowedInvalidRoles,
-        ignoreNonDOM: true
-      }
+        ignoreNonDOM: true,
+      },
     ],
     'jsx-a11y/aria-unsupported-elements': 'error',
     'jsx-a11y/autocomplete-valid': ['error', { inputComponents: autocompleteValid?.extraInputComponents }],
@@ -294,8 +294,8 @@ const jsxAccessibilityRules = ({
       'error',
       {
         components: imageComponents,
-        words: imgRedundantAlt?.extraCheckedWords
-      }
+        words: imgRedundantAlt?.extraCheckedWords,
+      },
     ],
     'jsx-a11y/interactive-supports-focus': [
       'error',
@@ -308,13 +308,13 @@ const jsxAccessibilityRules = ({
           'spinbutton',
           'switch',
           'textbox',
-          ...interactiveSupportsFocus?.extraTabbableElements ?? []
-        ]
-      }
+          ...interactiveSupportsFocus?.extraTabbableElements ?? [],
+        ],
+      },
     ],
     'jsx-a11y/label-has-associated-control': [
       'error',
-      labelHasAssociatedControl ?? {}
+      labelHasAssociatedControl ?? {},
     ],
     'jsx-a11y/lang': 'error',
     'jsx-a11y/media-has-caption': ['error', { ...mediaHasCaption }],
@@ -325,15 +325,15 @@ const jsxAccessibilityRules = ({
           'onMouseOver',
           'onMouseEnter',
           'onPointerOver',
-          'onPointerEnter'
+          'onPointerEnter',
         ],
         hoverOutHandlers: [
           'onMouseOut',
           'onMouseLeave',
           'onPointerOut',
-          'onPointerLeave'
-        ]
-      }
+          'onPointerLeave',
+        ],
+      },
     ],
     'jsx-a11y/no-access-key': 'error',
     'jsx-a11y/no-aria-hidden-on-focusable': 'error',
@@ -341,14 +341,14 @@ const jsxAccessibilityRules = ({
     'jsx-a11y/no-distracting-elements': [
       'error',
       // @ts-expect-error - type definition is incorrect
-      { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
+      { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] },
     ],
     'jsx-a11y/no-interactive-element-to-noninteractive-role': [
       'error',
       {
         tr: ['none', 'presentation'],
-        ...noInteractiveElementToNoninteractiveRole
-      }
+        ...noInteractiveElementToNoninteractiveRole,
+      },
     ],
     'jsx-a11y/no-noninteractive-element-interactions': [
       'error',
@@ -360,9 +360,9 @@ const jsxAccessibilityRules = ({
           'onKeyPress',
           'onKeyDown',
           'onKeyUp',
-          ...noNoninteractiveElementInteractions?.extraHandlers ?? []
-        ]
-      }
+          ...noNoninteractiveElementInteractions?.extraHandlers ?? [],
+        ],
+      },
     ],
     'jsx-a11y/no-noninteractive-element-to-interactive-role': [
       'error',
@@ -372,16 +372,16 @@ const jsxAccessibilityRules = ({
         li: ['menuitem', 'option', 'row', 'tab', 'treeitem'],
         table: ['grid'],
         td: ['gridcell'],
-        ...noNoninteractiveElementToInteractiveRole
-      }
+        ...noNoninteractiveElementToInteractiveRole,
+      },
     ],
     'jsx-a11y/no-noninteractive-tabindex': [
       'error',
       {
         tags: noNoninteractiveTabindex?.tags,
         roles: ['tabpanel', ...noNoninteractiveTabindex?.extraRoles ?? []],
-        allowExpressionValues: noNoninteractiveTabindex?.allowExpressionValues ?? true
-      }
+        allowExpressionValues: noNoninteractiveTabindex?.allowExpressionValues ?? true,
+      },
     ],
     'jsx-a11y/no-redundant-roles': ['error', { nav: ['navigation'], ...noRedundantRoles }],
     'jsx-a11y/no-static-element-interactions': [
@@ -394,15 +394,15 @@ const jsxAccessibilityRules = ({
           'onKeyPress',
           'onKeyDown',
           'onKeyUp',
-          ...noStaticElementInteractions?.extraHandlers ?? []
+          ...noStaticElementInteractions?.extraHandlers ?? [],
         ],
-        allowExpressionValues: noStaticElementInteractions?.allowExpressionValues ?? true
-      }
+        allowExpressionValues: noStaticElementInteractions?.allowExpressionValues ?? true,
+      },
     ],
     'jsx-a11y/role-has-required-aria-props': 'error',
     'jsx-a11y/role-supports-aria-props': 'error',
     'jsx-a11y/scope': 'error',
-    'jsx-a11y/tabindex-no-positive': 'error'
+    'jsx-a11y/tabindex-no-positive': 'error',
   }
 }
 
@@ -414,21 +414,21 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
     typescript = false,
     ruleOptions = {},
     accessibility = {},
-    overrides
+    overrides,
   } = options
 
 
   const [
     pluginReact,
     pluginReactHooks,
-    pluginReactRefresh
+    pluginReactRefresh,
   ] = await Promise.all([
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react')),
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react-hooks')),
     // @ts-expect-error - no dts file available
-    interopDefault(import('eslint-plugin-react-refresh'))
+    interopDefault(import('eslint-plugin-react-refresh')),
   ] as const)
 
 
@@ -440,9 +440,9 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         'react-hooks': pluginReactHooks,
         ...!!accessibility && {
           // @ts-expect-error - no dts file available
-          'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y'))
-        }
-      }
+          'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')),
+        },
+      },
     },
     {
       name: 'aelita:react',
@@ -450,12 +450,12 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
       settings: {
         react: {
           version: 'detect',
-          ...options.settings
+          ...options.settings,
         },
         propWrapperFunctions: options.propWrapperFunctions,
         componentWrapperFunctions: options.componentWrapperFunctions,
         formComponents: options.formComponents,
-        linkComponents: options.linkComponents
+        linkComponents: options.linkComponents,
       },
       rules: {
         ...reactRules(ruleOptions),
@@ -467,14 +467,14 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         ...reactHooksRules(ruleOptions),
         ...!!accessibility && jsxAccessibilityRules(options),
         ...overrides?.react,
-        ...!!accessibility && overrides?.jsxA11y
-      }
+        ...!!accessibility && overrides?.jsxA11y,
+      },
     },
     {
       name: 'aelita:react:fast-refresh',
       files: [GLOB_JSX, GLOB_TSX],
       plugins: {
-        'react-refresh': pluginReactRefresh
+        'react-refresh': pluginReactRefresh,
       },
       rules: {
         'react-refresh/only-export-components': [
@@ -482,10 +482,10 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
           {
             checkJS: false,
             allowConstantExport: true,
-            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames
-          }
-        ]
-      }
-    }
+            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
+          },
+        ],
+      },
+    },
   ]
 }

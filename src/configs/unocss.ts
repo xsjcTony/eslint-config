@@ -10,24 +10,24 @@ interface UnocssOptions extends OptionsUnocss, OptionsFiles {
 const unocssRules = (attributify: UnocssOptions['attributify']): FlatConfigItem['rules'] => ({
   'unocss/order': 'error',
   ...attributify && { 'unocss/attributify': 'error' },
-  'unocss/blocklist': 'error'
+  'unocss/blocklist': 'error',
 })
 
 
 export const unocss = async ({
   files,
   attributify,
-  overrides
+  overrides,
 }: UnocssOptions): Promise<FlatConfigItem[]> => [
   {
     name: 'aelita:playwright',
     ...files && files,
     plugins: {
-      unocss: await interopDefault(import('@unocss/eslint-plugin'))
+      unocss: await interopDefault(import('@unocss/eslint-plugin')),
     },
     rules: {
       ...unocssRules(attributify),
-      ...overrides
-    }
-  }
+      ...overrides,
+    },
+  },
 ]

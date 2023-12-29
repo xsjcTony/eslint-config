@@ -7,7 +7,7 @@ import type {
   OptionsConfig,
   OptionsFiles,
   OptionsTypeScriptParserOptionsOverride,
-  OptionsTypeScriptWithTypes
+  OptionsTypeScriptWithTypes,
 } from '../types'
 
 
@@ -32,8 +32,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
       'ts-ignore': true,
       'ts-nocheck': true,
       'ts-check': false,
-      minimumDescriptionLength: 2
-    }
+      minimumDescriptionLength: 2,
+    },
   ],
   'ts/ban-types': [
     'error',
@@ -41,19 +41,19 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
       types: {
         String: {
           message: 'Use string instead',
-          fixWith: 'string'
+          fixWith: 'string',
         },
         Boolean: {
           message: 'Use boolean instead',
-          fixWith: 'boolean'
+          fixWith: 'boolean',
         },
         Number: {
           message: 'Use number instead',
-          fixWith: 'number'
+          fixWith: 'number',
         },
         Symbol: {
           message: 'Use symbol instead',
-          fixWith: 'symbol'
+          fixWith: 'symbol',
         },
 
         Function: {
@@ -61,8 +61,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
             'The `Function` type accepts any function-like value.',
             'It provides no type safety when calling the function, which can be a common source of bugs.',
             'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
-            'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.'
-          ].join('\n')
+            'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
+          ].join('\n'),
         },
 
         // object typing
@@ -70,12 +70,12 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
           message: [
             'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
             '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
-            '- If you want a type meaning "any value", you probably want `unknown` instead.'
-          ].join('\n')
-        }
+            '- If you want a type meaning "any value", you probably want `unknown` instead.',
+          ].join('\n'),
+        },
       },
-      extendDefaults: false
-    }
+      extendDefaults: false,
+    },
   ],
 
   'ts/consistent-indexed-object-style': ['error', 'record'],
@@ -83,16 +83,16 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     'error',
     {
       assertionStyle: 'as',
-      objectLiteralTypeAssertions: 'allow-as-parameter'
-    }
+      objectLiteralTypeAssertions: 'allow-as-parameter',
+    },
   ],
   'ts/consistent-type-definitions': ['error', projectType === 'app' ? 'type' : 'interface'],
   'ts/consistent-type-imports': [
     'error',
     {
       prefer: 'type-imports',
-      fixStyle: 'separate-type-imports'
-    }
+      fixStyle: 'separate-type-imports',
+    },
   ],
 
   'default-param-last': 'off',
@@ -108,8 +108,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
       allowConciseArrowFunctionExpressionsStartingWithVoid: true,
       allowFunctionsWithoutTypeParameters: false,
       allowIIFEs: false,
-      allowedNames: []
-    }
+      allowedNames: [],
+    },
   ],
   'ts/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
 
@@ -136,8 +136,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     'error',
     {
       ignoreParameters: false,
-      ignoreProperties: false
-    }
+      ignoreProperties: false,
+    },
   ],
 
   'no-invalid-this': 'off',
@@ -146,8 +146,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     'error',
     {
       allowInGenericTypeArguments: true,
-      allowAsThisParameter: true
-    }
+      allowAsThisParameter: true,
+    },
   ],
 
   'no-loop-func': 'off',
@@ -161,8 +161,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     'error',
     {
       allowDeclarations: true,
-      allowDefinitionFiles: true
-    }
+      allowDefinitionFiles: true,
+    },
   ],
   'ts/no-non-null-assertion': 'warn',
 
@@ -173,8 +173,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     'error',
     {
       allowDestructuring: true,
-      allowedNames: []
-    }
+      allowedNames: [],
+    },
   ],
 
   'no-unused-vars': 'off',
@@ -184,8 +184,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
       vars: 'all',
       args: 'none',
       ignoreRestSiblings: true,
-      destructuredArrayIgnorePattern: '^_'
-    }
+      destructuredArrayIgnorePattern: '^_',
+    },
   ],
 
   'no-useless-constructor': 'off',
@@ -214,19 +214,19 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
         'tuple',
         'intersection',
         'union',
-        'nullish'
-      ]
-    }
+        'nullish',
+      ],
+    },
   ],
   'ts/triple-slash-reference': [
     'error',
     {
       path: 'never',
       types: 'prefer-import',
-      lib: 'never'
-    }
+      lib: 'never',
+    },
   ],
-  'ts/unified-signatures': 'error'
+  'ts/unified-signatures': 'error',
 })
 
 
@@ -241,23 +241,23 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
       allowKeywords: true,
       allowPrivateClassPropertyAccess: false,
       allowProtectedClassPropertyAccess: false,
-      allowIndexSignaturePropertyAccess: false
-    }
+      allowIndexSignaturePropertyAccess: false,
+    },
   ],
 
   'ts/no-confusing-void-expression': [
     'error',
     {
       ignoreArrowShorthand: false,
-      ignoreVoidOperator: true
-    }
+      ignoreVoidOperator: true,
+    },
   ],
   'ts/no-duplicate-type-constituents': [
     'error',
     {
       ignoreIntersections: false,
-      ignoreUnions: false
-    }
+      ignoreUnions: false,
+    },
   ],
   'ts/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: false }],
   'ts/no-for-in-array': 'error',
@@ -267,29 +267,29 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
     {
       checksConditionals: true,
       checksVoidReturn: false,
-      checksSpreads: true
-    }
+      checksSpreads: true,
+    },
   ],
   'ts/no-throw-literal': [
     'error',
     {
       allowThrowingAny: false,
-      allowThrowingUnknown: false
-    }
+      allowThrowingUnknown: false,
+    },
   ],
   'ts/no-unnecessary-boolean-literal-compare': [
     'error',
     {
       allowComparingNullableBooleansToTrue: false,
-      allowComparingNullableBooleansToFalse: false
-    }
+      allowComparingNullableBooleansToFalse: false,
+    },
   ],
   'ts/no-unnecessary-condition': [
     'error',
     {
       allowConstantLoopConditions: true,
-      allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false
-    }
+      allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
+    },
   ],
   'ts/no-unnecessary-qualifier': 'error',
   'ts/no-unnecessary-type-assertion': 'error',
@@ -305,9 +305,9 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
       ignorePrimitives: {
         'boolean': true,
         number: true,
-        string: true
-      }
-    }
+        string: true,
+      },
+    },
   ],
   'ts/prefer-optional-chain': 'error',
   'ts/prefer-reduce-type-parameter': 'error',
@@ -322,8 +322,8 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
       checkFunctionDeclarations: true,
       checkFunctionExpressions: true,
       checkMethodDeclarations: true,
-      allowedPromiseNames: []
-    }
+      allowedPromiseNames: [],
+    },
   ],
   'ts/require-array-sort-compare': ['error', { ignoreStringArrays: true }],
   'ts/require-await': 'error',
@@ -335,8 +335,8 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
       allowBoolean: false,
       allowNullish: false,
       allowRegExp: false,
-      allowNumberAndString: false
-    }
+      allowNumberAndString: false,
+    },
   ],
   'ts/restrict-template-expressions': [
     'error',
@@ -346,13 +346,13 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
       allowBoolean: false,
       allowRegExp: false,
       allowNullish: false,
-      allowNever: false
-    }
+      allowNever: false,
+    },
   ],
   'ts/return-await': ['error', 'always'],
   // @ts-expect-error - type definition is not up-to-date
   'ts/switch-exhaustiveness-check': ['error', { requireDefaultForNonUnion: true }],
-  'ts/unbound-method': ['error', { ignoreStatic: false }]
+  'ts/unbound-method': ['error', { ignoreStatic: false }],
 }
 
 
@@ -378,8 +378,8 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
     {
       beforeColon: false,
       afterColon: true,
-      mode: 'strict'
-    }
+      mode: 'strict',
+    },
   ],
 
   'keyword-spacing': 'off',
@@ -391,8 +391,8 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
     'always',
     {
       exceptAfterSingleLine: true,
-      exceptAfterOverload: true
-    }
+      exceptAfterOverload: true,
+    },
   ],
 
   'ts/member-delimiter-style': [
@@ -400,14 +400,14 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
     {
       multiline: {
         delimiter: 'none',
-        requireLast: true
+        requireLast: true,
       },
       singleline: {
         delimiter: 'semi',
-        requireLast: false
+        requireLast: false,
       },
-      multilineDetection: 'brackets'
-    }
+      multilineDetection: 'brackets',
+    },
   ],
 
   'no-extra-parens': 'off',
@@ -416,8 +416,8 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
     'all',
     {
       ignoreJSX: 'multi-line',
-      nestedBinaryExpressions: false
-    }
+      nestedBinaryExpressions: false,
+    },
   ],
 
   'object-curly-spacing': 'off',
@@ -427,7 +427,7 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
   'ts/padding-line-between-statements': [
     'error',
     { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife', 'interface'] },
-    { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' }
+    { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' },
   ],
 
   quotes: 'off',
@@ -445,8 +445,8 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
     {
       anonymous: 'never',
       named: 'never',
-      asyncArrow: 'always'
-    }
+      asyncArrow: 'always',
+    },
   ],
 
   'space-infix-ops': 'off',
@@ -460,12 +460,12 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
       overrides: {
         arrow: {
           before: true,
-          after: true
-        }
-      }
-    }
+          after: true,
+        },
+      },
+    },
   ],
-  'ts/no-useless-template-literals': 'error'
+  'ts/no-useless-template-literals': 'error',
 }
 
 
@@ -475,12 +475,12 @@ export const typescript = async ({
   tsconfigPath,
   parserOptionsOverride = {},
   overrides = {},
-  projectType = 'app'
+  projectType = 'app',
 }: TypescriptOptions = {}): Promise<FlatConfigItem[]> => {
 
   const [pluginTypescript, parserTypescript] = await Promise.all([
     interopDefault(import('@typescript-eslint/eslint-plugin')),
-    interopDefault(import('@typescript-eslint/parser'))
+    interopDefault(import('@typescript-eslint/parser')),
   ] as const)
 
 
@@ -488,14 +488,14 @@ export const typescript = async ({
     {
       name: 'aelita:typescript:setup',
       plugins: {
-        ts: pluginTypescript
-      }
+        ts: pluginTypescript,
+      },
     },
     {
       name: 'aelita:typescript',
       files: files ?? [
         GLOB_SRC,
-        ...componentExtensions.map(ext => `**/*.${ext}`)
+        ...componentExtensions.map(ext => `**/*.${ext}`),
       ],
       languageOptions: {
         parser: parserTypescript,
@@ -512,39 +512,39 @@ export const typescript = async ({
           extraFileExtensions: componentExtensions.map(ext => `.${ext}`),
           ...tsconfigPath && {
             project: toArray(tsconfigPath),
-            tsconfigRootDir: processCwd()
+            tsconfigRootDir: processCwd(),
           },
-          ...parserOptionsOverride
-        }
+          ...parserOptionsOverride,
+        },
       },
       rules: {
         ...typescriptRules(projectType),
         ...typescriptStylisticRules,
         ...tsconfigPath && typeAwareTypescriptRules,
-        ...overrides
-      }
+        ...overrides,
+      },
     },
     {
       name: 'aelita:typescript:dts-overrides',
       files: [GLOB_DTS],
       rules: {
         'ts/no-unused-vars': 'off',
-        'ts/consistent-indexed-object-style': 'off'
-      }
+        'ts/consistent-indexed-object-style': 'off',
+      },
     },
     {
       name: 'aelita:typescript:test-overrides',
       files: ['**/*.{test,spec}.ts?(x)'],
       rules: {
-        'ts/no-empty-function': 'off'
-      }
+        'ts/no-empty-function': 'off',
+      },
     },
     {
       name: 'aelita:typescript:javascript-overrides',
       files: ['**/*.?(c)js'],
       rules: {
-        'ts/no-require-imports': 'off'
-      }
-    }
+        'ts/no-require-imports': 'off',
+      },
+    },
   ]
 }

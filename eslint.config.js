@@ -6,12 +6,12 @@ export default defineConfig(
   {
     typescript: {
       tsconfigPath: ['./tsconfig.json', './tsconfig.node.js.json'],
-      projectType: 'lib'
-    }
+      projectType: 'lib',
+    },
   },
   {
     rules: {
-      'ts/sort-type-constituents': 'off'
-    }
-  }
+      'ts/sort-type-constituents': 'off',
+    },
+  },
 )

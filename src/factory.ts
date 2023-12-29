@@ -8,7 +8,7 @@ import {
   react,
   typescript,
   unocss,
-  vue
+  vue,
 } from './configs'
 
 
@@ -24,7 +24,7 @@ const flatConfigProps: (keyof FlatConfigItem)[] = [
   'processor',
   'plugins',
   'rules',
-  'settings'
+  'settings',
 ]
 
 
@@ -32,7 +32,7 @@ const VUE_PACKAGES = [
   'vue',
   'nuxt',
   'vitepress',
-  '@slidev/cli'
+  '@slidev/cli',
 ]
 
 
@@ -40,7 +40,7 @@ const REACT_PACKAGES = [
   'react',
   'react-dom',
   'react-native',
-  'next'
+  'next',
 ]
 
 
@@ -63,7 +63,7 @@ export const defineConfig = async (
     gitignore: enableGitignore = true,
     overrides = {},
     componentExtensions = [],
-    filesOverride = {}
+    filesOverride = {},
   } = options
 
 
@@ -94,17 +94,17 @@ export const defineConfig = async (
     ignores(),
     javascript({
       overrides: overrides.javascript,
-      files: filesOverride.javascript
+      files: filesOverride.javascript,
     }),
     importConfig({
       typescript: !!enableTypescript,
       vue: !!enableVue,
       overrides: {
         'import': overrides.import,
-        importTypescript: overrides.importTypescript
+        importTypescript: overrides.importTypescript,
       },
-      files: filesOverride.import
-    })
+      files: filesOverride.import,
+    }),
   )
 
 
@@ -116,7 +116,7 @@ export const defineConfig = async (
       ...typeof enableTypescript !== 'boolean' && enableTypescript,
       componentExtensions,
       overrides: overrides.typescript,
-      files: filesOverride.typescript
+      files: filesOverride.typescript,
     }))
   }
 
@@ -130,9 +130,9 @@ export const defineConfig = async (
       typescript: !!enableTypescript,
       overrides: {
         vue: overrides.vue,
-        vueAccessibility: overrides.vueAccessibility
+        vueAccessibility: overrides.vueAccessibility,
       },
-      files: filesOverride.vue
+      files: filesOverride.vue,
     }))
   }
 
@@ -146,9 +146,9 @@ export const defineConfig = async (
       typescript: !!enableTypescript,
       overrides: {
         react: overrides.react,
-        jsxA11y: overrides.jsxA11y
+        jsxA11y: overrides.jsxA11y,
       },
-      files: filesOverride.react
+      files: filesOverride.react,
     }))
   }
 
@@ -159,7 +159,7 @@ export const defineConfig = async (
   if (enablePlaywright) {
     configs.push(playwright({
       overrides: overrides.playwright,
-      files: filesOverride.playwright
+      files: filesOverride.playwright,
     }))
   }
 
@@ -171,7 +171,7 @@ export const defineConfig = async (
     configs.push(unocss({
       ...typeof enableUnocss !== 'boolean' && enableUnocss,
       overrides: overrides.unocss,
-      files: filesOverride.unocss
+      files: filesOverride.unocss,
     }))
   }
 

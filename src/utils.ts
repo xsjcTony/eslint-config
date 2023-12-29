@@ -14,7 +14,7 @@ export const renameRules = (rules: Record<string, any>, from: string, to: string
   Object.fromEntries(
     Object.entries(rules).map(([key, value]) => key.startsWith(from)
       ? [to + key.slice(from.length), value]
-      : [key, value])
+      : [key, value]),
   )
 
 

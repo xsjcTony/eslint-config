@@ -16,8 +16,8 @@ const javascriptRules: FlatConfigItem['rules'] = {
       properties: 'never',
       ignoreDestructuring: true,
       ignoreImports: false,
-      ignoreGlobals: false
-    }
+      ignoreGlobals: false,
+    },
   ],
   'dot-notation': ['error', { allowKeywords: true }],
   'new-cap': [
@@ -25,8 +25,8 @@ const javascriptRules: FlatConfigItem['rules'] = {
     {
       newIsCap: true,
       capIsNew: true,
-      properties: true
-    }
+      properties: true,
+    },
   ],
   'no-console': ['error', { allow: ['warn', 'error'] }],
   'no-multi-assign': 'error',
@@ -63,15 +63,15 @@ const javascriptRules: FlatConfigItem['rules'] = {
       vars: 'all',
       args: 'none',
       ignoreRestSiblings: true,
-      destructuredArrayIgnorePattern: '^_'
-    }
+      destructuredArrayIgnorePattern: '^_',
+    },
   ],
   eqeqeq: ['error', 'always', { 'null': 'ignore' }],
   'no-with': 'error',
   'default-param-last': 'error',
   'no-else-return': ['error', { allowElseIf: false }],
   'no-implied-eval': 'error',
-  'no-loss-of-precision': 'error'
+  'no-loss-of-precision': 'error',
 }
 
 
@@ -101,8 +101,8 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
     'all',
     {
       ignoreJSX: 'multi-line',
-      nestedBinaryExpressions: false
-    }
+      nestedBinaryExpressions: false,
+    },
   ],
   'no-extra-semi': 'error',
   'no-floating-decimal': 'error',
@@ -118,7 +118,7 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
   'padding-line-between-statements': [
     'error',
     { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife'] },
-    { blankLine: 'always', prev: ['class', 'function', 'iife'], next: '*' }
+    { blankLine: 'always', prev: ['class', 'function', 'iife'], next: '*' },
   ],
   'quote-props': ['error', 'as-needed', { keywords: true }],
   quotes: [
@@ -126,8 +126,8 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
     'single',
     {
       avoidEscape: true,
-      allowTemplateLiterals: true
-    }
+      allowTemplateLiterals: true,
+    },
   ],
   'rest-spread-spacing': ['error', 'never'],
   semi: ['error', 'never'],
@@ -137,8 +137,8 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
     {
       anonymous: 'never',
       named: 'never',
-      asyncArrow: 'always'
-    }
+      asyncArrow: 'always',
+    },
   ],
   'space-in-parens': ['error', 'never'],
   'space-infix-ops': ['error', { int32Hint: false }],
@@ -148,7 +148,7 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
   'template-curly-spacing': ['error', 'never'],
   'template-tag-spacing': ['error', 'never'],
   'wrap-iife': ['error', 'inside', { functionPrototypeMethods: false }],
-  'yield-star-spacing': ['error', 'after']
+  'yield-star-spacing': ['error', 'after'],
 }
 
 
@@ -164,32 +164,32 @@ export const javascript = ({ files, overrides }: JavascriptOptions = {}): FlatCo
         ...globals.node,
         document: 'readonly',
         navigator: 'readonly',
-        window: 'readonly'
+        window: 'readonly',
       },
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
-          impliedStrict: true
+          impliedStrict: true,
         },
         ecmaVersion: 'latest',
-        sourceType: 'module'
+        sourceType: 'module',
       },
-      sourceType: 'module'
+      sourceType: 'module',
     },
     linterOptions: {
-      reportUnusedDisableDirectives: true
+      reportUnusedDisableDirectives: true,
     },
     rules: {
       ...javascriptRules,
       ...javascriptStylisticRules,
-      ...overrides
-    }
+      ...overrides,
+    },
   },
   {
     name: 'aelita:javascript:scripts-override',
     files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
     rules: {
-      'no-console': 'off'
-    }
-  }
+      'no-console': 'off',
+    },
+  },
 ]

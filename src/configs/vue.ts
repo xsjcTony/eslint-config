@@ -26,8 +26,8 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
     {
       registeredComponentsOnly: true,
       ignores: [],
-      globals: options.globalComponents
-    }
+      globals: options.globalComponents,
+    },
   ],
   'vue/custom-event-name-casing': ['error', 'camelCase'],
   'vue/define-emits-declaration': ['error', 'type-literal'],
@@ -50,9 +50,9 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
     {
       ignorePatterns: [
         ...options.globalComponents ?? [],
-        ...options.extraGlobalComponentsWithRegex ?? []
-      ]
-    }
+        ...options.extraGlobalComponentsWithRegex ?? [],
+      ],
+    },
   ],
   'vue/no-undef-properties': 'error',
   'vue/no-unused-properties': [
@@ -61,8 +61,8 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
       groups: ['props'],
       deepData: false,
       ignorePublicMembers: false,
-      unreferencedOptions: []
-    }
+      unreferencedOptions: [],
+    },
   ],
   'vue/no-unused-refs': 'error',
   'vue/no-use-v-else-with-v-for': 'error',
@@ -82,8 +82,8 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
       defineEmits: 'emit',
       defineSlots: 'slots',
       useSlots: 'slots',
-      useAttrs: 'attrs'
-    }
+      useAttrs: 'attrs',
+    },
   ],
   'vue/v-for-delimiter-style': ['error', 'in'],
   'vue/v-on-handler-style': ['error', ['method', 'inline-function'], { ignoreIncludesComment: false }],
@@ -97,8 +97,8 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
       properties: 'never',
       ignoreDestructuring: true,
       ignoreImports: false,
-      ignoreGlobals: false
-    }
+      ignoreGlobals: false,
+    },
   ],
   'vue/dot-notation': ['error', { allowKeywords: true }],
   'vue/eqeqeq': ['error', 'always', { 'null': 'ignore' }],
@@ -108,13 +108,13 @@ const vueRules = (pluginVue: any, options: VueOptions): FlatConfigItem['rules'] 
   'vue/no-loss-of-precision': 'error',
   'vue/no-useless-concat': 'error',
   'vue/object-shorthand': ['error', 'always'],
-  'vue/prefer-template': 'error'
+  'vue/prefer-template': 'error',
 })
 
 
 const vueTypeScriptRules: FlatConfigItem['rules'] = {
   'vue/require-typed-object-prop': 'error',
-  'vue/require-typed-ref': 'error'
+  'vue/require-typed-ref': 'error',
 }
 
 
@@ -122,15 +122,15 @@ const vueDefaultOverrideRules = (ruleOptions: NonNullable<VueOptions['ruleOption
   // Priority A: Essential
   'vue/multi-word-component-names': [
     'error',
-    { ignores: ruleOptions.multiWordComponentNames?.ignores }
+    { ignores: ruleOptions.multiWordComponentNames?.ignores },
   ],
   'vue/no-arrow-functions-in-watch': 'off',
   'vue/no-reserved-component-names': [
     'error',
     {
       disallowVueBuiltInComponents: true,
-      disallowVue3BuiltInComponents: true
-    }
+      disallowVue3BuiltInComponents: true,
+    },
   ],
   'vue/no-shared-component-data': 'off',
   'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
@@ -143,11 +143,11 @@ const vueDefaultOverrideRules = (ruleOptions: NonNullable<VueOptions['ruleOption
       html: {
         'void': 'always',
         normal: 'always',
-        component: 'always'
+        component: 'always',
       },
       svg: 'always',
-      math: 'always'
-    }
+      math: 'always',
+    },
   ],
   'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }],
   'vue/multiline-html-element-content-newline': [
@@ -155,8 +155,8 @@ const vueDefaultOverrideRules = (ruleOptions: NonNullable<VueOptions['ruleOption
     {
       ignoreWhenEmpty: true,
       allowEmptyLines: false,
-      ignores: []
-    }
+      ignores: [],
+    },
   ],
   'vue/singleline-html-element-content-newline': 'off',
   'vue/v-slot-style': [
@@ -164,13 +164,13 @@ const vueDefaultOverrideRules = (ruleOptions: NonNullable<VueOptions['ruleOption
     {
       'default': 'shorthand',
       named: 'shorthand',
-      atComponent: 'shorthand'
-    }
+      atComponent: 'shorthand',
+    },
   ],
   'vue/v-on-event-hyphenation': ['error', 'always', { autofix: true, ignore: [] }],
 
   // Priority C: Recommended
-  'vue/order-in-components': 'off'
+  'vue/order-in-components': 'off',
 })
 
 
@@ -185,23 +185,23 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
       blocks: {
         template: {
           singleline: 'always',
-          multiline: 'always'
+          multiline: 'always',
         },
         script: {
           singleline: 'always',
-          multiline: 'always'
+          multiline: 'always',
         },
         style: {
           singleline: 'always',
           multiline: 'always',
-          maxEmptyLines: 2
-        }
-      }
-    }
+          maxEmptyLines: 2,
+        },
+      },
+    },
   ],
   'vue/define-macros-order': [
     'error',
-    { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] }
+    { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] },
   ],
   'vue/html-comment-content-newline': ['error', { singleline: 'never', multiline: 'always' }],
   'vue/html-comment-content-spacing': ['error', 'always'],
@@ -216,8 +216,8 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
     {
       baseIndent: 0,
       switchCase: 1,
-      ignores: []
-    }
+      ignores: [],
+    },
   ],
 
 
@@ -238,8 +238,8 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
     'all',
     {
       ignoreJSX: 'multi-line',
-      nestedBinaryExpressions: false
-    }
+      nestedBinaryExpressions: false,
+    },
   ],
   'vue/object-curly-spacing': ['error', 'always'],
   'vue/operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
@@ -247,7 +247,7 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
   'vue/space-in-parens': ['error', 'never'],
   'vue/space-infix-ops': ['error', { int32Hint: false }],
   'vue/space-unary-ops': ['error', { words: true, nonwords: false }],
-  'vue/template-curly-spacing': ['error', 'never']
+  'vue/template-curly-spacing': ['error', 'never'],
 }
 
 
@@ -261,22 +261,22 @@ const vueAccessibilityRules = ({
   mediaHasCaption,
   noAutofocus,
   noDistractingElements,
-  noRedundantRoles
+  noRedundantRoles,
 }: NonNullable<Exclude<VueOptions['accessibility'], false>>): FlatConfigItem['rules'] => ({
   'vue-a11y/alt-text': [
     'error',
     {
       elements: ['img', 'object', 'area', 'input[type="image"]', ...altText?.extraElements ?? []],
-      ...altText?.elementMapping
-    }
+      ...altText?.elementMapping,
+    },
   ],
   'vue-a11y/anchor-has-content': [
     'error',
     {
       components: anchorHasContent?.extraComponents,
       accessibleChildren: anchorHasContent?.accessibleChildren,
-      accessibleDirectives: anchorHasContent?.accessibleDirectives
-    }
+      accessibleDirectives: anchorHasContent?.accessibleDirectives,
+    },
   ],
   'vue-a11y/aria-props': 'error',
   'vue-a11y/aria-role': ['error', { ignoreNonDOM: true }],
@@ -286,16 +286,16 @@ const vueAccessibilityRules = ({
     'error',
     {
       labelComponents: formControlHasLabel?.extraLabelComponents,
-      controlComponents: formControlHasLabel?.extraControlComponents
-    }
+      controlComponents: formControlHasLabel?.extraControlComponents,
+    },
   ],
   'vue-a11y/heading-has-content': [
     'error',
     {
       components: headingHasContent?.extraComponents,
       accessibleChildren: headingHasContent?.accessibleChildren,
-      accessibleDirectives: headingHasContent?.accessibleDirectives
-    }
+      accessibleDirectives: headingHasContent?.accessibleDirectives,
+    },
   ],
   'vue-a11y/iframe-has-title': 'error',
   'vue-a11y/interactive-supports-focus': [
@@ -309,9 +309,9 @@ const vueAccessibilityRules = ({
         'spinbutton',
         'switch',
         'textbox',
-        ...interactiveSupportsFocus?.extraTabbableElements ?? []
-      ]
-    }
+        ...interactiveSupportsFocus?.extraTabbableElements ?? [],
+      ],
+    },
   ],
   'vue-a11y/label-has-for': [
     'error',
@@ -319,8 +319,8 @@ const vueAccessibilityRules = ({
       components: labelHasFor?.extraComponents,
       controlComponents: labelHasFor?.extraControlComponents,
       required: labelHasFor?.required ?? { every: ['nesting', 'id'] },
-      allowChildren: labelHasFor?.allowChildren ?? false
-    }
+      allowChildren: labelHasFor?.allowChildren ?? false,
+    },
   ],
   'vue-a11y/media-has-caption': ['error', { ...mediaHasCaption }],
   'vue-a11y/mouse-events-have-key-events': 'error',
@@ -328,12 +328,12 @@ const vueAccessibilityRules = ({
   ...noAutofocus && { 'vue-a11y/no-autofocus': ['error', { ignoreNonDOM: true }] },
   'vue-a11y/no-distracting-elements': [
     'error',
-    { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] }
+    { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] },
   ],
   'vue-a11y/no-redundant-roles': ['error', noRedundantRoles?.extraExceptions ?? {}],
   'vue-a11y/no-static-element-interactions': 'error',
   'vue-a11y/role-has-required-aria-props': 'error',
-  'vue-a11y/tabindex-no-positive': 'error'
+  'vue-a11y/tabindex-no-positive': 'error',
 })
 
 
@@ -344,14 +344,14 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
     typescript = false,
     accessibility = {},
     overrides,
-    ruleOptions = {}
+    ruleOptions = {},
   } = options
 
 
   const [pluginVue, parserVue] = await Promise.all([
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-vue')),
-    interopDefault(import('vue-eslint-parser'))
+    interopDefault(import('vue-eslint-parser')),
   ] as const)
 
 
@@ -362,9 +362,9 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
         vue: pluginVue,
         ...!!accessibility && {
           // @ts-expect-error - no dts file available
-          'vue-a11y': await interopDefault(import('eslint-plugin-vuejs-accessibility'))
-        }
-      }
+          'vue-a11y': await interopDefault(import('eslint-plugin-vuejs-accessibility')),
+        },
+      },
     },
     {
       name: 'aelita:vue',
@@ -380,12 +380,12 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
             interpolationAsNonHTML: true,
             // @ts-expect-error - type definition is not up-to-date
             styleCSSVariableInjection: true,
-            customMacros: []
+            customMacros: [],
           },
           extraFileExtensions: ['.vue'],
           // @ts-expect-error - type definition issue with `parserOptions.parser`
-          parser: typescript ? await interopDefault(import('@typescript-eslint/parser')) : void 0
-        }
+          parser: typescript ? await interopDefault(import('@typescript-eslint/parser')) : void 0,
+        },
       },
       processor: pluginVue.processors['.vue'],
       rules: {
@@ -395,8 +395,8 @@ export const vue = async (options: VueOptions = {}): Promise<FlatConfigItem[]> =
         ...vueStylisticRules,
         ...!!accessibility && vueAccessibilityRules(accessibility),
         ...overrides?.vue,
-        ...!!accessibility && overrides?.vueAccessibility
-      }
-    }
+        ...!!accessibility && overrides?.vueAccessibility,
+      },
+    },
   ]
 }

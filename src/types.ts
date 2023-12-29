@@ -9,7 +9,7 @@ import type {
   VueRules,
   ReactRules,
   ReactHooksRules,
-  JsxA11yRules
+  JsxA11yRules,
 } from '@antfu/eslint-define-config'
 import type { ParserOptions } from '@typescript-eslint/parser'
 import type { Linter } from 'eslint'
@@ -286,7 +286,7 @@ interface JsxAccessibilityOptions {
   anchorIsValid?: {
     aspects?: [
       'noHref' | 'invalidHref' | 'preferButton',
-      ...('noHref' | 'invalidHref' | 'preferButton')[]
+      ...('noHref' | 'invalidHref' | 'preferButton')[],
     ]
   }
 
