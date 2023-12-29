@@ -226,7 +226,7 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
   'vue/arrow-spacing': ['error', { before: true, after: true }],
   'vue/block-spacing': ['error', 'always'],
   'vue/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-  'vue/comma-dangle': ['error', 'never'],
+  'vue/comma-dangle': ['error', 'always-multiline'],
   'vue/comma-spacing': ['error', { before: false, after: true }],
   'vue/comma-style': ['error', 'last'],
   'vue/dot-location': ['error', 'property'],

@@ -81,7 +81,7 @@ const javascriptStylisticRules: FlatConfigItem['rules'] = {
   'arrow-spacing': ['error', { before: true, after: true }],
   'block-spacing': ['error', 'always'],
   'brace-style': ['error', '1tbs', { allowSingleLine: true }],
-  'comma-dangle': ['error', 'never'],
+  'comma-dangle': ['error', 'always-multiline'],
   'comma-spacing': ['error', { before: false, after: true }],
   'comma-style': ['error', 'last'],
   'computed-property-spacing': ['error', 'never'],

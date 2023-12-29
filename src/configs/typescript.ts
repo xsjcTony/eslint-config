@@ -364,7 +364,7 @@ const typescriptStylisticRules: FlatConfigItem['rules'] = {
   'ts/brace-style': ['error', '1tbs', { allowSingleLine: true }],
 
   'comma-dangle': 'off',
-  'ts/comma-dangle': ['error', 'never'],
+  'ts/comma-dangle': ['error', 'always-multiline'],
 
   'comma-spacing': 'off',
   'ts/comma-spacing': ['error', { before: false, after: true }],
