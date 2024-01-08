@@ -227,6 +227,8 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
     },
   ],
   'ts/unified-signatures': 'error',
+
+  'no-undef': 'off',
 })
 
 
