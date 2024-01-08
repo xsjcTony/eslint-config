@@ -9,9 +9,4 @@ export default defineConfig(
       projectType: 'lib',
     },
   },
-  {
-    rules: {
-      'ts/sort-type-constituents': 'off',
-    },
-  },
 )
