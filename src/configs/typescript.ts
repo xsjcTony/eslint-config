@@ -197,7 +197,7 @@ const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatCon
   'ts/prefer-for-of': 'error',
   'ts/prefer-function-type': 'error',
   'ts/prefer-ts-expect-error': 'error',
-  'ts/sort-type-constituents': [
+  'ts/sort-type-constituents': projectType === 'lib' ? 'off' : [
     'error',
     {
       checkIntersections: true,
