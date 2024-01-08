@@ -532,6 +532,8 @@ export const typescript = async ({
       rules: {
         'ts/no-unused-vars': 'off',
         'ts/consistent-indexed-object-style': 'off',
+        'ts/consistent-type-definitions': 'off',
+        'ts/no-empty-interface': 'off',
       },
     },
     {
