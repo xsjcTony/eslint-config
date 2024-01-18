@@ -201,7 +201,11 @@ const vueStylisticRules: FlatConfigItem['rules'] = {
   ],
   'vue/define-macros-order': [
     'error',
-    { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] },
+    {
+      // @ts-expect-error - type definition is not up-to-date
+      order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots', 'defineModel'],
+      defineExposeLast: false,
+    },
   ],
   'vue/html-comment-content-newline': ['error', { singleline: 'never', multiline: 'always' }],
   'vue/html-comment-content-spacing': ['error', 'always'],
