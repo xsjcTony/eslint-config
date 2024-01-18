@@ -41,6 +41,7 @@ const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/prefer-to-contain': 'error',
   'playwright/prefer-to-have-count': 'error',
   'playwright/valid-title': 'error',
+  'playwright/no-wait-for-selector': 'error',
 }
 
 
