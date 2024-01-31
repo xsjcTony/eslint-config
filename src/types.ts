@@ -599,6 +599,9 @@ export interface OptionsReact extends OptionsHasTypeScript, OptionsFiles {
 }
 
 
+export interface OptionsNext extends OptionsFiles {}
+
+
 export interface OptionsUnocss {
   attributify?: boolean
 }
@@ -646,6 +649,13 @@ export interface OptionsConfig extends OptionsComponentExtensions {
   react?: boolean | OptionsReact
 
   /**
+   * Enable Next.js support.
+   *
+   * @default auto-detect based on the dependencies
+   */
+  next?: boolean | OptionsFiles
+
+  /**
    * Enable Vue support.
    *
    * @default auto-detect based on the dependencies
@@ -677,6 +687,7 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     javascript?: LooseJavascriptRulesDict
     typescript?: LooseTypescriptRulesDict
     react?: LooseReactRulesDict
+    next?: FlatConfigItem['rules']
     jsxA11y?: LooseJsxA11yDict
     vue?: LooseVueRulesDict
     vueAccessibility?: FlatConfigItem['rules']
@@ -695,6 +706,7 @@ export interface OptionsConfig extends OptionsComponentExtensions {
     typescript?: string[]
     vue?: string[]
     react?: string[]
+    next?: string[]
     unocss?: string[]
     playwright?: string[]
   }

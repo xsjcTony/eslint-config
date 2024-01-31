@@ -57,6 +57,7 @@ export const defineConfig = async (
     isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
     vue: enableVue = VUE_PACKAGES.some(i => isPackageExists(i)),
     react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
+    next: enableNext = isPackageExists('next'),
     typescript: enableTypescript = isPackageExists('typescript'),
     playwright: enablePlaywright = isPackageExists('@playwright/test'),
     unocss: enableUnocss = isPackageExists('unocss'),
@@ -150,6 +151,14 @@ export const defineConfig = async (
       },
       files: filesOverride.react,
     }))
+  }
+
+
+  /**
+   * Next.js 14
+   */
+  if (enableNext) {
+    configs.push()
   }
 
 
