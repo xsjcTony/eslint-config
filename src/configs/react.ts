@@ -231,7 +231,7 @@ const jsxAccessibilityRules = ({
     ?.map(comp => typeof comp === 'string' ? comp : comp.name)
   const extraLinkComponentAttributes = linkComponents
     ?.filter(comp => typeof comp !== 'string')
-    ?.map(comp =>
+    .map(comp =>
       (comp as Exclude<NonNullable<ReactOptions['linkComponents']>[number], string>).linkAttribute)
 
   const {

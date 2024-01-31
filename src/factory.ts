@@ -12,6 +12,7 @@ import {
 } from './configs'
 
 
+import { next } from './configs/next'
 import { combine, interopDefault } from './utils'
 import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types'
 
@@ -158,7 +159,11 @@ export const defineConfig = async (
    * Next.js 14
    */
   if (enableNext) {
-    configs.push()
+    configs.push(next({
+      ...typeof enableNext !== 'boolean' && enableNext,
+      overrides: overrides.next,
+      files: filesOverride.next,
+    }))
   }
 
 
