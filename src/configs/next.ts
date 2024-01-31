@@ -1,5 +1,5 @@
 import { GLOB_SRC } from '../globs'
-import { interopDefault } from '../utils'
+import { interopDefault, renameRules } from '../utils'
 import type { OptionsConfig, OptionsNext, FlatConfigItem } from '../types'
 
 
@@ -28,10 +28,10 @@ export const next = async ({
       name: 'aelita:next',
       files,
       plugins: {
-        '@next/next': pluginNext,
+        next: pluginNext,
       },
       rules: {
-        ...nextRules(pluginNext),
+        ...renameRules(nextRules(pluginNext) ?? {}, '@next/next', 'next'),
         ...overrides,
       },
     },
