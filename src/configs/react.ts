@@ -4,6 +4,7 @@ import type { OptionsConfig, FlatConfigItem, OptionsReact } from '../types'
 
 
 interface ReactOptions extends OptionsReact {
+  next?: boolean
   overrides?: {
     react?: NonNullable<OptionsConfig['overrides']>['react']
     jsxA11y?: NonNullable<OptionsConfig['overrides']>['jsxA11y']
@@ -412,6 +413,7 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
   const {
     files = [GLOB_SRC],
     typescript = false,
+    next,
     ruleOptions = {},
     accessibility = {},
     overrides,
@@ -470,22 +472,24 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         ...!!accessibility && overrides?.jsxA11y,
       },
     },
-    {
-      name: 'aelita:react:fast-refresh',
-      files: [GLOB_JSX, GLOB_TSX],
-      plugins: {
-        'react-refresh': pluginReactRefresh,
-      },
-      rules: {
-        'react-refresh/only-export-components': [
-          'warn',
-          {
-            checkJS: false,
-            allowConstantExport: true,
-            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
-          },
-        ],
-      },
-    },
+    ...next
+      ? [{
+        name: 'aelita:react:fast-refresh',
+        files: [GLOB_JSX, GLOB_TSX],
+        plugins: {
+          'react-refresh': pluginReactRefresh,
+        },
+        rules: {
+          'react-refresh/only-export-components': [
+            'warn',
+            {
+              checkJS: false,
+              allowConstantExport: true,
+              allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
+            },
+          ],
+        },
+      }]
+      : ([] as any),
   ]
 }
