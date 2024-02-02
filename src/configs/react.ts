@@ -472,24 +472,22 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         ...!!accessibility && overrides?.jsxA11y,
       },
     },
-    ...next
-      ? [{
-        name: 'aelita:react:fast-refresh',
-        files: [GLOB_JSX, GLOB_TSX],
-        plugins: {
-          'react-refresh': pluginReactRefresh,
-        },
-        rules: {
-          'react-refresh/only-export-components': [
-            'warn',
-            {
-              checkJS: false,
-              allowConstantExport: true,
-              allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
-            },
-          ],
-        },
-      }]
-      : ([] as any),
+    {
+      name: 'aelita:react:fast-refresh',
+      files: [GLOB_JSX, GLOB_TSX],
+      plugins: {
+        'react-refresh': pluginReactRefresh,
+      },
+      rules: {
+        'react-refresh/only-export-components': next ? 'off' : [
+          'warn',
+          {
+            checkJS: false,
+            allowConstantExport: true,
+            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
+          },
+        ],
+      },
+    },
   ]
 }
