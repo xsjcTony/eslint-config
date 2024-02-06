@@ -355,6 +355,7 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   // @ts-expect-error - type definition is not up-to-date
   'ts/switch-exhaustiveness-check': ['error', { requireDefaultForNonUnion: true }],
   'ts/unbound-method': ['error', { ignoreStatic: false }],
+  'ts/prefer-find': 'error',
 }
 
 
