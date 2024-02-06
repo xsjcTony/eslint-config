@@ -146,6 +146,7 @@ export const defineConfig = async (
     configs.push(react({
       ...typeof enableReact !== 'boolean' && enableReact,
       typescript: !!enableTypescript,
+      next: !!enableNext,
       overrides: {
         react: overrides.react,
         jsxA11y: overrides.jsxA11y,
