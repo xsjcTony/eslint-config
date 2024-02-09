@@ -36,10 +36,7 @@
     "typecheck": "tsc --noEmit",
     "preview": "eslint-flat-config-viewer",
     "lint": "eslint .",
-    "test:ci": "pnpm typecheck && pnpm build && pnpm lint",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "test:ci": "pnpm typecheck && pnpm build && pnpm lint"
   },
   "peerDependencies": {
     "eslint": ">=8.0.0"
@@ -66,15 +63,13 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.56.2",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.17",
     "bumpp": "^9.3.0",
     "changelogithub": "^0.13.3",
     "eslint": "^8.56.0",
     "eslint-flat-config-viewer": "^0.1.11",
     "sass": "^1.70.0",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3",
-    "vitepress": "1.0.0-rc.41",
-    "vue": "^3.4.15"
+    "typescript": "^5.3.3"
   }
 }
