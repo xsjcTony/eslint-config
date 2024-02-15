@@ -487,10 +487,10 @@ export const typescript = async ({
   projectType = 'app',
 }: TypescriptOptions = {}): Promise<FlatConfigItem[]> => {
 
-  const [pluginTypescript, parserTypescript] = await Promise.all([
-    interopDefault(import('@typescript-eslint/eslint-plugin')),
-    interopDefault(import('@typescript-eslint/parser')),
-  ] as const)
+  const {
+    parser: parserTypescript,
+    plugin: pluginTypescript,
+  } = await interopDefault(import('typescript-eslint'))
 
 
   return [
