@@ -1,5 +1,5 @@
 import { cwd as processCwd } from 'node:process'
-import { GLOB_DTS, GLOB_SRC } from '../globs'
+import { GLOB_DTS, GLOB_SRC, GLOB_TSX } from '../globs'
 import { interopDefault, toArray } from '../utils'
 import type {
   FlatConfigItem,
@@ -531,6 +531,13 @@ export const typescript = async ({
         ...typescriptStylisticRules,
         ...tsconfigPath && typeAwareTypescriptRules,
         ...overrides,
+      },
+    },
+    {
+      name: 'aelita:typescript:tsx-overrides',
+      files: [GLOB_TSX],
+      rules: {
+        'ts/no-unnecessary-type-constraint': 'off',
       },
     },
     {
