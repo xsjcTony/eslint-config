@@ -27,8 +27,8 @@ dependencies:
     specifier: ^6.8.0
     version: 6.8.0(eslint@8.56.0)
   eslint-plugin-playwright:
-    specifier: ^1.0.1
-    version: 1.0.1(eslint@8.56.0)
+    specifier: ^1.1.0
+    version: 1.1.0(eslint@8.56.0)
   eslint-plugin-react:
     specifier: ^7.33.2
     version: 7.33.2(eslint@8.56.0)
@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^8.56.2
     version: 8.56.2
   '@types/node':
-    specifier: ^20.11.17
-    version: 20.11.17
+    specifier: ^20.11.19
+    version: 20.11.19
   bumpp:
     specifier: ^9.3.0
     version: 9.3.0
@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^0.1.11
     version: 0.1.11(eslint@8.56.0)(typescript@5.3.3)
   sass:
-    specifier: ^1.70.0
-    version: 1.70.0
+    specifier: ^1.71.0
+    version: 1.71.0
   tsup:
     specifier: ^8.0.2
     version: 8.0.2(typescript@5.3.3)
@@ -558,8 +558,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
 
-  /@types/node@20.11.17:
-    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
+  /@types/node@20.11.19:
+    resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1701,8 +1701,9 @@ packages:
       object.fromentries: 2.0.7
     dev: false
 
-  /eslint-plugin-playwright@1.0.1(eslint@8.56.0):
-    resolution: {integrity: sha512-fq3oIZSE7/aHry2gaZRXGYwSkKDkoV+PKyQfyKmtMg4Gt4vQ41dZc4qBPd6VrdXLAflbL1i5KEl3bF9x1UFbVw==}
+  /eslint-plugin-playwright@1.1.0(eslint@8.56.0):
+    resolution: {integrity: sha512-HYh91H2I5Tf7HZ2LNnP7l9bRbharWomN1RzXMA/8KcTf1UDoc7OJxulny2O5QWxghBJk0MoElG6sil0fkPwnSA==}
+    engines: {node: '>=16.6.0'}
     peerDependencies:
       eslint: '>=7'
       eslint-plugin-jest: '>=25'
@@ -3204,8 +3205,8 @@ packages:
       is-regex: 1.1.4
     dev: false
 
-  /sass@1.70.0:
-    resolution: {integrity: sha512-uUxNQ3zAHeAx5nRFskBnrWzDUJrrvpCPD5FNAoRvTi0WwremlheES3tg+56PaVtCs5QDRX5CBLxxKMDJMEa1WQ==}
+  /sass@1.71.0:
+    resolution: {integrity: sha512-HKKIKf49Vkxlrav3F/w6qRuPcmImGVbIXJ2I3Kg0VMA+3Bav+8yE9G5XmP5lMj6nl4OlqbPftGAscNaNu28b8w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
