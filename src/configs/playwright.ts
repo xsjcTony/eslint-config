@@ -43,6 +43,7 @@ const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/valid-title': 'error',
   'playwright/no-wait-for-selector': 'error',
   'playwright/no-get-by-title': 'warn',
+  'playwright/no-unsafe-references': 'error',
 }
 
 
