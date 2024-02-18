@@ -27,8 +27,8 @@ dependencies:
     specifier: ^6.8.0
     version: 6.8.0(eslint@8.56.0)
   eslint-plugin-playwright:
-    specifier: ^1.1.0
-    version: 1.1.0(eslint@8.56.0)
+    specifier: ^1.2.0
+    version: 1.2.0(eslint@8.56.0)
   eslint-plugin-react:
     specifier: ^7.33.2
     version: 7.33.2(eslint@8.56.0)
@@ -1701,11 +1701,11 @@ packages:
       object.fromentries: 2.0.7
     dev: false
 
-  /eslint-plugin-playwright@1.1.0(eslint@8.56.0):
-    resolution: {integrity: sha512-HYh91H2I5Tf7HZ2LNnP7l9bRbharWomN1RzXMA/8KcTf1UDoc7OJxulny2O5QWxghBJk0MoElG6sil0fkPwnSA==}
+  /eslint-plugin-playwright@1.2.0(eslint@8.56.0):
+    resolution: {integrity: sha512-D7kY1gutJx5VWrqev4DmUs1HVTItR0iVjCAZl7PG4xI7G+amtjvvuM6EzWUL433JUH9vMk1e5afh53A5pHXWfg==}
     engines: {node: '>=16.6.0'}
     peerDependencies:
-      eslint: '>=7'
+      eslint: '>=8.40.0'
       eslint-plugin-jest: '>=25'
     peerDependenciesMeta:
       eslint-plugin-jest:

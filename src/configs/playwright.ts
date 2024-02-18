@@ -44,6 +44,11 @@ const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/no-wait-for-selector': 'error',
   'playwright/no-get-by-title': 'warn',
   'playwright/no-unsafe-references': 'error',
+  'playwright/no-conditional-expect': 'error',
+  'playwright/no-duplicate-hooks': 'error',
+  'playwright/no-standalone-expect': 'error',
+  'playwright/prefer-hooks-in-order': 'error',
+  'playwright/prefer-hooks-on-top': 'error',
 }
 
 
