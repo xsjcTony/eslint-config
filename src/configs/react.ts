@@ -85,7 +85,8 @@ const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): Flat
 
 
 const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
-  'react/jsx-boolean-value': ['error', 'never'],
+  // @ts-expect-error - type definition is not up-to-date
+  'react/jsx-boolean-value': ['error', 'never', [{ assumeUndefinedIsFalse: false }]],
   'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
   'react/jsx-fragments': ['error', 'syntax'],
   'react/jsx-key': [
