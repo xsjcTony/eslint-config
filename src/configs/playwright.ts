@@ -51,6 +51,8 @@ const playwrightRules: FlatConfigItem['rules'] = {
   'playwright/prefer-hooks-on-top': 'error',
   'playwright/prefer-comparison-matcher': 'error',
   'playwright/prefer-equality-matcher': 'error',
+  'playwright/valid-describe-callback': 'error',
+  'playwright/valid-expect-in-promise': 'error',
 }
 
 
