@@ -11,6 +11,7 @@ const unocssRules = (attributify: UnocssOptions['attributify']): FlatConfigItem[
   'unocss/order': 'error',
   ...attributify && { 'unocss/attributify': 'error' },
   'unocss/blocklist': 'error',
+  'unocss/enforce-class-compile': 'off',
 })
 
 
