@@ -315,7 +315,8 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   'ts/prefer-reduce-type-parameter': 'error',
   'ts/prefer-regexp-exec': 'error',
   'ts/prefer-return-this-type': 'error',
-  'ts/prefer-string-starts-ends-with': 'error',
+  // @ts-expect-error - type definition is not up-to-date
+  'ts/prefer-string-starts-ends-with': ['error', { allowSingleElementEquality: 'never' }],
   'ts/promise-function-async': [
     'error',
     {
