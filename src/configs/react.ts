@@ -12,8 +12,11 @@ interface ReactOptions extends OptionsReact {
 }
 
 
-const reactRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
-  'react/boolean-prop-naming': [
+const reactRules = (
+  ruleOptions: NonNullable<ReactOptions['ruleOptions']>,
+  typescript: boolean,
+): FlatConfigItem['rules'] => ({
+  'react/boolean-prop-naming': typescript ? 'off' : [
     'warn',
     {
       rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
@@ -461,7 +464,7 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         linkComponents: options.linkComponents,
       },
       rules: {
-        ...reactRules(ruleOptions),
+        ...reactRules(ruleOptions, typescript),
         ...jsxRules(ruleOptions),
         ...typescript && reactTypeScriptRules,
         ...typescript && jsxTypeScriptRules,
