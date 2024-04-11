@@ -1,12 +1,6 @@
 // @ts-check
-import defineConfig from './dist/index.js'
+import { bundleRequire } from 'bundle-require'
 
 
-export default defineConfig(
-  {
-    typescript: {
-      tsconfigPath: ['./tsconfig.json', './tsconfig.node.js.json'],
-      projectType: 'lib',
-    },
-  },
-)
+export default bundleRequire({ filepath: './eslint.config.ts' })
+  .then(r => r.mod.default)
