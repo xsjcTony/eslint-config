@@ -34,12 +34,12 @@
     "build": "tsup",
     "release": "pnpm test:ci && bumpp",
     "typecheck": "tsc --noEmit",
-    "preview": "npx @eslint/config-inspector",
+    "preview": "eslint-config-inspector --config eslint.config.ts",
     "lint": "eslint .",
     "test:ci": "pnpm typecheck && pnpm build && pnpm lint"
   },
   "peerDependencies": {
-    "eslint": ">=8.0.0"
+    "eslint": ">=8.40.0"
   },
   "dependencies": {
     "@antfu/eslint-define-config": "^1.23.0-2",
