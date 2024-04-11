@@ -78,6 +78,10 @@ export interface OptionsTypeScriptWithTypes {
   tsconfigPath?: string | string[]
 }
 
+export interface OptionsTypeScriptMisc {
+  projectType?: 'app' | 'lib'
+}
+
 export interface OptionsHasTypeScript {
   typescript?: boolean
 }
@@ -639,7 +643,11 @@ export interface OptionsConfig extends OptionsComponentExtensions {
    *
    * @default auto-detect based on the dependencies
    */
-  typescript?: boolean | (OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptionsOverride)
+  typescript?: boolean | (
+    OptionsTypeScriptWithTypes
+    & OptionsTypeScriptParserOptionsOverride
+    & OptionsTypeScriptMisc
+  )
 
   /**
    * Enable React support.

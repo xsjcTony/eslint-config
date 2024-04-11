@@ -6,6 +6,7 @@ import type {
   OptionsComponentExtensions,
   OptionsConfig,
   OptionsFiles,
+  OptionsTypeScriptMisc,
   OptionsTypeScriptParserOptionsOverride,
   OptionsTypeScriptWithTypes,
 } from '../types'
@@ -16,9 +17,9 @@ type TypescriptOptions =
   & OptionsFiles
   & OptionsTypeScriptWithTypes
   & OptionsTypeScriptParserOptionsOverride
+  & OptionsTypeScriptMisc
   & {
     overrides?: NonNullable<OptionsConfig['overrides']>['typescript']
-    projectType?: 'app' | 'lib'
   }
 
 
