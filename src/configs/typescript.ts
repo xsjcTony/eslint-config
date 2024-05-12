@@ -1,238 +1,216 @@
 import { cwd as processCwd } from 'node:process'
 import { GLOB_DTS, GLOB_SRC, GLOB_TSX } from '../globs'
 import { interopDefault, toArray } from '../utils'
-import type {
-  FlatConfigItem,
-  OptionsComponentExtensions,
-  OptionsConfig,
-  OptionsFiles,
-  OptionsTypeScriptParserOptionsOverride,
-  OptionsTypeScriptWithTypes,
-} from '../types'
+import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
+import type { Linter } from 'eslint'
 
 
-type TypescriptOptions =
-  & OptionsComponentExtensions
-  & OptionsFiles
-  & OptionsTypeScriptWithTypes
-  & OptionsTypeScriptParserOptionsOverride
-  & {
-    overrides?: NonNullable<OptionsConfig['overrides']>['typescript']
-    projectType?: 'app' | 'lib'
-  }
-
-
-const typescriptRules = (projectType: TypescriptOptions['projectType']): FlatConfigItem['rules'] => ({
-  'ts/adjacent-overload-signatures': 'error',
-  'ts/array-type': ['error', { 'default': 'array', readonly: 'array' }],
-  'ts/ban-ts-comment': [
-    'error',
-    {
-      'ts-expect-error': 'allow-with-description',
-      'ts-ignore': true,
-      'ts-nocheck': true,
-      'ts-check': false,
-      minimumDescriptionLength: 2,
-    },
-  ],
-  'ts/ban-types': [
-    'error',
-    {
-      types: {
-        String: {
-          message: 'Use string instead',
-          fixWith: 'string',
-        },
-        Boolean: {
-          message: 'Use boolean instead',
-          fixWith: 'boolean',
-        },
-        Number: {
-          message: 'Use number instead',
-          fixWith: 'number',
-        },
-        Symbol: {
-          message: 'Use symbol instead',
-          fixWith: 'symbol',
-        },
-
-        Function: {
-          message: [
-            'The `Function` type accepts any function-like value.',
-            'It provides no type safety when calling the function, which can be a common source of bugs.',
-            'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
-            'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
-          ].join('\n'),
-        },
-
-        // object typing
-        Object: {
-          message: [
-            'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
-            '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
-            '- If you want a type meaning "any value", you probably want `unknown` instead.',
-          ].join('\n'),
-        },
+function typescriptRules(
+  projectType: NonNullable<OptionsTypeScript['projectType']>,
+): TypedFlatConfigItem['rules'] {
+  return {
+    'ts/adjacent-overload-signatures': 'error',
+    'ts/array-type': ['error', { 'default': 'array', readonly: 'array' }],
+    'ts/ban-ts-comment': [
+      'error',
+      {
+        'ts-expect-error': 'allow-with-description',
+        'ts-ignore': true,
+        'ts-nocheck': true,
+        'ts-check': false,
+        minimumDescriptionLength: 2,
       },
-      extendDefaults: false,
-    },
-  ],
+    ],
+    'ts/ban-types': [
+      'error',
+      {
+        types: {
+          String: {
+            message: 'Use string instead',
+            fixWith: 'string',
+          },
+          Boolean: {
+            message: 'Use boolean instead',
+            fixWith: 'boolean',
+          },
+          Number: {
+            message: 'Use number instead',
+            fixWith: 'number',
+          },
+          Symbol: {
+            message: 'Use symbol instead',
+            fixWith: 'symbol',
+          },
 
-  'ts/consistent-indexed-object-style': ['error', 'record'],
-  'ts/consistent-type-assertions': [
-    'error',
-    {
-      assertionStyle: 'as',
-      objectLiteralTypeAssertions: 'allow-as-parameter',
-    },
-  ],
-  'ts/consistent-type-definitions': ['error', projectType === 'app' ? 'type' : 'interface'],
-  'ts/consistent-type-imports': [
-    'error',
-    {
-      prefer: 'type-imports',
-      fixStyle: 'separate-type-imports',
-    },
-  ],
+          Function: {
+            message: [
+              'The `Function` type accepts any function-like value.',
+              'It provides no type safety when calling the function, which can be a common source of bugs.',
+              'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
+              'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
+            ].join('\n'),
+          },
 
-  'default-param-last': 'off',
-  'ts/default-param-last': 'error',
+          // object typing
+          Object: {
+            message: [
+              'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
+              '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
+              '- If you want a type meaning "any value", you probably want `unknown` instead.',
+            ].join('\n'),
+          },
+        },
+        extendDefaults: false,
+      },
+    ],
 
-  'ts/explicit-function-return-type': [
-    'error',
-    {
-      allowExpressions: true,
-      allowTypedFunctionExpressions: true,
-      allowHigherOrderFunctions: true,
-      allowDirectConstAssertionInArrowFunctions: true,
-      allowConciseArrowFunctionExpressionsStartingWithVoid: true,
-      allowFunctionsWithoutTypeParameters: false,
-      allowIIFEs: false,
-      allowedNames: [],
-    },
-  ],
-  'ts/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
+    'ts/consistent-indexed-object-style': ['error', 'record'],
+    'ts/consistent-type-assertions': [
+      'error',
+      {
+        assertionStyle: 'as',
+        objectLiteralTypeAssertions: 'allow-as-parameter',
+      },
+    ],
+    'ts/consistent-type-definitions': ['error', projectType === 'app' ? 'type' : 'interface'],
+    'ts/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+        fixStyle: 'separate-type-imports',
+      },
+    ],
 
-  'ts/method-signature-style': ['error', 'property'],
+    'default-param-last': 'off',
+    'ts/default-param-last': 'error',
 
-  'no-array-constructor': 'off',
-  'ts/no-array-constructor': 'error',
+    'ts/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+        allowHigherOrderFunctions: true,
+        allowDirectConstAssertionInArrowFunctions: true,
+        allowConciseArrowFunctionExpressionsStartingWithVoid: true,
+        allowFunctionsWithoutTypeParameters: false,
+        allowIIFEs: false,
+        allowedNames: [],
+      },
+    ],
+    'ts/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
 
-  'ts/no-confusing-non-null-assertion': 'error',
+    'ts/method-signature-style': ['error', 'property'],
 
-  'no-dupe-class-members': 'off',
+    'no-array-constructor': 'off',
+    'ts/no-array-constructor': 'error',
 
-  'no-empty-function': 'off',
-  'ts/no-empty-function': ['error', { allow: ['decoratedFunctions'] }],
+    'ts/no-confusing-non-null-assertion': 'error',
 
-  'ts/no-empty-interface': ['error', { allowSingleExtends: true }],
-  'ts/no-extra-non-null-assertion': 'error',
+    'no-dupe-class-members': 'off',
 
-  'no-extra-semi': 'off',
-  'ts/no-extra-semi': 'error',
+    'no-empty-function': 'off',
+    'ts/no-empty-function': ['error', { allow: ['decoratedFunctions'] }],
 
-  'ts/no-extraneous-class': 'error',
-  'ts/no-inferrable-types': [
-    'error',
-    {
-      ignoreParameters: false,
-      ignoreProperties: false,
-    },
-  ],
+    'ts/no-empty-interface': ['error', { allowSingleExtends: true }],
+    'ts/no-extra-non-null-assertion': 'error',
 
-  'no-invalid-this': 'off',
+    'no-extra-semi': 'off',
+    'ts/no-extra-semi': 'error',
 
-  'ts/no-invalid-void-type': [
-    'error',
-    {
-      allowInGenericTypeArguments: true,
-      allowAsThisParameter: true,
-    },
-  ],
+    'ts/no-extraneous-class': 'error',
+    'ts/no-inferrable-types': [
+      'error',
+      {
+        ignoreParameters: false,
+        ignoreProperties: false,
+      },
+    ],
 
-  'no-loop-func': 'off',
-  'ts/no-loop-func': 'error',
+    'no-invalid-this': 'off',
 
-  'no-loss-of-precision': 'off',
-  'ts/no-loss-of-precision': 'error',
+    'ts/no-invalid-void-type': [
+      'error',
+      {
+        allowInGenericTypeArguments: true,
+        allowAsThisParameter: true,
+      },
+    ],
 
-  'ts/no-misused-new': 'error',
-  'ts/no-namespace': [
-    'error',
-    {
-      allowDeclarations: true,
-      allowDefinitionFiles: true,
-    },
-  ],
-  'ts/no-non-null-assertion': 'warn',
+    'no-loop-func': 'off',
+    'ts/no-loop-func': 'error',
 
-  'no-redeclare': 'off',
+    'no-loss-of-precision': 'off',
+    'ts/no-loss-of-precision': 'error',
 
-  'ts/no-require-imports': 'error',
-  'ts/no-this-alias': [
-    'error',
-    {
-      allowDestructuring: true,
-      allowedNames: [],
-    },
-  ],
+    'ts/no-misused-new': 'error',
+    'ts/no-namespace': [
+      'error',
+      {
+        allowDeclarations: true,
+        allowDefinitionFiles: true,
+      },
+    ],
+    'ts/no-non-null-assertion': 'warn',
 
-  'no-unused-vars': 'off',
-  'ts/no-unused-vars': [
-    'error',
-    {
-      vars: 'all',
-      args: 'none',
-      ignoreRestSiblings: true,
-      destructuredArrayIgnorePattern: '^_',
-    },
-  ],
+    'no-redeclare': 'off',
 
-  'no-useless-constructor': 'off',
-  'ts/no-useless-constructor': 'error',
+    'ts/no-require-imports': 'error',
+    'ts/no-this-alias': [
+      'error',
+      {
+        allowDestructuring: true,
+        allowedNames: [],
+      },
+    ],
 
-  'ts/no-useless-empty-export': 'error',
-  'ts/parameter-properties': ['error', { prefer: 'class-property', allow: [] }],
-  'ts/prefer-as-const': 'error',
-  'ts/prefer-for-of': 'error',
-  'ts/prefer-function-type': 'error',
-  'ts/prefer-ts-expect-error': 'error',
-  'ts/sort-type-constituents': projectType === 'lib' ? 'off' : [
-    'error',
-    {
-      checkIntersections: true,
-      checkUnions: true,
-      groupOrder: [
-        'named',
-        'keyword',
-        'operator',
-        'literal',
-        'function',
-        'import',
-        'conditional',
-        'object',
-        'tuple',
-        'intersection',
-        'union',
-        'nullish',
+    'no-useless-constructor': 'off',
+    'ts/no-useless-constructor': 'error',
+
+    'ts/no-useless-empty-export': 'error',
+    'ts/parameter-properties': ['error', { prefer: 'class-property', allow: [] }],
+    'ts/prefer-as-const': 'error',
+    'ts/prefer-for-of': 'error',
+    'ts/prefer-function-type': 'error',
+    'ts/prefer-ts-expect-error': 'error',
+    'ts/sort-type-constituents': projectType === 'lib'
+      ? 'off'
+      : [
+        'error',
+        {
+          checkIntersections: true,
+          checkUnions: true,
+          groupOrder: [
+            'named',
+            'keyword',
+            'operator',
+            'literal',
+            'function',
+            'import',
+            'conditional',
+            'object',
+            'tuple',
+            'intersection',
+            'union',
+            'nullish',
+          ],
+        },
       ],
-    },
-  ],
-  'ts/triple-slash-reference': [
-    'error',
-    {
-      path: 'never',
-      types: 'prefer-import',
-      lib: 'never',
-    },
-  ],
-  'ts/unified-signatures': 'error',
+    'ts/triple-slash-reference': [
+      'error',
+      {
+        path: 'never',
+        types: 'prefer-import',
+        lib: 'never',
+      },
+    ],
+    'ts/unified-signatures': 'error',
 
-  'no-undef': 'off',
-})
+    'no-undef': 'off',
+  }
+}
 
 
-const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
+const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/await-thenable': 'error',
   'ts/consistent-type-exports': ['error', { fixMixedExportsWithInlineTypeSpecifier: false }],
 
@@ -315,7 +293,6 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   'ts/prefer-reduce-type-parameter': 'error',
   'ts/prefer-regexp-exec': 'error',
   'ts/prefer-return-this-type': 'error',
-  // @ts-expect-error - type definition is not up-to-date
   'ts/prefer-string-starts-ends-with': ['error', { allowSingleElementEquality: 'never' }],
   'ts/promise-function-async': [
     'error',
@@ -355,7 +332,6 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   'ts/return-await': ['error', 'always'],
   'ts/switch-exhaustiveness-check': [
     'error',
-    // @ts-expect-error - type definition is not up-to-date
     {
       requireDefaultForNonUnion: true,
       allowDefaultCaseForExhaustiveSwitch: false,
@@ -363,130 +339,30 @@ const typeAwareTypescriptRules: FlatConfigItem['rules'] = {
   ],
   'ts/unbound-method': ['error', { ignoreStatic: false }],
   'ts/prefer-find': 'error',
-}
-
-
-const typescriptStylisticRules: FlatConfigItem['rules'] = {
-  'block-spacing': 'off',
-  'ts/block-spacing': ['error', 'always'],
-
-  'brace-style': 'off',
-  'ts/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-
-  'comma-dangle': 'off',
-  'ts/comma-dangle': ['error', 'always-multiline'],
-
-  'comma-spacing': 'off',
-  'ts/comma-spacing': ['error', { before: false, after: true }],
-
-  'func-call-spacing': 'off',
-  'ts/func-call-spacing': ['error', 'never'],
-
-  'key-spacing': 'off',
-  'ts/key-spacing': [
-    'error',
-    {
-      beforeColon: false,
-      afterColon: true,
-      mode: 'strict',
-    },
-  ],
-
-  'keyword-spacing': 'off',
-  'ts/keyword-spacing': ['error', { before: true, after: true }],
-
-  'lines-between-class-members': 'off',
-  'ts/lines-between-class-members': [
-    'error',
-    'always',
-    {
-      exceptAfterSingleLine: true,
-      exceptAfterOverload: true,
-    },
-  ],
-
-  'ts/member-delimiter-style': [
-    'error',
-    {
-      multiline: {
-        delimiter: 'none',
-        requireLast: true,
-      },
-      singleline: {
-        delimiter: 'semi',
-        requireLast: false,
-      },
-      multilineDetection: 'brackets',
-    },
-  ],
-
-  'no-extra-parens': 'off',
-  'ts/no-extra-parens': [
-    'error',
-    'all',
-    {
-      ignoreJSX: 'multi-line',
-      nestedBinaryExpressions: false,
-    },
-  ],
-
-  'object-curly-spacing': 'off',
-  'ts/object-curly-spacing': ['error', 'always'],
-
-  'padding-line-between-statements': 'off',
-  'ts/padding-line-between-statements': [
-    'error',
-    { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife', 'interface'] },
-    { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' },
-  ],
-
-  quotes: 'off',
-  'ts/quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
-
-  semi: 'off',
-  'ts/semi': ['error', 'never'],
-
-  'space-before-blocks': 'off',
-  'ts/space-before-blocks': ['error', 'always'],
-
-  'space-before-function-paren': 'off',
-  'ts/space-before-function-paren': [
-    'error',
-    {
-      anonymous: 'never',
-      named: 'never',
-      asyncArrow: 'always',
-    },
-  ],
-
-  'space-infix-ops': 'off',
-  'ts/space-infix-ops': ['error', { int32Hint: false }],
-
-  'ts/type-annotation-spacing': [
-    'error',
-    {
-      before: false,
-      after: true,
-      overrides: {
-        arrow: {
-          before: true,
-          after: true,
-        },
-      },
-    },
-  ],
   'ts/no-useless-template-literals': 'error',
+  'ts/only-throw-error': ['error', { allowThrowingAny: false, allowThrowingUnknown: false }],
 }
 
 
-export const typescript = async ({
-  componentExtensions = [],
-  files,
-  tsconfigPath,
-  parserOptionsOverride = {},
-  overrides = {},
-  projectType = 'app',
-}: TypescriptOptions = {}): Promise<FlatConfigItem[]> => {
+export async function typescript(options: OptionsTypeScript = {}): Promise<TypedFlatConfigItem[]> {
+
+  const {
+    componentExts = [],
+    overrides,
+    parserOptions = {},
+    projectType = 'app',
+  } = options
+
+
+  const files = options.files ?? [
+    GLOB_SRC,
+    ...componentExts.map(ext => `**/*.${ext}`),
+  ]
+  const tsconfigPath = options.tsconfigPath
+    ? toArray(options.tsconfigPath)
+    : void 0
+  const isTypeAware = !!tsconfigPath
+
 
   const {
     parser: parserTypescript,
@@ -502,67 +378,69 @@ export const typescript = async ({
       },
     },
     {
-      name: 'aelita:typescript',
-      files: files ?? [
-        GLOB_SRC,
-        ...componentExtensions.map(ext => `**/*.${ext}`),
-      ],
+      name: 'aelita:typescript:rules',
+      files,
       languageOptions: {
-        parser: parserTypescript,
+        parser: parserTypescript as Linter.FlatConfigParserModule,
         parserOptions: {
-          // https://github.com/antfu/eslint-config/issues/320
-          // @ts-expect-error - type conflict in `parserOptions` interface
           ecmaVersion: 'latest',
-          // @ts-expect-error - type conflict in `parserOptions` interface
           ecmaFeatures: { jsx: true },
-          // @ts-expect-error - type conflict in `parserOptions` interface
+          // @ts-expect-error - type conflict between `typescript-eslint` and `@types/eslint`
           sourceType: 'module',
-          // @ts-expect-error - type does not contain `null`
           jsxPragma: null,
-          extraFileExtensions: componentExtensions.map(ext => `.${ext}`),
-          ...tsconfigPath && {
-            project: toArray(tsconfigPath),
+          extraFileExtensions: componentExts.map(ext => `.${ext}`),
+          ...isTypeAware && {
+            project: tsconfigPath,
             tsconfigRootDir: processCwd(),
           },
-          ...parserOptionsOverride,
+          ...parserOptions,
         },
       },
-      rules: {
-        ...typescriptRules(projectType),
-        ...typescriptStylisticRules,
-        ...tsconfigPath && typeAwareTypescriptRules,
-        ...overrides,
-      },
+      rules: typescriptRules(projectType),
     },
+    ...isTypeAware
+      ? [{
+        name: 'aelita:typescript:rules:type-aware',
+        files,
+        rules: typeAwareRules,
+      }]
+      : [],
+    ...overrides
+      ? [{
+        name: 'aelita:typescript:override:custom',
+        rules: overrides,
+      }]
+      : [],
     {
-      name: 'aelita:typescript:tsx-overrides',
+      name: 'aelita:typescript:override:tsx',
       files: [GLOB_TSX],
       rules: {
         'ts/no-unnecessary-type-constraint': 'off',
       },
     },
     {
-      name: 'aelita:typescript:dts-overrides',
+      name: 'aelita:typescript:override:dts',
       files: [GLOB_DTS],
       rules: {
-        'ts/no-unused-vars': 'off',
         'ts/consistent-indexed-object-style': 'off',
         'ts/consistent-type-definitions': 'off',
         'ts/no-empty-interface': 'off',
+        'unused-imports/no-unused-vars': 'off',
       },
     },
     {
-      name: 'aelita:typescript:test-overrides',
+      name: 'aelita:typescript:override:test',
       files: ['**/*.{test,spec}.ts?(x)'],
       rules: {
         'ts/no-empty-function': 'off',
       },
     },
     {
-      name: 'aelita:typescript:javascript-overrides',
+      name: 'aelita:typescript:override:cjs',
       files: ['**/*.?(c)js'],
       rules: {
         'ts/no-require-imports': 'off',
+        'ts/no-var-requires': 'off',
       },
     },
   ]

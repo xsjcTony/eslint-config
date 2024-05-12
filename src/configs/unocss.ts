@@ -1,34 +1,47 @@
-import { interopDefault } from '../utils'
-import type { OptionsConfig, FlatConfigItem, OptionsUnocss, OptionsFiles } from '../types'
+import { ensurePackages, interopDefault } from '../utils'
+import type { OptionsUnocss, TypedFlatConfigItem } from '../types'
 
 
-interface UnocssOptions extends OptionsUnocss, OptionsFiles {
-  overrides?: NonNullable<OptionsConfig['overrides']>['unocss']
+function unocssRules(attributify: OptionsUnocss['attributify']): TypedFlatConfigItem['rules'] {
+  return {
+    'unocss/order': 'error',
+    ...attributify && { 'unocss/attributify': 'error' },
+    'unocss/blocklist': 'error',
+    'unocss/enforce-class-compile': 'off',
+  }
 }
 
 
-const unocssRules = (attributify: UnocssOptions['attributify']): FlatConfigItem['rules'] => ({
-  'unocss/order': 'error',
-  ...attributify && { 'unocss/attributify': 'error' },
-  'unocss/blocklist': 'error',
-  'unocss/enforce-class-compile': 'off',
-})
+export async function unocss(options: OptionsUnocss = {}): Promise<TypedFlatConfigItem[]> {
+
+  const {
+    files,
+    attributify = false,
+    overrides,
+  } = options
 
 
-export const unocss = async ({
-  files,
-  attributify,
-  overrides,
-}: UnocssOptions): Promise<FlatConfigItem[]> => [
-  {
-    name: 'aelita:playwright',
-    ...files && files,
-    plugins: {
-      unocss: await interopDefault(import('@unocss/eslint-plugin')),
+  await ensurePackages(['@unocss/eslint-plugin'])
+
+
+  return [
+    {
+      name: 'aelita:unocss:setup',
+      plugins: {
+        unocss: await interopDefault(import('@unocss/eslint-plugin')),
+      },
     },
-    rules: {
-      ...unocssRules(attributify),
-      ...overrides,
+    {
+      name: 'aelita:unocss:rules',
+      ...files && files,
+      rules: unocssRules(attributify),
     },
-  },
-]
+    ...overrides
+      ? [{
+        name: 'aelita:unocss:override:custom',
+        ...files && files,
+        rules: overrides,
+      }]
+      : [],
+  ]
+}

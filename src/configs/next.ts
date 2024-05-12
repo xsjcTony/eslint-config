@@ -1,23 +1,26 @@
 import { GLOB_SRC } from '../globs'
-import { interopDefault, renameRules } from '../utils'
-import type { OptionsConfig, OptionsNext, FlatConfigItem } from '../types'
+import { ensurePackages, interopDefault, renameRules } from '../utils'
+import type { OptionsNext, TypedFlatConfigItem } from '../types'
 
 
-interface NextOptions extends OptionsNext {
-  overrides?: NonNullable<OptionsConfig['overrides']>['next']
+function nextRules(pluginNext: any): TypedFlatConfigItem['rules'] {
+  return {
+    ...pluginNext.configs.recommended.rules,
+    ...pluginNext.configs['core-web-vitals'].rules,
+  }
 }
 
 
-const nextRules = (pluginNext: any): FlatConfigItem['rules'] => ({
-  ...pluginNext.configs.recommended.rules,
-  ...pluginNext.configs['core-web-vitals'].rules,
-})
+export async function next(options: OptionsNext = {}): Promise<TypedFlatConfigItem[]> {
+
+  const {
+    files = [GLOB_SRC],
+    overrides,
+  } = options
 
 
-export const next = async ({
-  files = [GLOB_SRC],
-  overrides,
-}: NextOptions): Promise<FlatConfigItem[]> => {
+  await ensurePackages(['@next/eslint-plugin-next'])
+
 
   // @ts-expect-error - no dts file available
   const pluginNext = await interopDefault(import('@next/eslint-plugin-next'))
@@ -31,7 +34,7 @@ export const next = async ({
         next: pluginNext,
       },
       rules: {
-        ...renameRules(nextRules(pluginNext) ?? {}, '@next/next', 'next'),
+        ...renameRules(nextRules(pluginNext) ?? {}, { '@next/next': 'next' }),
         ...overrides,
       },
     },

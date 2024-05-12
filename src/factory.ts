@@ -1,23 +1,30 @@
 import { existsSync } from 'node:fs'
+import process from 'node:process'
+import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { isPackageExists } from 'local-pkg'
 import {
   ignores,
-  javascript,
   importConfig,
+  javascript,
+  next,
+  node,
   playwright,
   react,
+  stylistic,
   typescript,
+  unicorn,
   unocss,
+  vitest,
   vue,
 } from './configs'
+import { resolveStylisticConfig } from './configs/stylistic'
+import { interopDefault } from './utils'
+import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types'
+import type { Linter } from 'eslint'
 
 
-import { next } from './configs/next'
-import { combine, interopDefault } from './utils'
-import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types'
-
-
-const flatConfigProps: (keyof FlatConfigItem)[] = [
+const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
+  'name',
   'files',
   'ignores',
   'languageOptions',
@@ -45,31 +52,81 @@ const REACT_PACKAGES = [
 ]
 
 
+export const DEFAULT_PLUGIN_RENAMING_MAP = {
+  '@typescript-eslint': 'ts',
+  '@stylistic': 'style',
+  '@stylistic/js': 'styleJs',
+  'import-x': 'import',
+  'vuejs-accessibility': 'vue-a11y',
+  '@next/next': 'next',
+  n: 'node',
+}
+
+
 /**
  * Construct an array of ESLint flat config items.
+ *
+ * @param {OptionsConfig & TypedFlatConfigItem} options The options for generating the ESLint configurations.
+ * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]} userConfigs The user configurations to be merged with the generated configurations.
+ *
+ * @returns {FlatConfigComposer<TypedFlatConfigItem, ConfigNames>} The merged ESLint configurations.
  */
-export const defineConfig = async (
-  options: OptionsConfig & FlatConfigItem = {},
-  ...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
-): Promise<UserConfigItem[]> => {
+export async function defineConfig(
+  options: OptionsConfig & TypedFlatConfigItem = {},
+  ...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]
+): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
 
   const {
-    // eslint-disable-next-line ts/no-unused-vars
-    isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
-    vue: enableVue = VUE_PACKAGES.some(i => isPackageExists(i)),
-    react: enableReact = REACT_PACKAGES.some(i => isPackageExists(i)),
-    next: enableNext = isPackageExists('next'),
+    componentExts = [],
+    isInEditor = !!(
+      (process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM)
+      && !process.env.CI
+    ),
+    autoRenamePlugins = true,
+    gitignore: enableGitignore = true,
+    javascript: javascriptOptions = {},
+    unicorn: unicornOptions = {},
+    node: nodeOptions = {},
     typescript: enableTypescript = isPackageExists('typescript'),
+    'import': enableImport = true,
+    stylistic: _stylistic = true,
+    vue: enableVue = VUE_PACKAGES.some(pkg => isPackageExists(pkg)),
+    react: enableReact = REACT_PACKAGES.some(pkg => isPackageExists(pkg)),
+    next: enableNext = isPackageExists('next'),
     playwright: enablePlaywright = isPackageExists('@playwright/test'),
     unocss: enableUnocss = isPackageExists('unocss'),
-    gitignore: enableGitignore = true,
-    overrides = {},
-    componentExtensions = [],
-    filesOverride = {},
+    vitest: enableVitest = isPackageExists('vitest'),
   } = options
 
 
-  const configs: Awaitable<FlatConfigItem[]>[] = []
+  const stylisticOptions = resolveStylisticConfig(_stylistic)
+
+
+  if (enableVue)
+    componentExts.push('vue')
+
+
+  /**
+   * ESLintignore, JavaScript, Import
+   */
+  const configs: Awaitable<TypedFlatConfigItem[]>[] = [
+    ignores(),
+    javascript({
+      isInEditor,
+      ...javascriptOptions,
+    }),
+    unicorn({
+      typescript: !!enableTypescript,
+      ...unicornOptions,
+    }),
+    node(nodeOptions),
+    importConfig({
+      typescript: !!enableTypescript,
+      vue: !!enableVue,
+      stylistic: !!stylisticOptions,
+      ...typeof enableImport !== 'boolean' && enableImport,
+    }),
+  ]
 
 
   /**
@@ -79,47 +136,33 @@ export const defineConfig = async (
     if (typeof enableGitignore === 'boolean') {
       existsSync('.gitignore')
       && configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]))
-    } else {
-      configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]))
-    }
+    } else { configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)])) }
   }
 
 
-  if (enableVue)
-    componentExtensions.push('vue')
-
-
   /**
-   * ESLintignore, Javascript, Import
-   */
-  configs.push(
-    ignores(),
-    javascript({
-      overrides: overrides.javascript,
-      files: filesOverride.javascript,
-    }),
-    importConfig({
-      typescript: !!enableTypescript,
-      vue: !!enableVue,
-      overrides: {
-        'import': overrides.import,
-        importTypescript: overrides.importTypescript,
-      },
-      files: filesOverride.import,
-    }),
-  )
-
-
-  /**
-   * Typescript
+   * TypeScript
    */
   if (enableTypescript) {
-    configs.push(typescript({
-      ...typeof enableTypescript !== 'boolean' && enableTypescript,
-      componentExtensions,
-      overrides: overrides.typescript,
-      files: filesOverride.typescript,
-    }))
+    configs.push(
+      typescript({
+        componentExts,
+        ...typeof enableTypescript !== 'boolean' && enableTypescript,
+      }),
+    )
+  }
+
+
+  /**
+   * Stylistic
+   */
+  if (stylisticOptions) {
+    configs.push(
+      stylistic({
+        ...stylisticOptions,
+        ...typeof _stylistic === 'object' && { overrides: _stylistic.overrides },
+      }),
+    )
   }
 
 
@@ -127,15 +170,13 @@ export const defineConfig = async (
    * Vue 3
    */
   if (enableVue) {
-    configs.push(vue({
-      ...typeof enableVue !== 'boolean' && enableVue,
-      typescript: !!enableTypescript,
-      overrides: {
-        vue: overrides.vue,
-        vueAccessibility: overrides.vueAccessibility,
-      },
-      files: filesOverride.vue,
-    }))
+    configs.push(
+      vue({
+        typescript: !!enableTypescript,
+        stylistic: stylisticOptions,
+        ...typeof enableVue !== 'boolean' && enableVue,
+      }),
+    )
   }
 
 
@@ -143,16 +184,13 @@ export const defineConfig = async (
    * React 18
    */
   if (enableReact) {
-    configs.push(react({
-      ...typeof enableReact !== 'boolean' && enableReact,
-      typescript: !!enableTypescript,
-      next: !!enableNext,
-      overrides: {
-        react: overrides.react,
-        jsxA11y: overrides.jsxA11y,
-      },
-      files: filesOverride.react,
-    }))
+    configs.push(
+      react({
+        typescript: !!enableTypescript,
+        next: !!enableNext,
+        ...typeof enableReact !== 'boolean' && enableReact,
+      }),
+    )
   }
 
 
@@ -160,11 +198,9 @@ export const defineConfig = async (
    * Next.js 14
    */
   if (enableNext) {
-    configs.push(next({
-      ...typeof enableNext !== 'boolean' && enableNext,
-      overrides: overrides.next,
-      files: filesOverride.next,
-    }))
+    configs.push(
+      next(typeof enableNext === 'boolean' ? {} : enableNext),
+    )
   }
 
 
@@ -172,10 +208,9 @@ export const defineConfig = async (
    * Playwright
    */
   if (enablePlaywright) {
-    configs.push(playwright({
-      overrides: overrides.playwright,
-      files: filesOverride.playwright,
-    }))
+    configs.push(
+      playwright(typeof enablePlaywright === 'boolean' ? {} : enablePlaywright),
+    )
   }
 
 
@@ -183,19 +218,31 @@ export const defineConfig = async (
    * Unocss
    */
   if (enableUnocss) {
-    configs.push(unocss({
-      ...typeof enableUnocss !== 'boolean' && enableUnocss,
-      overrides: overrides.unocss,
-      files: filesOverride.unocss,
-    }))
+    configs.push(
+      unocss(typeof enableUnocss === 'boolean' ? {} : enableUnocss),
+    )
+  }
+
+
+  /**
+   * Vitest
+   */
+  if (enableVitest) {
+    configs.push(
+      vitest({
+        isInEditor,
+        ...typeof enableVitest !== 'boolean' && enableVitest,
+      }),
+    )
   }
 
 
   /**
    * Flat config object
    */
-  const fusedConfig = flatConfigProps.reduce<FlatConfigItem>((acc, key) => {
+  const fusedConfig = flatConfigProps.reduce<TypedFlatConfigItem>((acc, key) => {
     if (key in options)
+      // eslint-disable-next-line ts/no-unnecessary-type-assertion
       acc[key] = options[key] as any
     return acc
   }, {})
@@ -204,5 +251,13 @@ export const defineConfig = async (
     configs.push([fusedConfig])
 
 
-  return await combine(...configs, ...userConfigs)
+  let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
+
+  composer = composer.append(...configs, ...userConfigs as any)
+
+  if (autoRenamePlugins)
+    composer = composer.renamePlugins(DEFAULT_PLUGIN_RENAMING_MAP)
+
+
+  return await composer
 }

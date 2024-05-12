@@ -1,234 +1,165 @@
 import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
-import { interopDefault } from '../utils'
-import type { OptionsConfig, FlatConfigItem, OptionsReact } from '../types'
+import { ensurePackages, interopDefault } from '../utils'
+import type { OptionsReact, TypedFlatConfigItem } from '../types'
 
 
-interface ReactOptions extends OptionsReact {
-  next?: boolean
-  overrides?: {
-    react?: NonNullable<OptionsConfig['overrides']>['react']
-    jsxA11y?: NonNullable<OptionsConfig['overrides']>['jsxA11y']
+function reactRules(options: OptionsReact = {}): TypedFlatConfigItem['rules'] {
+  const {
+    typescript,
+    ruleOptions = {},
+  } = options
+
+  return {
+    'react/boolean-prop-naming': typescript
+      ? 'off'
+      : [
+        'warn',
+        {
+          rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
+          message: 'BOOLEAN prop ({{ propName }}) should start with "is" or "has" and use camelCase',
+          validateNested: false,
+          propTypeNames: ruleOptions.booleanPropNaming?.extraPropTypeNames,
+        },
+      ],
+    'react/button-has-type': ['error', { button: true, submit: true, reset: true }],
+    'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
+    'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'always' }],
+    'react/display-name': ['error', { ignoreTranspilerName: false, checkContextObjects: false }],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
+    'react/hook-use-state': ['error', { allowDestructuredState: true }],
+    'react/no-array-index-key': 'warn',
+    'react/no-children-prop': ['error', { allowFunctions: false }],
+    'react/no-danger': 'warn',
+    'react/no-danger-with-children': 'error',
+    'react/no-deprecated': 'error',
+    'react/no-multi-comp': ['error', { ignoreStateless: true }],
+    'react/no-object-type-as-default-prop': 'error',
+    'react/no-string-refs': ['error', { noTemplateLiterals: true }],
+    'react/no-this-in-sfc': 'error',
+    'react/no-typos': 'error',
+    'react/no-unescaped-entities': [
+      'error',
+      {
+        forbid: [
+          {
+            'char': '>',
+            alternatives: ['&gt;'],
+          },
+          {
+            'char': '"',
+            alternatives: ['&quot;'],
+          },
+          {
+            'char': '\'',
+            alternatives: ['&apos;'],
+          },
+          {
+            'char': '}',
+            alternatives: ['&#125;'],
+          },
+          ...ruleOptions.noUnescapedEntities?.extraForbiddenCharacters ?? [],
+        ],
+      },
+    ],
+    'react/no-unknown-property': [
+      'error',
+      {
+        requireDataLowercase: true,
+        ignore: ruleOptions.noUnknownProperty?.ignoredProperties,
+      },
+    ],
+    'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
+    'react/no-unused-prop-types': 'error',
+    'react/prop-types': ['error', { skipUndeclared: false }],
+    'react/style-prop-object': ['error', { allow: ruleOptions.stylePropObject?.allowedComponents }],
+    'react/void-dom-elements-no-children': 'error',
   }
 }
 
 
-const reactRules = (
-  ruleOptions: NonNullable<ReactOptions['ruleOptions']>,
-  typescript: boolean,
-): FlatConfigItem['rules'] => ({
-  'react/boolean-prop-naming': typescript ? 'off' : [
-    'warn',
-    {
-      rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
-      message: 'BOOLEAN prop ({{ propName }}) should start with "is" or "has" and use camelCase',
-      validateNested: false,
-      propTypeNames: ruleOptions.booleanPropNaming?.extraPropTypeNames,
-    },
-  ],
-  'react/button-has-type': ['error', { button: true, submit: true, reset: true }],
-  'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
-  'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'always' }],
-  'react/display-name': ['error', { ignoreTranspilerName: false, checkContextObjects: false }],
-  'react/function-component-definition': [
-    'error',
-    {
-      namedComponents: 'arrow-function',
-      unnamedComponents: 'arrow-function',
-    },
-  ],
-  'react/hook-use-state': ['error', { allowDestructuredState: true }],
-  'react/no-array-index-key': 'warn',
-  'react/no-children-prop': ['error', { allowFunctions: false }],
-  'react/no-danger': 'warn',
-  'react/no-danger-with-children': 'error',
-  'react/no-deprecated': 'error',
-  'react/no-multi-comp': ['error', { ignoreStateless: true }],
-  'react/no-object-type-as-default-prop': 'error',
-  'react/no-string-refs': ['error', { noTemplateLiterals: true }],
-  'react/no-this-in-sfc': 'error',
-  'react/no-typos': 'error',
-  'react/no-unescaped-entities': [
-    'error',
-    {
-      forbid: [
-        {
-          'char': '>',
-          alternatives: ['&gt;'],
-        },
-        {
-          'char': '"',
-          alternatives: ['&quot;'],
-        },
-        {
-          'char': '\'',
-          alternatives: ['&apos;'],
-        },
-        {
-          'char': '}',
-          alternatives: ['&#125;'],
-        },
-        ...ruleOptions.noUnescapedEntities?.extraForbiddenCharacters ?? [],
-      ],
-    },
-  ],
-  'react/no-unknown-property': [
-    'error',
-    {
-      // @ts-expect-error - type definition is not up-to-date
-      requireDataLowercase: true,
-      ignore: ruleOptions.noUnknownProperty?.ignoredProperties,
-    },
-  ],
-  'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
-  'react/no-unused-prop-types': 'error',
-  'react/prop-types': ['error', { skipUndeclared: false }],
-  'react/style-prop-object': ['error', { allow: ruleOptions.stylePropObject?.allowedComponents }],
-  'react/void-dom-elements-no-children': 'error',
-})
-
-
-const jsxRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
-  // @ts-expect-error - type definition is not up-to-date
-  'react/jsx-boolean-value': ['error', 'never', { assumeUndefinedIsFalse: false }],
-  'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
-  'react/jsx-fragments': ['error', 'syntax'],
-  'react/jsx-key': [
-    'error',
-    {
-      checkFragmentShorthand: true,
-      // Maybe a breaking change in future: https://github.com/facebook/react/issues/20031#issuecomment-710346866
-      checkKeyMustBeforeSpread: true,
-      warnOnDuplicates: true,
-    },
-  ],
-  'react/jsx-no-comment-textnodes': 'error',
-  'react/jsx-no-constructed-context-values': 'error',
-  'react/jsx-no-duplicate-props': ['error', { ignoreCase: false }],
-  'react/jsx-no-leaked-render': 'warn',
-  'react/jsx-no-script-url': [
-    'error',
-    [
-      { name: 'Link', props: ['to', 'href'] },
-      ...ruleOptions.jsxNoScriptUrl?.extraComponentNameAndProps ?? [],
+function jsxRules(options: NonNullable<OptionsReact['ruleOptions']>): TypedFlatConfigItem['rules'] {
+  return {
+    'react/jsx-boolean-value': ['error', 'never', { assumeUndefinedIsFalse: false }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
+    'react/jsx-fragments': ['error', 'syntax'],
+    'react/jsx-key': [
+      'error',
+      {
+        checkFragmentShorthand: true,
+        // Maybe a breaking change in future: https://github.com/facebook/react/issues/20031#issuecomment-710346866
+        checkKeyMustBeforeSpread: true,
+        warnOnDuplicates: true,
+      },
     ],
-  ],
-  'react/jsx-no-target-blank': [
-    'error',
-    {
-      allowReferrer: false,
-      enforceDynamicLinks: 'always',
-      warnOnSpreadAttributes: true,
-      links: true,
-      forms: true,
-    },
-  ],
-  'react/jsx-no-undef': ['error', { allowGlobals: true }],
-  'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
-  'react/jsx-pascal-case': [
-    'error',
-    {
-      allowAllCaps: false,
-      allowLeadingUnderscore: false,
-      allowNamespace: false,
-      ignore: ruleOptions.jsxPascalCase?.ignore,
-    },
-  ],
-  'react/jsx-uses-vars': 'error',
-})
+    'react/jsx-no-comment-textnodes': 'error',
+    'react/jsx-no-constructed-context-values': 'error',
+    'react/jsx-no-duplicate-props': ['error', { ignoreCase: false }],
+    'react/jsx-no-leaked-render': 'warn',
+    'react/jsx-no-script-url': [
+      'error',
+      [
+        { name: 'Link', props: ['to', 'href'] },
+        ...options.jsxNoScriptUrl?.extraComponentNameAndProps ?? [],
+      ],
+    ],
+    'react/jsx-no-target-blank': [
+      'error',
+      {
+        allowReferrer: false,
+        enforceDynamicLinks: 'always',
+        warnOnSpreadAttributes: true,
+        links: true,
+        forms: true,
+      },
+    ],
+    'react/jsx-no-undef': ['error', { allowGlobals: true }],
+    'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
+    'react/jsx-uses-vars': 'error',
+  }
+}
 
 
-const reactTypeScriptRules: FlatConfigItem['rules'] = {
+const reactTypeScriptRules: TypedFlatConfigItem['rules'] = {
   'react/no-typos': 'off',
   'react/no-unknown-property': 'off',
 }
 
 
-const jsxTypeScriptRules: FlatConfigItem['rules'] = {
+const jsxTypeScriptRules: TypedFlatConfigItem['rules'] = {
   'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
   'react/jsx-no-leaked-render': 'off',
 }
 
 
-const reactStylisticRules: FlatConfigItem['rules'] = { 'react/self-closing-comp': ['error', { html: true, component: true }] }
-
-
-const jsxStylisticRules: FlatConfigItem['rules'] = {
-  'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
-  'react/jsx-closing-tag-location': 'error',
-  'react/jsx-curly-brace-presence': [
-    'error',
-    {
-      props: 'never',
-      children: 'never',
-      propElementValues: 'always',
-    },
-  ],
-  'react/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
-  'react/jsx-curly-spacing': [
-    'error',
-    {
-      when: 'never',
-      children: true,
-      allowMultiline: false,
-      attributes: true,
-    },
-  ],
-  'react/jsx-equals-spacing': ['error', 'never'],
-  'react/jsx-first-prop-new-line': ['error', 'multiline'],
-  'react/jsx-indent': ['error', 2, { checkAttributes: true, indentLogicalExpressions: true }],
-  'react/jsx-indent-props': ['error', 2],
-  'react/jsx-max-props-per-line': ['error', { maximum: { single: 3, multi: 1 } }],
-  'react/jsx-sort-props': [
-    'error',
-    {
-      callbacksLast: true,
-      shorthandFirst: true,
-      shorthandLast: false,
-      multiline: 'ignore',
-      ignoreCase: true,
-      noSortAlphabetically: false,
-      reservedFirst: true,
-      locale: 'auto',
-    },
-  ],
-  'react/jsx-tag-spacing': [
-    'error',
-    {
-      closingSlash: 'never',
-      beforeSelfClosing: 'always',
-      afterOpening: 'never',
-      beforeClosing: 'never',
-    },
-  ],
-  'react/jsx-wrap-multilines': [
-    'error',
-    {
-      declaration: 'parens-new-line',
-      assignment: 'parens-new-line',
-      'return': 'parens-new-line',
-      arrow: 'parens-new-line',
-      condition: 'parens-new-line',
-      logical: 'parens-new-line',
-      prop: 'parens-new-line',
-    },
-  ],
+function reactHooksRules(options: NonNullable<OptionsReact['ruleOptions']>): TypedFlatConfigItem['rules'] {
+  return {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      { additionalHooks: options.reactHooksExhaustiveDeps?.additionalHooks },
+    ],
+  }
 }
 
 
-const reactHooksRules = (ruleOptions: NonNullable<ReactOptions['ruleOptions']>): FlatConfigItem['rules'] => ({
-  'react-hooks/rules-of-hooks': 'error',
-  'react-hooks/exhaustive-deps': [
-    'warn',
-    { additionalHooks: ruleOptions.reactHooksExhaustiveDeps?.additionalHooks },
-  ],
-})
+function jsxAccessibilityRules(options: OptionsReact): TypedFlatConfigItem['rules'] {
+  const {
+    linkComponents,
+    imageComponents,
+  } = options
 
+  const accessibility = options.accessibility === false
+    ? false
+    : typeof options.accessibility === 'boolean'
+      ? {}
+      : options.accessibility ?? {}
 
-const jsxAccessibilityRules = ({
-  linkComponents,
-  imageComponents,
-  accessibility = {},
-}: ReactOptions): FlatConfigItem['rules'] => {
   if (!accessibility)
     return {}
 
@@ -236,8 +167,8 @@ const jsxAccessibilityRules = ({
     ?.map(comp => typeof comp === 'string' ? comp : comp.name)
   const extraLinkComponentAttributes = linkComponents
     ?.filter(comp => typeof comp !== 'string')
-    .map(comp =>
-      (comp as Exclude<NonNullable<ReactOptions['linkComponents']>[number], string>).linkAttribute)
+    // @ts-expect-error - type narrowing issue of `Array.prototype.filter`
+    .map(comp => comp.linkAttribute)
 
   const {
     altText,
@@ -345,7 +276,6 @@ const jsxAccessibilityRules = ({
     ...noAutofocus && { 'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }] },
     'jsx-a11y/no-distracting-elements': [
       'error',
-      // @ts-expect-error - type definition is incorrect
       { elements: ['marquee', 'blink', ...noDistractingElements?.extraDistractingElements ?? []] },
     ],
     'jsx-a11y/no-interactive-element-to-noninteractive-role': [
@@ -412,29 +342,45 @@ const jsxAccessibilityRules = ({
 }
 
 
-export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[]> => {
+function reactRefreshRules(options: NonNullable<OptionsReact['ruleOptions']>): TypedFlatConfigItem['rules'] {
+  return {
+    'react-refresh/only-export-components': [
+      'warn',
+      {
+        checkJS: false,
+        allowConstantExport: true,
+        allowExportNames: options.fastRefresh?.allowedExportNames,
+      },
+    ],
+  }
+}
+
+
+export async function react(options: OptionsReact = {}): Promise<TypedFlatConfigItem[]> {
 
   const {
-    files = [GLOB_SRC],
     typescript = false,
-    next,
+    enableFastRefresh = true,
     ruleOptions = {},
     accessibility = {},
-    overrides,
+    overrides = {},
+    a11yOverrides = {},
   } = options
 
 
-  const [
-    pluginReact,
-    pluginReactHooks,
-    pluginReactRefresh,
-  ] = await Promise.all([
+  await ensurePackages([
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+    ...enableFastRefresh ? ['eslint-plugin-react-refresh'] : [],
+    ...accessibility ? ['eslint-plugin-jsx-a11y'] : [],
+  ])
+
+
+  const [pluginReact, pluginReactHooks] = await Promise.all([
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react')),
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react-hooks')),
-    // @ts-expect-error - no dts file available
-    interopDefault(import('eslint-plugin-react-refresh')),
   ] as const)
 
 
@@ -444,15 +390,19 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
       plugins: {
         react: pluginReact,
         'react-hooks': pluginReactHooks,
-        ...!!accessibility && {
+        ...accessibility && {
           // @ts-expect-error - no dts file available
           'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')),
+        },
+        ...enableFastRefresh && {
+          // @ts-expect-error - no dts file available
+          'react-refresh': await interopDefault(import('eslint-plugin-react-refresh')),
         },
       },
     },
     {
-      name: 'aelita:react',
-      files,
+      name: 'aelita:react:rules',
+      files: options.files ?? [GLOB_SRC],
       settings: {
         react: {
           version: 'detect',
@@ -464,34 +414,30 @@ export const react = async (options: ReactOptions = {}): Promise<FlatConfigItem[
         linkComponents: options.linkComponents,
       },
       rules: {
-        ...reactRules(ruleOptions, typescript),
+        ...reactRules(options),
         ...jsxRules(ruleOptions),
         ...typescript && reactTypeScriptRules,
         ...typescript && jsxTypeScriptRules,
-        ...reactStylisticRules,
-        ...jsxStylisticRules,
         ...reactHooksRules(ruleOptions),
-        ...!!accessibility && jsxAccessibilityRules(options),
-        ...overrides?.react,
-        ...!!accessibility && overrides?.jsxA11y,
+        ...overrides,
       },
     },
-    {
-      name: 'aelita:react:fast-refresh',
-      files: [GLOB_JSX, GLOB_TSX],
-      plugins: {
-        'react-refresh': pluginReactRefresh,
-      },
-      rules: {
-        'react-refresh/only-export-components': next ? 'off' : [
-          'warn',
-          {
-            checkJS: false,
-            allowConstantExport: true,
-            allowExportNames: ruleOptions.fastRefresh?.allowedExportNames,
-          },
-        ],
-      },
-    },
+    ...accessibility
+      ? [{
+        name: 'aelita:react:rules:accessibility',
+        files: options.files ?? [GLOB_JSX, GLOB_TSX],
+        rules: {
+          ...jsxAccessibilityRules(options),
+          ...a11yOverrides,
+        },
+      }]
+      : [],
+    ...enableFastRefresh
+      ? [{
+        name: 'aelita:react:rules:fast-refresh',
+        files: options.files ?? [GLOB_JSX, GLOB_TSX],
+        rules: reactRefreshRules(ruleOptions),
+      }]
+      : [],
   ]
 }

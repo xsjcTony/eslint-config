@@ -1,14 +1,9 @@
-import { GLOB_PLAYWRIGHT } from '../globs'
-import { interopDefault } from '../utils'
-import type { FlatConfigItem, OptionsConfig, OptionsFiles } from '../types'
+import { GLOB_E2E_TESTS } from '../globs'
+import { ensurePackages, interopDefault } from '../utils'
+import type { OptionsPlaywright, TypedFlatConfigItem } from '../types'
 
 
-interface PlaywrightOptions extends OptionsFiles {
-  overrides?: NonNullable<OptionsConfig['overrides']>['playwright']
-}
-
-
-const playwrightRules: FlatConfigItem['rules'] = {
+const playwrightRules: TypedFlatConfigItem['rules'] = {
   'playwright/no-conditional-in-test': 'warn',
   'playwright/no-element-handle': 'error',
   'playwright/no-eval': 'error',
@@ -56,19 +51,35 @@ const playwrightRules: FlatConfigItem['rules'] = {
 }
 
 
-export const playwright = async ({
-  files = [GLOB_PLAYWRIGHT],
-  overrides,
-}: PlaywrightOptions): Promise<FlatConfigItem[]> => [
-  {
-    name: 'aelita:playwright',
-    files,
-    plugins: {
-      playwright: await interopDefault(import('eslint-plugin-playwright')),
+export async function playwright(options: OptionsPlaywright = {}): Promise<TypedFlatConfigItem[]> {
+
+  const {
+    files = GLOB_E2E_TESTS,
+    overrides,
+  } = options
+
+
+  await ensurePackages(['eslint-plugin-playwright'])
+
+
+  return [
+    {
+      name: 'aelita:playwright:setup',
+      plugins: {
+        playwright: await interopDefault(import('eslint-plugin-playwright')),
+      },
     },
-    rules: {
-      ...playwrightRules,
-      ...overrides,
+    {
+      name: 'aelita:playwright:rules',
+      files,
+      rules: playwrightRules,
     },
-  },
-]
+    ...overrides
+      ? [{
+        name: 'aelita:playwright:override:custom',
+        files,
+        rules: overrides,
+      }]
+      : [],
+  ]
+}

@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "es2020",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "."
   },
   "include": [
-    "**/*.ts",
-    "./docs/.vitepress/**/*.ts",
-    "./docs/.vitepress/**/*.vue"
+    "**/*.ts"
   ]
 }
