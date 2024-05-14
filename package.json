@@ -119,8 +119,10 @@
   "devDependencies": {
     "@aelita-dev/eslint-config": "workspace:*",
     "@eslint/config-inspector": "^0.4.8",
+    "@next/eslint-plugin-next": "^14.2.3",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.12.11",
+    "@unocss/eslint-plugin": "^0.60.2",
     "bumpp": "^9.4.1",
     "bundle-require": "^4.1.0",
     "changelogithub": "^0.13.7",
