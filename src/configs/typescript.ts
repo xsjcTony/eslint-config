@@ -69,7 +69,7 @@ function typescriptRules(
       'error',
       {
         assertionStyle: 'as',
-        objectLiteralTypeAssertions: 'allow-as-parameter',
+        objectLiteralTypeAssertions: 'allow',
       },
     ],
     'ts/consistent-type-definitions': ['error', projectType === 'app' ? 'type' : 'interface'],
