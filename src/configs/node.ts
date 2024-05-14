@@ -8,9 +8,10 @@ const nodeRules: TypedFlatConfigItem['rules'] = {
   'node/no-new-require': 'error',
   'node/no-path-concat': 'error',
   'node/prefer-global/buffer': ['error', 'never'],
+  'node/prefer-global/console': ['error', 'always'],
   'node/prefer-global/process': ['error', 'never'],
-  'node/prefer-global/url-search-params': ['error', 'never'],
-  'node/prefer-global/url': ['error', 'never'],
+  'node/prefer-global/url-search-params': ['error', 'always'],
+  'node/prefer-global/url': ['error', 'always'],
   'node/process-exit-as-throw': 'error',
 }
 
