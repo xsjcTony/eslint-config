@@ -177,6 +177,7 @@ function typescriptRules(
       : [
         'error',
         {
+          caseSensitive: true,
           checkIntersections: true,
           checkUnions: true,
           groupOrder: [
