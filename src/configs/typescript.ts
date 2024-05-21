@@ -1,4 +1,4 @@
-import { cwd as processCwd } from 'node:process'
+import { cwd } from 'node:process'
 import { GLOB_DTS, GLOB_SRC, GLOB_TSX } from '../globs'
 import { interopDefault, toArray } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
@@ -391,7 +391,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...isTypeAware && {
             project: tsconfigPath,
-            tsconfigRootDir: processCwd(),
+            tsconfigRootDir: cwd(),
           },
           ...parserOptions,
         },
