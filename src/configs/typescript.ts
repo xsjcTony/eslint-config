@@ -171,7 +171,6 @@ function typescriptRules(
     'ts/prefer-as-const': 'error',
     'ts/prefer-for-of': 'error',
     'ts/prefer-function-type': 'error',
-    'ts/prefer-ts-expect-error': 'error',
     'ts/sort-type-constituents': projectType === 'lib'
       ? 'off'
       : [
