@@ -36,7 +36,6 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/no-ref-object-reactivity-loss': 'error',
     'vue/no-required-prop-with-default': ['error', { autofix: true }],
     'vue/no-restricted-v-bind': 'error',
-    'vue/no-root-v-if': 'error',
     'vue/no-setup-props-reactivity-loss': 'error',
     'vue/no-static-inline-styles': ['warn', { allowBinding: false }],
     'vue/no-template-target-blank': ['error', { allowReferrer: false, enforceDynamicLinks: 'always' }],
@@ -81,7 +80,6 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
       },
     ],
     'vue/v-for-delimiter-style': ['error', 'in'],
-    'vue/v-on-handler-style': ['error', ['method', 'inline-function'], { ignoreIncludesComment: false }],
     'vue/valid-define-options': 'error',
     'vue/no-unused-emit-declarations': 'error',
 
