@@ -25,7 +25,7 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
       },
     ],
     'vue/custom-event-name-casing': ['error', 'camelCase'],
-    'vue/define-emits-declaration': ['error', 'type-literal'],
+    'vue/define-emits-declaration': ['error', 'type-based'],
     'vue/define-props-declaration': ['error', 'type-based'],
     'vue/html-button-has-type': ['error', { button: true, submit: true, reset: true }],
     'vue/next-tick-style': ['error', 'promise'],
