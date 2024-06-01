@@ -91,6 +91,7 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
         ignoreDestructuring: true,
         ignoreImports: false,
         ignoreGlobals: false,
+        allow: ['^_'],
       },
     ],
     'vue/dot-notation': ['error', { allowKeywords: true }],

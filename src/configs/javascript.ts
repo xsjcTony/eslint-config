@@ -14,6 +14,7 @@ function javascriptRules(isInEditor: boolean): TypedFlatConfigItem['rules'] {
         ignoreDestructuring: true,
         ignoreImports: false,
         ignoreGlobals: false,
+        allow: ['^_'],
       },
     ],
     'dot-notation': ['error', { allowKeywords: true }],
