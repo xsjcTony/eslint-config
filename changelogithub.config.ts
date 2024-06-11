@@ -14,5 +14,6 @@ export default {
     test: { title: '🧪 Tests' },
     style: { title: '🎨 Styles' },
     ci: { title: '🤖 CI' },
+    chore: { title: '🧹 Chores' },
   },
 } satisfies ChangelogOptions

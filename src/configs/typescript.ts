@@ -339,7 +339,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   ],
   'ts/unbound-method': ['error', { ignoreStatic: false }],
   'ts/prefer-find': 'error',
-  'ts/no-useless-template-literals': 'error',
+  'ts/no-useless-template-expression': 'error',
   'ts/only-throw-error': ['error', { allowThrowingAny: false, allowThrowingUnknown: false }],
 }
 
