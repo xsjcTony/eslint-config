@@ -1,5 +1,5 @@
 import { cwd } from 'node:process'
-import { GLOB_DTS, GLOB_SRC, GLOB_TSX } from '../globs'
+import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
 import { interopDefault, toArray } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
 import type { Linter } from 'eslint'
@@ -355,7 +355,8 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
 
 
   const files = options.files ?? [
-    GLOB_SRC,
+    GLOB_TS,
+    GLOB_TSX,
     ...componentExts.map(ext => `**/*.${ext}`),
   ]
   const tsconfigPath = options.tsconfigPath
