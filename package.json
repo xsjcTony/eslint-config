@@ -146,7 +146,12 @@
   },
   "overrides": {
     "eslint-plugin-unused-imports": {
-      "dependencies": {
+      "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^7.13.1",
+        "@typescript-eslint/parser": "^7.13.1",
+        "eslint": "$eslint"
+      },
+      "peerDependencies": {
         "eslint": ">=8.40.0",
         "@typescript-eslint/eslint-plugin": ">=7.13.1"
       }
