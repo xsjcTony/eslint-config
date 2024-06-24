@@ -143,18 +143,5 @@
     "tsx": "^4.15.7",
     "typescript": "^5.5.2",
     "vue-eslint-parser": "^9.4.3"
-  },
-  "overrides": {
-    "eslint-plugin-unused-imports": {
-      "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^7.13.1",
-        "@typescript-eslint/parser": "^7.13.1",
-        "eslint": "$eslint"
-      },
-      "peerDependencies": {
-        "eslint": ">=8.40.0",
-        "@typescript-eslint/eslint-plugin": ">=7.13.1"
-      }
-    }
   }
 }
