@@ -90,6 +90,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/prefer-structured-clone': 'error',
     'unicorn/no-invalid-fetch-options': 'error',
     'unicorn/prefer-string-raw': 'error',
+    'unicorn/no-negation-in-equality-check': 'error',
   }
 }
 
