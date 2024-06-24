@@ -167,7 +167,6 @@ function jsxAccessibilityRules(options: OptionsReact): TypedFlatConfigItem['rule
     ?.map(comp => typeof comp === 'string' ? comp : comp.name)
   const extraLinkComponentAttributes = linkComponents
     ?.filter(comp => typeof comp !== 'string')
-    // @ts-expect-error - type narrowing issue of `Array.prototype.filter`
     .map(comp => comp.linkAttribute)
 
   const {
