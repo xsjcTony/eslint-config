@@ -43,7 +43,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
   return {
     'style/array-bracket-newline': ['error', 'consistent'],
     'style/array-bracket-spacing': ['error', 'never'],
-    'style/array-element-newline': ['error', 'consistent'],
+    'style/array-element-newline': ['error', { consistent: true, multiline: true }],
     'style/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
     'style/arrow-spacing': ['error', { before: true, after: true }],
     'style/block-spacing': ['error', 'always'],
