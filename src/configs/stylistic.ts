@@ -191,7 +191,6 @@ function jsxRules(
     'style/jsx-equals-spacing': ['error', 'never'],
     'style/jsx-first-prop-new-line': ['error', 'multiline'],
     'style/jsx-function-call-newline': ['error', 'multiline'],
-    'style/jsx-indent': ['error', config.indent, { checkAttributes: true, indentLogicalExpressions: true }],
     'style/jsx-indent-props': ['error', config.indent],
     'style/jsx-max-props-per-line': ['error', { maximum: { single: 3, multi: 1 } }],
     'style/jsx-pascal-case': [

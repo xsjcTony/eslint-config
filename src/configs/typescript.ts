@@ -114,9 +114,6 @@ function typescriptRules(
     'ts/no-empty-interface': ['error', { allowSingleExtends: true }],
     'ts/no-extra-non-null-assertion': 'error',
 
-    'no-extra-semi': 'off',
-    'ts/no-extra-semi': 'error',
-
     'ts/no-extraneous-class': 'error',
     'ts/no-inferrable-types': [
       'error',
@@ -248,13 +245,6 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
       checksConditionals: true,
       checksVoidReturn: false,
       checksSpreads: true,
-    },
-  ],
-  'ts/no-throw-literal': [
-    'error',
-    {
-      allowThrowingAny: false,
-      allowThrowingUnknown: false,
     },
   ],
   'ts/no-unnecessary-boolean-literal-compare': [

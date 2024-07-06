@@ -47,7 +47,6 @@ function javascriptRules(isInEditor: boolean): TypedFlatConfigItem['rules'] {
     'prefer-rest-params': 'error',
     'no-loop-func': 'error',
     'prefer-spread': 'error',
-    'function-paren-newline': ['error', 'consistent'],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
     'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: false }],
     'no-useless-concat': 'error',
