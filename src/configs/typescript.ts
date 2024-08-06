@@ -1,6 +1,7 @@
-import { cwd } from 'node:process'
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
-import { interopDefault, toArray } from '../utils'
+import { interopDefault } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
 import type { Linter } from 'eslint'
 
@@ -21,49 +22,8 @@ function typescriptRules(
         minimumDescriptionLength: 2,
       },
     ],
-    'ts/ban-types': [
-      'error',
-      {
-        types: {
-          String: {
-            message: 'Use string instead',
-            fixWith: 'string',
-          },
-          Boolean: {
-            message: 'Use boolean instead',
-            fixWith: 'boolean',
-          },
-          Number: {
-            message: 'Use number instead',
-            fixWith: 'number',
-          },
-          Symbol: {
-            message: 'Use symbol instead',
-            fixWith: 'symbol',
-          },
-
-          Function: {
-            message: [
-              'The `Function` type accepts any function-like value.',
-              'It provides no type safety when calling the function, which can be a common source of bugs.',
-              'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
-              'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
-            ].join('\n'),
-          },
-
-          // object typing
-          Object: {
-            message: [
-              'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
-              '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
-              '- If you want a type meaning "any value", you probably want `unknown` instead.',
-            ].join('\n'),
-          },
-        },
-        extendDefaults: false,
-      },
-    ],
-
+    'ts/no-unsafe-function-type': 'error',
+    'ts/no-wrapper-object-types': 'error',
     'ts/consistent-indexed-object-style': ['error', 'record'],
     'ts/consistent-type-assertions': [
       'error',
@@ -111,9 +71,14 @@ function typescriptRules(
     'no-empty-function': 'off',
     'ts/no-empty-function': ['error', { allow: ['decoratedFunctions'] }],
 
-    'ts/no-empty-interface': ['error', { allowSingleExtends: true }],
+    'ts/no-empty-object-type': [
+      'error',
+      {
+        allowInterfaces: 'with-single-extends',
+        allowObjectTypes: 'always',
+      },
+    ],
     'ts/no-extra-non-null-assertion': 'error',
-
     'ts/no-extraneous-class': 'error',
     'ts/no-inferrable-types': [
       'error',
@@ -135,9 +100,6 @@ function typescriptRules(
 
     'no-loop-func': 'off',
     'ts/no-loop-func': 'error',
-
-    'no-loss-of-precision': 'off',
-    'ts/no-loss-of-precision': 'error',
 
     'ts/no-misused-new': 'error',
     'ts/no-namespace': [
@@ -236,7 +198,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
       ignoreUnions: false,
     },
   ],
-  'ts/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: false }],
+  'ts/no-floating-promises': ['error', { checkThenables: false, ignoreVoid: true, ignoreIIFE: false }],
   'ts/no-for-in-array': 'error',
   'ts/no-implied-eval': 'error',
   'ts/no-misused-promises': [
@@ -340,6 +302,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
     componentExts = [],
     overrides,
     parserOptions = {},
+    enableTypeAwareRules = true,
     projectType = 'app',
   } = options
 
@@ -349,10 +312,6 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
     GLOB_TSX,
     ...componentExts.map(ext => `**/*.${ext}`),
   ]
-  const tsconfigPath = options.tsconfigPath
-    ? toArray(options.tsconfigPath)
-    : void 0
-  const isTypeAware = !!tsconfigPath
 
 
   const {
@@ -372,24 +331,23 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
       name: 'aelita:typescript:rules',
       files,
       languageOptions: {
-        parser: parserTypescript as Linter.FlatConfigParserModule,
+        parser: parserTypescript as Linter.Parser,
         parserOptions: {
           ecmaVersion: 'latest',
           ecmaFeatures: { jsx: true },
-          // @ts-expect-error - type conflict between `typescript-eslint` and `@types/eslint`
           sourceType: 'module',
           jsxPragma: null,
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
-          ...isTypeAware && {
-            project: tsconfigPath,
-            tsconfigRootDir: cwd(),
+          ...enableTypeAwareRules && {
+            projectService: enableTypeAwareRules,
+            tsconfigRootDir: dirname(fileURLToPath(import.meta.url)),
           },
           ...parserOptions,
         },
       },
       rules: typescriptRules(projectType),
     },
-    ...isTypeAware
+    ...enableTypeAwareRules
       ? [{
         name: 'aelita:typescript:rules:type-aware',
         files,
@@ -415,7 +373,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
       rules: {
         'ts/consistent-indexed-object-style': 'off',
         'ts/consistent-type-definitions': 'off',
-        'ts/no-empty-interface': 'off',
+        'ts/no-empty-object-type': 'off',
         'unused-imports/no-unused-vars': 'off',
       },
     },
@@ -428,10 +386,9 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
     },
     {
       name: 'aelita:typescript:override:cjs',
-      files: ['**/*.?(c)js'],
+      files: ['**/*.?(c)ts'],
       rules: {
         'ts/no-require-imports': 'off',
-        'ts/no-var-requires': 'off',
       },
     },
   ]

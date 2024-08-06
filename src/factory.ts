@@ -67,13 +67,13 @@ export const DEFAULT_PLUGIN_RENAMING_MAP = {
  * Construct an array of ESLint flat config items.
  *
  * @param {OptionsConfig & TypedFlatConfigItem} options The options for generating the ESLint configurations.
- * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]} userConfigs The user configurations to be merged with the generated configurations.
+ * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]} userConfigs The user configurations to be merged with the generated configurations.
  *
  * @returns {FlatConfigComposer<TypedFlatConfigItem, ConfigNames>} The merged ESLint configurations.
  */
 export async function defineConfig(
   options: OptionsConfig & TypedFlatConfigItem = {},
-  ...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]
+  ...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]
 ): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
 
   const {
@@ -242,7 +242,6 @@ export async function defineConfig(
    */
   const fusedConfig = flatConfigProps.reduce<TypedFlatConfigItem>((acc, key) => {
     if (key in options)
-      // eslint-disable-next-line ts/no-unnecessary-type-assertion
       acc[key] = options[key] as any
     return acc
   }, {})

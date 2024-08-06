@@ -33,7 +33,7 @@ function javascriptRules(isInEditor: boolean): TypedFlatConfigItem['rules'] {
     'no-unexpected-multiline': 'error',
     'prefer-const': ['error', { destructuring: 'all' }],
     'no-const-assign': 'error',
-    'no-constant-condition': ['error', { checkLoops: false }],
+    'no-constant-condition': ['error', { checkLoops: 'allExceptWhileTrue' }],
     'no-var': 'error',
     'no-object-constructor': 'error',
     'object-shorthand': ['error', 'always'],

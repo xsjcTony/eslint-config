@@ -91,6 +91,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-invalid-fetch-options': 'error',
     'unicorn/prefer-string-raw': 'error',
     'unicorn/no-negation-in-equality-check': 'error',
+    'unicorn/no-length-as-slice-end': 'error',
   }
 }
 
@@ -104,7 +105,6 @@ export async function unicorn(options: OptionsUnicorn = {}): Promise<TypedFlatCo
     {
       name: 'aelita:unicorn:setup',
       plugins: {
-        // @ts-expect-error - no dts file available
         unicorn: await interopDefault(import('eslint-plugin-unicorn')),
       },
     },

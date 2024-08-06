@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat'
 import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
 import type { OptionsReact, TypedFlatConfigItem } from '../types'
@@ -25,13 +26,6 @@ function reactRules(options: OptionsReact = {}): TypedFlatConfigItem['rules'] {
     'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
     'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'always' }],
     'react/display-name': ['error', { ignoreTranspilerName: false, checkContextObjects: false }],
-    'react/function-component-definition': [
-      'error',
-      {
-        namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function',
-      },
-    ],
     'react/hook-use-state': ['error', { allowDestructuredState: true }],
     'react/no-array-index-key': 'warn',
     'react/no-children-prop': ['error', { allowFunctions: false }],
@@ -121,6 +115,7 @@ function jsxRules(options: NonNullable<OptionsReact['ruleOptions']>): TypedFlatC
     'react/jsx-no-undef': ['error', { allowGlobals: true }],
     'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
     'react/jsx-uses-vars': 'error',
+    'react/jsx-props-no-spread-multi': 'error',
   }
 }
 
@@ -391,11 +386,11 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
         'react-hooks': pluginReactHooks,
         ...accessibility && {
           // @ts-expect-error - no dts file available
-          'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')),
+          'jsx-a11y': fixupPluginRules(await interopDefault(import('eslint-plugin-jsx-a11y'))),
         },
         ...enableFastRefresh && {
           // @ts-expect-error - no dts file available
-          'react-refresh': await interopDefault(import('eslint-plugin-react-refresh')),
+          'react-refresh': fixupPluginRules(await interopDefault(import('eslint-plugin-react-refresh'))),
         },
       },
     },

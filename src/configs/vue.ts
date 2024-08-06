@@ -341,6 +341,8 @@ function vueAccessibilityRules(
     'vue-a11y/no-static-element-interactions': 'error',
     'vue-a11y/role-has-required-aria-props': 'error',
     'vue-a11y/tabindex-no-positive': 'error',
+    'vue-a11y/no-aria-hidden-on-focusable': 'error',
+    'vue-a11y/no-role-presentation-on-focusable': 'error',
   }
 }
 

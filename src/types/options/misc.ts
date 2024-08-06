@@ -26,10 +26,12 @@ export interface OptionsIsInEditor {
 
 export interface OptionsTypeScriptWithTypes {
   /**
-   * When this option is provided, type aware rules will be enabled.
+   * Where to enable type aware rules.
    * @see https://typescript-eslint.io/linting/typed-linting/
+   *
+   * @default true
    */
-  tsconfigPath?: string | string[]
+  enableTypeAwareRules?: boolean
 }
 
 
