@@ -383,14 +383,14 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
       name: 'aelita:react:setup',
       plugins: {
         react: pluginReact,
-        'react-hooks': pluginReactHooks,
+        'react-hooks': fixupPluginRules(pluginReactHooks),
         ...accessibility && {
           // @ts-expect-error - no dts file available
           'jsx-a11y': fixupPluginRules(await interopDefault(import('eslint-plugin-jsx-a11y'))),
         },
         ...enableFastRefresh && {
           // @ts-expect-error - no dts file available
-          'react-refresh': fixupPluginRules(await interopDefault(import('eslint-plugin-react-refresh'))),
+          'react-refresh': await interopDefault(import('eslint-plugin-react-refresh')),
         },
       },
     },
