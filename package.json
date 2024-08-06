@@ -144,5 +144,10 @@
     "tsx": "^4.16.5",
     "typescript": "^5.5.4",
     "vue-eslint-parser": "^9.4.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@typescript-eslint/utils": "$typescript-eslint"
+    }
   }
 }
