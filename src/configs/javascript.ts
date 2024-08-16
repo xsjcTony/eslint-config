@@ -97,7 +97,6 @@ export async function javascript(options: OptionsJavaScript = {}): Promise<Typed
   } = options
 
 
-  // @ts-expect-error - no dts file available
   const pluginUnusedImports = await interopDefault(import('eslint-plugin-unused-imports'))
 
 

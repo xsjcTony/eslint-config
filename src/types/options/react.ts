@@ -300,7 +300,7 @@ interface JsxAccessibilityOptions {
    * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-distracting-elements.md
    */
   noDistractingElements?: {
-    extraDistractingElements?: string[]
+    extraDistractingElements?: ('blink' | 'marquee')[]
   }
 
   /**

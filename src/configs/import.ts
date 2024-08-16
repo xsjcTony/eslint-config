@@ -90,7 +90,6 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
               ...vue ? ['.vue'] : [],
             ],
           },
-          ...typescript && { typescript: true },
         },
       },
     },
