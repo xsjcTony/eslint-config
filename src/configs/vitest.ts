@@ -25,10 +25,10 @@ export async function vitest(options: OptionsVitest = {}): Promise<TypedFlatConf
   } = options
 
 
-  await ensurePackages(['eslint-plugin-vitest'])
+  await ensurePackages(['@vitest/eslint-plugin'])
 
 
-  const pluginVitest = await interopDefault(import('eslint-plugin-vitest'))
+  const pluginVitest = await interopDefault(import('@vitest/eslint-plugin'))
 
 
   return [
