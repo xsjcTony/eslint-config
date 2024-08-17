@@ -339,10 +339,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
           jsxPragma: null,
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...enableTypeAwareRules && {
-            projectService: projectService ?? {
-              allowDefaultProject: ['./*.ts', './*.js'],
-              defaultProject: './tsconfig.json',
-            },
+            projectService: projectService ?? true,
             tsconfigRootDir: cwd(),
           },
           ...parserOptions,
