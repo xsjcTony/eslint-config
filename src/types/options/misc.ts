@@ -1,5 +1,4 @@
 import type { OptionsStylistic, TypedFlatConfigItem } from '..'
-import type { ParserOptions } from '@typescript-eslint/types'
 
 
 export interface OptionsFiles {
@@ -25,7 +24,7 @@ export interface OptionsIsInEditor {
 }
 
 
-export interface OptionsTypeScriptWithTypes extends Pick<ParserOptions, 'projectService'> {
+export interface OptionsTypeScriptWithTypes {
   /**
    * Whether to enable type aware rules.
    * @see https://typescript-eslint.io/linting/typed-linting/
@@ -33,6 +32,11 @@ export interface OptionsTypeScriptWithTypes extends Pick<ParserOptions, 'project
    * @default true
    */
   enableTypeAwareRules?: boolean
+
+  projectService?: {
+    allowDefaultProject?: string[]
+    defaultProject?: string
+  }
 }
 
 
