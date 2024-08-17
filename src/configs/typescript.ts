@@ -304,6 +304,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
     parserOptions = {},
     enableTypeAwareRules = true,
     projectType = 'app',
+    projectService,
   } = options
 
 
@@ -339,7 +340,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
           jsxPragma: null,
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...enableTypeAwareRules && {
-            projectService: enableTypeAwareRules,
+            projectService: projectService ?? true,
             tsconfigRootDir: dirname(fileURLToPath(import.meta.url)),
           },
           ...parserOptions,

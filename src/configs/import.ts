@@ -66,6 +66,7 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
     stylistic = true,
     overrides,
     vue = false,
+    tsResolverOptions,
   } = options
 
 
@@ -89,6 +90,12 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
               ...typescript ? ['.ts', '.tsx'] : [],
               ...vue ? ['.vue'] : [],
             ],
+          },
+          ...typescript && {
+            typescript: {
+              project: 'tsconfig.json',
+              ...tsResolverOptions,
+            },
           },
         },
       },

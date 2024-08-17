@@ -1,4 +1,5 @@
 import type { OptionsEnableStylistic, OptionsHasTypeScript, OptionsOverrides } from '.'
+import type { TsResolverOptions } from 'eslint-import-resolver-typescript'
 
 
 export interface OptionsImport extends
@@ -6,4 +7,5 @@ export interface OptionsImport extends
   OptionsOverrides,
   OptionsHasTypeScript {
   vue?: boolean
+  tsResolverOptions?: Pick<TsResolverOptions, 'alwaysTryTypes' | 'project'>
 }
