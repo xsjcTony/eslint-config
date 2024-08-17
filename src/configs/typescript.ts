@@ -1,5 +1,4 @@
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { cwd } from 'node:process'
 import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
 import { interopDefault } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
@@ -340,8 +339,11 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
           jsxPragma: null,
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...enableTypeAwareRules && {
-            projectService: projectService ?? true,
-            tsconfigRootDir: dirname(fileURLToPath(import.meta.url)),
+            projectService: projectService ?? {
+              allowDefaultProject: ['./*.ts', './*.js'],
+              defaultProject: './tsconfig.json',
+            },
+            tsconfigRootDir: cwd(),
           },
           ...parserOptions,
         },
