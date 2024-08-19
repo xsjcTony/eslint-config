@@ -122,7 +122,7 @@
     "@eslint/config-inspector": "^0.5.3",
     "@next/eslint-plugin-next": "^14.2.5",
     "@types/eslint": "^9.6.0",
-    "@types/node": "^20.15.0",
+    "@types/node": "^20.16.1",
     "@unocss/eslint-plugin": "^0.62.2",
     "@vitest/eslint-plugin": "^1.0.3",
     "bumpp": "^9.5.1",
