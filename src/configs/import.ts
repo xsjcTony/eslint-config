@@ -92,10 +92,7 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
             ],
           },
           ...typescript && {
-            typescript: {
-              project: 'tsconfig.json',
-              ...tsResolverOptions,
-            },
+            typescript: tsResolverOptions ?? true,
           },
         },
       },
