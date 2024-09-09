@@ -51,7 +51,7 @@ export interface OptionsReact extends
     | string
     | { property: string; object?: string }
     | { property: string; exact: true }
-    )[]
+  )[]
 
   /**
    * Wrapper function on component.
@@ -59,7 +59,7 @@ export interface OptionsReact extends
   componentWrapperFunctions?: (
     | string
     | { property: string; object?: string }
-    )[]
+  )[]
 
   /**
    * Additional form components.
@@ -174,7 +174,7 @@ interface JsxAccessibilityOptions {
    */
   anchorIsValid?: {
     aspects?: [
-        'noHref' | 'invalidHref' | 'preferButton',
+      'noHref' | 'invalidHref' | 'preferButton',
       ...('noHref' | 'invalidHref' | 'preferButton')[],
     ]
   }
@@ -260,7 +260,7 @@ interface JsxAccessibilityOptions {
       | 'doc-biblioref'
       | 'doc-glossref'
       | 'doc-noteref'
-      )[]
+    )[]
   }
 
   /**

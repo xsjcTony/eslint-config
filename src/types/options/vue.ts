@@ -142,7 +142,7 @@ interface VueAccessibilityOptions {
       | 'doc-biblioref'
       | 'doc-glossref'
       | 'doc-noteref'
-      )[]
+    )[]
   }
 
   /**

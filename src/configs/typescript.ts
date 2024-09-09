@@ -292,6 +292,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/prefer-find': 'error',
   'ts/no-unnecessary-template-expression': 'error',
   'ts/only-throw-error': ['error', { allowThrowingAny: false, allowThrowingUnknown: false }],
+  'ts/no-deprecated': 'warn',
 }
 
 

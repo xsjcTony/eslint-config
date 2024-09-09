@@ -25,13 +25,6 @@ export function resolveStylisticConfig(
 }
 
 
-function javascriptRules(config: FilledStylisticConfig): TypedFlatConfigItem['rules'] {
-  return {
-    'styleJs/indent': ['error', config.indent, { SwitchCase: 1, ignoreComments: false }],
-  }
-}
-
-
 function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['rules'] {
   const {
     semi,
@@ -58,6 +51,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/function-call-spacing': ['error', 'never'],
     'style/function-paren-newline': ['error', 'consistent'],
     'style/generator-star-spacing': ['error', { before: false, after: true }],
+    'style/indent': ['error', indent, { SwitchCase: 1, ignoreComments: false }],
     'style/jsx-quotes': ['error', 'prefer-double'],
     'style/key-spacing': ['error', { beforeColon: false, afterColon: true, mode: 'strict' }],
     'style/keyword-spacing': ['error', { before: true, after: true }],
@@ -124,6 +118,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/indent-binary-ops': ['error', indent],
     'antfu/consistent-list-newline': 'error',
     'antfu/top-level-function': 'error',
+    'antfu/consistent-chaining': 'error',
   }
 }
 
@@ -151,6 +146,11 @@ function typescriptRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
         after: true,
         overrides: {
           arrow: {
+            before: true,
+            after: true,
+          },
+          // https://github.com/eslint-stylistic/eslint-stylistic/issues/525
+          operator: {
             before: true,
             after: true,
           },
@@ -259,11 +259,9 @@ export async function stylistic(options: OptionsConfig['stylistic'] = {}): Promi
 
   const [
     pluginStylistic,
-    pluginStylisticJs,
     pluginAntfu,
   ] = await Promise.all([
     interopDefault(import('@stylistic/eslint-plugin')),
-    interopDefault(import('@stylistic/eslint-plugin-js')),
     interopDefault(import('eslint-plugin-antfu')),
   ])
 
@@ -273,13 +271,8 @@ export async function stylistic(options: OptionsConfig['stylistic'] = {}): Promi
       name: 'aelita:stylistic:setup',
       plugins: {
         style: pluginStylistic,
-        styleJs: pluginStylisticJs,
         antfu: pluginAntfu,
       },
-    },
-    {
-      name: 'aelita:stylistic:rules:javascript',
-      rules: javascriptRules(config),
     },
     {
       name: 'aelita:stylistic:rules:js-ts-shared',
