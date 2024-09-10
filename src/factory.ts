@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs'
-import process from 'node:process'
 import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { isPackageExists } from 'local-pkg'
 import {

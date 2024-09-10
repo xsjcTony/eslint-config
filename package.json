@@ -37,7 +37,8 @@
     "typegen": "tsx scripts/typegen.ts",
     "prepack": "pnpm build",
     "release": "bumpp",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "publish-ci": "tsx scripts/publish.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
@@ -143,6 +144,7 @@
     "tsup": "^8.2.4",
     "tsx": "^4.19.0",
     "typescript": "^5.6.2",
-    "vue-eslint-parser": "^9.4.3"
+    "vue-eslint-parser": "^9.4.3",
+    "zx": "^8.1.5"
   }
 }

@@ -1,4 +1,3 @@
-import { cwd } from 'node:process'
 import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
 import { interopDefault } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
@@ -341,7 +340,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...enableTypeAwareRules && {
             projectService: projectService ?? true,
-            tsconfigRootDir: cwd(),
+            tsconfigRootDir: process.cwd(),
           },
           ...parserOptions,
         },
