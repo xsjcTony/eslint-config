@@ -118,7 +118,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/indent-binary-ops': ['error', indent],
     'antfu/consistent-list-newline': 'error',
     'antfu/top-level-function': 'error',
-    'antfu/consistent-chaining': 'error',
+    'antfu/consistent-chaining': ['error', { allowLeadingPropertyAccess: true }],
   }
 }
 
@@ -146,11 +146,6 @@ function typescriptRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
         after: true,
         overrides: {
           arrow: {
-            before: true,
-            after: true,
-          },
-          // https://github.com/eslint-stylistic/eslint-stylistic/issues/525
-          operator: {
             before: true,
             after: true,
           },
