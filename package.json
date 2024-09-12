@@ -121,7 +121,7 @@
   "devDependencies": {
     "@aelita-dev/eslint-config": "workspace:*",
     "@eslint/config-inspector": "^0.5.4",
-    "@next/eslint-plugin-next": "^14.2.9",
+    "@next/eslint-plugin-next": "^14.2.10",
     "@types/eslint": "^9.6.1",
     "@types/node": "^20.16.5",
     "@unocss/eslint-plugin": "^0.62.3",
@@ -145,6 +145,6 @@
     "tsx": "^4.19.0",
     "typescript": "^5.6.2",
     "vue-eslint-parser": "^9.4.3",
-    "zx": "^8.1.5"
+    "zx": "^8.1.6"
   }
 }

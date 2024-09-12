@@ -75,7 +75,8 @@ dist
 .serverless
 
 # IDE
-.idea
+.idea/
+/.log*
 
 *.lerna_backup
 _fixtures

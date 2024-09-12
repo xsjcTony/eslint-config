@@ -67,8 +67,8 @@ importers:
         specifier: ^0.5.4
         version: 0.5.4(eslint@9.10.0(jiti@1.21.6))
       '@next/eslint-plugin-next':
-        specifier: ^14.2.9
-        version: 14.2.9
+        specifier: ^14.2.10
+        version: 14.2.10
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -139,8 +139,8 @@ importers:
         specifier: ^9.4.3
         version: 9.4.3(eslint@9.10.0(jiti@1.21.6))
       zx:
-        specifier: ^8.1.5
-        version: 8.1.5
+        specifier: ^8.1.6
+        version: 8.1.6
 
 packages:
 
@@ -554,8 +554,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@next/eslint-plugin-next@14.2.9':
-    resolution: {integrity: sha512-tmLXuDNfPTqoFuSfsd9Q4R96SS/UCKTPtBnnR+cKDcbh8xZU+126vZnRWH1WEpOmS4Vl2Hy/X6SPmgOGZzn+hA==}
+  '@next/eslint-plugin-next@14.2.10':
+    resolution: {integrity: sha512-LqJcPP5QkmKewpwO3zX8SoVfWwKn5NKwfcs/j52oJa5EsEDyUsqjsmj5IRzmAJA0FSuB4umhjG55AGayY306fw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3026,8 +3026,8 @@ packages:
     resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
     engines: {node: '>=18'}
 
-  zx@8.1.5:
-    resolution: {integrity: sha512-gvmiYPvDDEz2Gcc37x7pJkipTKcFIE18q9QlSI1p5qoPDtoSn3jmGuWD0eEb7HuxEH5aDD7N/RVgH8BqSxbKzA==}
+  zx@8.1.6:
+    resolution: {integrity: sha512-SYAriWG+i2CFqMOJcF8QayI8wprlMYQsrmP6tFD7rSPnDLcImNSW7n/8crOYvNVrB2EFgz8LAQk23U1+Y7WrKA==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -3337,7 +3337,7 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@next/eslint-plugin-next@14.2.9':
+  '@next/eslint-plugin-next@14.2.10':
     dependencies:
       glob: 10.3.10
 
@@ -6202,7 +6202,7 @@ snapshots:
 
   yoctocolors@2.1.1: {}
 
-  zx@8.1.5:
+  zx@8.1.6:
     optionalDependencies:
       '@types/fs-extra': 11.0.4
       '@types/node': 20.16.5

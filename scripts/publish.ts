@@ -31,7 +31,9 @@ const releaseTag = version.includes('beta')
     ? 'alpha'
     : void 0
 
-console.log(`Publishing version ${version} with tag ${releaseTag ?? 'latest'}`)
+console.log('------\n')
+console.log(`------Publishing version "${version}" with tag "${releaseTag ?? 'latest'}"`)
+console.log('\n------')
 
 
 releaseTag
