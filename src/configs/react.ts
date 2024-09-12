@@ -71,8 +71,7 @@ function reactRules(options: OptionsReact = {}): TypedFlatConfigItem['rules'] {
     'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
     'react/no-unused-prop-types': 'error',
 
-    // temporarily disabling this - https://github.com/jsx-eslint/eslint-plugin-react/issues/3796
-    // 'react/prop-types': ['error', { skipUndeclared: false }],
+    'react/prop-types': ['error', { skipUndeclared: false }],
     'react/style-prop-object': ['error', { allow: ruleOptions.stylePropObject?.allowedComponents }],
     'react/void-dom-elements-no-children': 'error',
   }
