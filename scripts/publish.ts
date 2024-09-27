@@ -29,7 +29,9 @@ const releaseTag = version.includes('beta')
   ? 'beta'
   : version.includes('alpha')
     ? 'alpha'
-    : void 0
+    : version.includes('rc')
+      ? 'rc'
+      : null
 
 console.log('--------------\n')
 console.log(`Publishing version "${version}" with tag "${releaseTag ?? 'latest'}"`)
