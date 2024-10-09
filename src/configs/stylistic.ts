@@ -166,7 +166,7 @@ function jsxRules(
 ): TypedFlatConfigItem['rules'] {
   return {
     'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
-    'style/jsx-closing-tag-location': 'error',
+    'style/jsx-closing-tag-location': ['error', 'tag-aligned'],
     'style/jsx-curly-brace-presence': [
       'error',
       {
