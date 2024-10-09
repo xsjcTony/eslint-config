@@ -93,6 +93,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-negation-in-equality-check': 'error',
     'unicorn/no-length-as-slice-end': 'error',
     'unicorn/prefer-global-this': 'error',
+    'unicorn/prefer-math-min-max': 'error',
   }
 }
 
