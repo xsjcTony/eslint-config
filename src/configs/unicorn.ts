@@ -94,6 +94,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-length-as-slice-end': 'error',
     'unicorn/prefer-global-this': 'error',
     'unicorn/prefer-math-min-max': 'error',
+    'unicorn/consistent-existence-index-check': 'error',
   }
 }
 
