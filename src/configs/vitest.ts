@@ -11,6 +11,7 @@ function vitestRules(isInEditor: OptionsVitest['isInEditor']): TypedFlatConfigIt
     'vitest/no-focused-tests': isInEditor ? 'off' : ['error', { fixable: false }],
     'vitest/prefer-hooks-in-order': 'error',
     'vitest/prefer-lowercase-title': 'error',
+    'vitest/prefer-vi-mocked': 'error',
   }
 }
 
