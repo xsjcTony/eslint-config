@@ -372,7 +372,6 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 
 
   const [pluginReact, pluginReactHooks] = await Promise.all([
-    // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react')),
     // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-react-hooks')),
