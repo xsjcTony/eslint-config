@@ -116,6 +116,8 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/wrap-iife': ['error', 'inside', { functionPrototypeMethods: false }],
     'style/yield-star-spacing': ['error', { before: false, after: true }],
     'style/indent-binary-ops': ['error', indent],
+    'style/curly-newline': ['error', { consistent: true }],
+
     'antfu/consistent-list-newline': 'error',
     'antfu/top-level-function': 'error',
     'antfu/consistent-chaining': ['error', { allowLeadingPropertyAccess: true }],
