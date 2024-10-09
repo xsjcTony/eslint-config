@@ -92,6 +92,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/prefer-string-raw': 'error',
     'unicorn/no-negation-in-equality-check': 'error',
     'unicorn/no-length-as-slice-end': 'error',
+    'unicorn/prefer-global-this': 'error',
   }
 }
 
