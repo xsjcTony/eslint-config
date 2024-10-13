@@ -7,4 +7,7 @@ export * from './configs'
 export type * from './types'
 
 
+/**
+ * @deprecated - use named exports instead.
+ */
 export { defineConfig as default } from './factory'

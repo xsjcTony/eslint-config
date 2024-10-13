@@ -13,5 +13,8 @@ export default defineBuildConfig({
     dts: {
       respectExternal: false,
     },
+    output: {
+      exports: 'named',
+    },
   },
 })
