@@ -103,6 +103,7 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/no-useless-concat': 'error',
     'vue/object-shorthand': ['error', 'always'],
     'vue/prefer-template': 'error',
+    'vue/no-deprecated-delete-set': 'error',
   }
 }
 
@@ -378,7 +379,6 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
 
 
   const [pluginVue, parserVue] = await Promise.all([
-    // @ts-expect-error - no dts file available
     interopDefault(import('eslint-plugin-vue')),
     interopDefault(import('vue-eslint-parser')),
   ] as const)
