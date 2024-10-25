@@ -3,19 +3,25 @@ import type { OptionsImport, TypedFlatConfigItem } from '../types'
 
 
 function importRules(options: OptionsImport): TypedFlatConfigItem['rules'] {
+  const {
+    vue,
+    ruleOptions,
+  } = options
+
   return {
     'import/first': 'error',
     'import/no-webpack-loader-syntax': 'error',
     'import/extensions': [
       'error',
       'ignorePackages',
-      { js: 'never', jsx: 'never', ...options.vue && { vue: 'always' } },
+      { js: 'never', jsx: 'never', ...vue && { vue: 'always' } },
     ],
     'import/order': [
       'error',
       {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
         'newlines-between': 'ignore',
+        pathGroups: ruleOptions?.order?.pathGroups,
         alphabetize: {
           order: 'asc',
           caseInsensitive: true,

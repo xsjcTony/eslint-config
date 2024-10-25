@@ -7,5 +7,28 @@ export interface OptionsImport extends
   OptionsOverrides,
   OptionsHasTypeScript {
   vue?: boolean
+
   tsResolverOptions?: Pick<TsResolverOptions, 'alwaysTryTypes' | 'project'>
+
+  /**
+   * Optional settings for rules.
+   */
+  ruleOptions?: ImportRuleOptions
+}
+
+
+interface ImportRuleOptions {
+  /**
+   * For `import/order` rule.
+   *
+   * @see https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/order.md
+   */
+  order?: {
+    pathGroups?: {
+      pattern: string
+      patternOptions?: Record<string, unknown | undefined>
+      group: ('builtin' | 'external' | 'internal' | 'unknown' | 'parent' | 'sibling' | 'index' | 'object' | 'type')
+      position?: ('after' | 'before')
+    }[]
+  }
 }
