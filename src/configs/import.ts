@@ -1,4 +1,4 @@
-import { interopDefault } from '../utils'
+import { ensurePackages, interopDefault } from '../utils'
 import type { OptionsImport, TypedFlatConfigItem } from '../types'
 
 
@@ -62,6 +62,12 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
     vue = false,
     tsResolverOptions,
   } = options
+
+
+  await ensurePackages([
+    'eslint-plugin-import-x',
+    ...typescript ? ['eslint-import-resolver-typescript'] : [],
+  ])
 
 
   return [

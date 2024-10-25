@@ -26,9 +26,6 @@ importers:
       eslint-flat-config-utils:
         specifier: ^0.4.0
         version: 0.4.0
-      eslint-import-resolver-typescript:
-        specifier: ^3.6.3
-        version: 3.6.3(@typescript-eslint/parser@8.11.0(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3))(eslint-plugin-import-x@4.3.1(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3))(eslint-plugin-import@2.29.1)(eslint@9.13.0(jiti@2.3.3))
       eslint-merge-processors:
         specifier: ^0.1.0
         version: 0.1.0(eslint@9.13.0(jiti@2.3.3))
@@ -38,9 +35,6 @@ importers:
       eslint-plugin-eslint-comments:
         specifier: ^3.2.0
         version: 3.2.0(eslint@9.13.0(jiti@2.3.3))
-      eslint-plugin-import-x:
-        specifier: ^4.3.1
-        version: 4.3.1(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3)
       eslint-plugin-n:
         specifier: ^17.11.1
         version: 17.11.1(eslint@9.13.0(jiti@2.3.3))
@@ -86,13 +80,19 @@ importers:
         version: 9.7.1
       bundle-require:
         specifier: ^5.0.0
-        version: 5.0.0(esbuild@0.24.0)
+        version: 5.0.0(esbuild@0.23.0)
       changelogithub:
         specifier: ^0.13.11
         version: 0.13.11
       eslint:
         specifier: ^9.13.0
         version: 9.13.0(jiti@2.3.3)
+      eslint-import-resolver-typescript:
+        specifier: ^3.6.3
+        version: 3.6.3(@typescript-eslint/parser@8.11.0(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3))(eslint-plugin-import-x@4.3.1(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3))(eslint-plugin-import@2.29.1)(eslint@9.13.0(jiti@2.3.3))
+      eslint-plugin-import-x:
+        specifier: ^4.3.1
+        version: 4.3.1(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3)
       eslint-plugin-jsx-a11y:
         specifier: ^6.10.1
         version: 6.10.1(eslint@9.13.0(jiti@2.3.3))

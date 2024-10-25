@@ -119,12 +119,6 @@ export async function defineConfig(
       ...unicornOptions,
     }),
     node(nodeOptions),
-    importConfig({
-      typescript: !!enableTypescript,
-      vue: !!enableVue,
-      stylistic: !!stylisticOptions,
-      ...typeof enableImport !== 'boolean' && enableImport,
-    }),
   ]
 
 
@@ -136,6 +130,21 @@ export async function defineConfig(
       existsSync('.gitignore')
       && configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]))
     } else { configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)])) }
+  }
+
+
+  /**
+   * Import
+   */
+  if (enableImport) {
+    configs.push(
+      importConfig({
+        typescript: !!enableTypescript,
+        vue: !!enableVue,
+        stylistic: !!stylisticOptions,
+        ...typeof enableImport !== 'boolean' && enableImport,
+      }),
+    )
   }
 
 
