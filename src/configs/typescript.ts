@@ -375,6 +375,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
         'ts/consistent-type-definitions': 'off',
         'ts/no-empty-object-type': 'off',
         'unused-imports/no-unused-vars': 'off',
+        'no-var': 'off',
       },
     },
     {
