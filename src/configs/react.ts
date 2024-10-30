@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat'
 import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
 import type { OptionsReact, TypedFlatConfigItem } from '../types'
@@ -386,7 +385,7 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
         'react-hooks': pluginReactHooks,
         ...accessibility && {
           // @ts-expect-error - no dts file available
-          'jsx-a11y': fixupPluginRules(await interopDefault(import('eslint-plugin-jsx-a11y'))),
+          'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')),
         },
         ...enableFastRefresh && {
           // @ts-expect-error - no dts file available
