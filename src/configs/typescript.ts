@@ -285,6 +285,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
     {
       requireDefaultForNonUnion: true,
       allowDefaultCaseForExhaustiveSwitch: false,
+      considerDefaultExhaustiveForUnions: true,
     },
   ],
   'ts/unbound-method': ['error', { ignoreStatic: false }],
