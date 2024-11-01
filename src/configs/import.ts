@@ -13,8 +13,16 @@ function importRules(options: OptionsImport): TypedFlatConfigItem['rules'] {
     'import/no-webpack-loader-syntax': 'error',
     'import/extensions': [
       'error',
-      'ignorePackages',
-      { js: 'never', jsx: 'never', ...vue && { vue: 'always' } },
+      'always',
+      {
+        ignorePackages: true,
+        checkTypeImports: true,
+        pattern: {
+          js: 'never',
+          jsx: 'never',
+          ...vue && { vue: 'always' },
+        },
+      },
     ],
     'import/order': [
       'error',
@@ -41,8 +49,16 @@ function importTypescriptRules(options: OptionsImport): TypedFlatConfigItem['rul
   return {
     'import/extensions': [
       'error',
-      'ignorePackages',
-      { ts: 'never', tsx: 'never', ...options.vue && { vue: 'always' } },
+      'always',
+      {
+        ignorePackages: true,
+        checkTypeImports: true,
+        pattern: {
+          ts: 'never',
+          tsx: 'never',
+          ...options.vue && { vue: 'always' },
+        },
+      },
     ],
     'import/named': 'off',
   }
