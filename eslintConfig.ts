@@ -6,5 +6,12 @@ export default defineConfig(
     typescript: {
       projectType: 'lib',
     },
+    'import': {
+      ruleOptions: {
+        order: {
+          typeImportsFirst: true,
+        },
+      },
+    },
   },
 )

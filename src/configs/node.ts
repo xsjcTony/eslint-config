@@ -1,5 +1,5 @@
-import { interopDefault } from '../utils'
 import type { OptionsNode, TypedFlatConfigItem } from '../types'
+import { interopDefault } from '../utils'
 
 
 const nodeRules: TypedFlatConfigItem['rules'] = {

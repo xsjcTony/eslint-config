@@ -1,5 +1,5 @@
-import { ensurePackages, interopDefault } from '../utils'
 import type { OptionsUnocss, TypedFlatConfigItem } from '../types'
+import { ensurePackages, interopDefault } from '../utils'
 
 
 function unocssRules(attributify: OptionsUnocss['attributify']): TypedFlatConfigItem['rules'] {

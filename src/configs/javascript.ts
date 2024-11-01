@@ -1,7 +1,7 @@
+import type { OptionsJavaScript, TypedFlatConfigItem } from '../types'
 import globals from 'globals'
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs'
 import { interopDefault } from '../utils'
-import type { OptionsJavaScript, TypedFlatConfigItem } from '../types'
 
 
 function javascriptRules(isInEditor: boolean): TypedFlatConfigItem['rules'] {

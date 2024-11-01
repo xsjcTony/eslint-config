@@ -1,3 +1,5 @@
+import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types'
+import type { Linter } from 'eslint'
 import { existsSync } from 'node:fs'
 import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { isPackageExists } from 'local-pkg'
@@ -18,8 +20,6 @@ import {
 } from './configs'
 import { resolveStylisticConfig } from './configs/stylistic'
 import { interopDefault } from './utils'
-import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types'
-import type { Linter } from 'eslint'
 
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [

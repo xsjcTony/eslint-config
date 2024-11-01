@@ -1,5 +1,5 @@
-import { interopDefault } from '../utils'
 import type { OptionsUnicorn, TypedFlatConfigItem } from '../types'
+import { interopDefault } from '../utils'
 
 
 function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {

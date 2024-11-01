@@ -1,6 +1,6 @@
+import type { OptionsPlaywright, TypedFlatConfigItem } from '../types'
 import { GLOB_E2E_TESTS } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
-import type { OptionsPlaywright, TypedFlatConfigItem } from '../types'
 
 
 const playwrightRules: TypedFlatConfigItem['rules'] = {

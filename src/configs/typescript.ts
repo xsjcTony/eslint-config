@@ -1,7 +1,7 @@
-import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
-import { interopDefault } from '../utils'
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
 import type { Linter } from 'eslint'
+import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
+import { interopDefault } from '../utils'
 
 
 function typescriptRules(

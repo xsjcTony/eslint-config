@@ -1,8 +1,8 @@
+import type { OptionsStylistic, OptionsVue, TypedFlatConfigItem } from '../types'
 import { mergeProcessors } from 'eslint-merge-processors'
 import { GLOB_VUE } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
 import { resolveStylisticConfig } from './stylistic'
-import type { OptionsStylistic, OptionsVue, TypedFlatConfigItem } from '../types'
 
 
 function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['rules'] {

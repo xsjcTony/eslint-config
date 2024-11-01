@@ -1,5 +1,5 @@
-import { ensurePackages, interopDefault } from '../utils'
 import type { OptionsImport, TypedFlatConfigItem } from '../types'
+import { ensurePackages, interopDefault } from '../utils'
 
 
 function importRules(options: OptionsImport): TypedFlatConfigItem['rules'] {
@@ -27,7 +27,9 @@ function importRules(options: OptionsImport): TypedFlatConfigItem['rules'] {
     'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+        groups: ruleOptions?.order?.typeImportsFirst ?? false
+          ? ['type', 'builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object']
+          : ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
         'newlines-between': 'ignore',
         pathGroups: ruleOptions?.order?.pathGroups,
         alphabetize: {

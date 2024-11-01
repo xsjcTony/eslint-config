@@ -1,5 +1,5 @@
-import { isPackageExists } from 'local-pkg'
 import type { Awaitable, TypedFlatConfigItem } from './types'
+import { isPackageExists } from 'local-pkg'
 
 
 /**

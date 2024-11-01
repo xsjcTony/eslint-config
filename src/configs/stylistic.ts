@@ -1,5 +1,5 @@
-import { interopDefault } from '../utils'
 import type { OptionsConfig, OptionsStylistic, TypedFlatConfigItem } from '../types'
+import { interopDefault } from '../utils'
 
 
 type FilledStylisticConfig = Required<OptionsStylistic>

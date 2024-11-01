@@ -1,6 +1,6 @@
+import type { OptionsNext, TypedFlatConfigItem } from '../types'
 import { GLOB_SRC } from '../globs'
 import { ensurePackages, interopDefault, renameRules } from '../utils'
-import type { OptionsNext, TypedFlatConfigItem } from '../types'
 
 
 function nextRules(pluginNext: any): TypedFlatConfigItem['rules'] {

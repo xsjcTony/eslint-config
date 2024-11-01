@@ -24,6 +24,12 @@ interface ImportRuleOptions {
    * @see https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/order.md
    */
   order?: {
+    /**
+     * Whether to put `import type` statements at the top.
+     *
+     * This will be a breaking change in v4, which will remove this flag and enable it by default.
+     */
+    typeImportsFirst?: boolean
     pathGroups?: {
       pattern: string
       patternOptions?: Record<string, unknown | undefined>

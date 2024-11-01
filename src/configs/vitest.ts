@@ -1,6 +1,6 @@
+import type { OptionsVitest, TypedFlatConfigItem } from '../types'
 import { GLOB_UNIT_TESTS } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
-import type { OptionsVitest, TypedFlatConfigItem } from '../types'
 
 
 function vitestRules(isInEditor: OptionsVitest['isInEditor']): TypedFlatConfigItem['rules'] {

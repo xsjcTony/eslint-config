@@ -1,6 +1,6 @@
+import type { OptionsReact, TypedFlatConfigItem } from '../types'
 import { GLOB_JSX, GLOB_SRC, GLOB_TSX } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
-import type { OptionsReact, TypedFlatConfigItem } from '../types'
 
 
 function reactRules(options: OptionsReact = {}): TypedFlatConfigItem['rules'] {
