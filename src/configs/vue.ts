@@ -82,6 +82,7 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/v-for-delimiter-style': ['error', 'in'],
     'vue/valid-define-options': 'error',
     'vue/no-unused-emit-declarations': 'error',
+    'vue/prefer-use-template-ref': 'error',
 
     // Extension Rules
     'vue/camelcase': [
