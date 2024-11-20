@@ -237,6 +237,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
         number: true,
         string: true,
       },
+      ignoreBooleanCoercion: true,
     },
   ],
   'ts/prefer-optional-chain': 'error',
