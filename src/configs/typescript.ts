@@ -187,6 +187,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
     {
       ignoreArrowShorthand: false,
       ignoreVoidOperator: true,
+      ignoreVoidReturningFunctions: false,
     },
   ],
   'ts/no-duplicate-type-constituents': [
@@ -294,6 +295,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/no-unnecessary-template-expression': 'error',
   'ts/only-throw-error': ['error', { allowThrowingAny: false, allowThrowingUnknown: false }],
   'ts/no-deprecated': 'warn',
+  'ts/related-getter-setter-pairs': 'error',
 }
 
 
