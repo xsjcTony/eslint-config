@@ -388,7 +388,6 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
           'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')),
         },
         ...enableFastRefresh && {
-          // @ts-expect-error - no dts file available
           'react-refresh': await interopDefault(import('eslint-plugin-react-refresh')),
         },
       },

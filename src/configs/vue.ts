@@ -83,6 +83,7 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/valid-define-options': 'error',
     'vue/no-unused-emit-declarations': 'error',
     'vue/prefer-use-template-ref': 'error',
+    'vue/slot-name-casing': ['error', 'camelCase'],
 
     // Extension Rules
     'vue/camelcase': [
