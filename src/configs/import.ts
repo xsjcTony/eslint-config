@@ -94,11 +94,23 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
   ])
 
 
+  const [
+    { 'default': pluginImportX, importXResolverCompat },
+    importResolverNode,
+    { createTypeScriptImportResolver },
+  ] = await Promise.all([
+    import('eslint-plugin-import-x'),
+    // @ts-expect-error - no dts file available
+    interopDefault(import('eslint-import-resolver-node')),
+    import('eslint-import-resolver-typescript'),
+  ])
+
+
   return [
     {
       name: 'aelita:import:setup',
       plugins: {
-        'import': await interopDefault(import('eslint-plugin-import-x')),
+        'import': pluginImportX,
       },
       settings: {
         ...typescript && {
@@ -106,19 +118,17 @@ export async function importConfig(options: OptionsImport = {}): Promise<TypedFl
             '@typescript-eslint/parser': ['.ts', '.tsx', ...vue ? ['.vue'] : []],
           },
         },
-        'import-x/resolver': {
-          node: {
+        'import-x/resolver-next': [
+          importXResolverCompat(importResolverNode, {
             extensions: [
               '.js',
               '.jsx',
               ...typescript ? ['.ts', '.tsx'] : [],
               ...vue ? ['.vue'] : [],
             ],
-          },
-          ...typescript && {
-            typescript: tsResolverOptions ?? true,
-          },
-        },
+          }),
+          ...typescript ? [createTypeScriptImportResolver(tsResolverOptions)] : [],
+        ],
       },
     },
     {

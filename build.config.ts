@@ -7,7 +7,11 @@ export default defineBuildConfig({
   ],
   clean: true,
   declaration: true,
-  externals: ['@typescript-eslint/types', 'eslint'],
+  externals: [
+    '@typescript-eslint/types',
+    'eslint',
+    'eslint-import-resolver-node',
+  ],
   rollup: {
     emitCJS: true,
     dts: {
