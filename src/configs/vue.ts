@@ -243,6 +243,7 @@ function vueStylisticRules(options: Required<OptionsStylistic>): TypedFlatConfig
       {
         ignoreJSX: 'multi-line',
         nestedBinaryExpressions: false,
+        nestedConditionalExpressions: false,
       },
     ],
     'vue/object-curly-spacing': ['error', 'always'],

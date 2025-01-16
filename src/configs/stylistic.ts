@@ -72,6 +72,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
       {
         ignoreJSX: 'multi-line',
         nestedBinaryExpressions: false,
+        nestedConditionalExpressions: false,
       },
     ],
     'style/no-extra-semi': 'error',
