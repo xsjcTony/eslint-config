@@ -48,6 +48,7 @@ const playwrightRules: TypedFlatConfigItem['rules'] = {
   'playwright/prefer-equality-matcher': 'error',
   'playwright/valid-describe-callback': 'error',
   'playwright/valid-expect-in-promise': 'error',
+  'playwright/no-slowed-test': ['error', { allowConditional: true }],
 }
 
 
