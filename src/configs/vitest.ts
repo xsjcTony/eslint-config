@@ -12,6 +12,8 @@ function vitestRules(isInEditor: OptionsVitest['isInEditor']): TypedFlatConfigIt
     'vitest/prefer-hooks-in-order': 'error',
     'vitest/prefer-lowercase-title': 'error',
     'vitest/prefer-vi-mocked': 'error',
+    'vitest/require-mock-type-parameters': ['error', { checkImportFunctions: false }],
+    'vitest/prefer-strict-boolean-matchers': 'error',
   }
 }
 
