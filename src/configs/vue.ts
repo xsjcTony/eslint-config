@@ -1,5 +1,6 @@
 import type { OptionsStylistic, OptionsVue, TypedFlatConfigItem } from '../types'
 import { mergeProcessors } from 'eslint-merge-processors'
+import globals from 'globals'
 import { GLOB_VUE } from '../globs'
 import { ensurePackages, interopDefault } from '../utils'
 import { resolveStylisticConfig } from './stylistic'
@@ -29,12 +30,10 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/define-props-declaration': ['error', 'type-based'],
     'vue/html-button-has-type': ['error', { button: true, submit: true, reset: true }],
     'vue/next-tick-style': ['error', 'promise'],
-    'vue/no-deprecated-model-definition': ['error', { allowVue3Compat: false }],
     'vue/no-duplicate-attr-inheritance': 'error',
     'vue/no-empty-component-block': 'error',
     'vue/no-multiple-objects-in-class': 'error',
     'vue/no-ref-object-reactivity-loss': 'error',
-    'vue/no-required-prop-with-default': ['error', { autofix: true }],
     'vue/no-restricted-v-bind': 'error',
     'vue/no-setup-props-reactivity-loss': 'error',
     'vue/no-static-inline-styles': ['warn', { allowBinding: false }],
@@ -80,7 +79,6 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
       },
     ],
     'vue/v-for-delimiter-style': ['error', 'in'],
-    'vue/valid-define-options': 'error',
     'vue/no-unused-emit-declarations': 'error',
     'vue/prefer-use-template-ref': 'error',
     'vue/slot-name-casing': ['error', 'camelCase'],
@@ -105,7 +103,6 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/no-useless-concat': 'error',
     'vue/object-shorthand': ['error', 'always'],
     'vue/prefer-template': 'error',
-    'vue/no-deprecated-delete-set': 'error',
   }
 }
 
@@ -363,6 +360,7 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
     ruleOptions = {},
     stylistic: _stylistic = true,
     sfcBlocks: _sfcBlocks,
+    ssr = false,
   } = options
 
 
@@ -401,6 +399,7 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
       // https://github.com/vuejs/eslint-plugin-vue/pull/2422
       languageOptions: {
         globals: {
+          ...ssr ? globals['shared-node-browser'] : globals.browser,
           computed: 'readonly',
           defineEmits: 'readonly',
           defineExpose: 'readonly',

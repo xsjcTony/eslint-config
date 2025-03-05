@@ -9,6 +9,14 @@ export interface OptionsVue extends
   OptionsOverrides,
   OptionsEnableStylistic {
   /**
+   * Whether to include globals for node.
+   *
+   * @see https://eslint.vuejs.org/user-guide/#specifying-globals-eslint-config-js
+   * @default false
+   */
+  ssr?: boolean
+
+  /**
    * Create virtual files for Vue SFC blocks to enable linting.
    *
    * @see https://github.com/antfu/eslint-processor-vue-blocks
