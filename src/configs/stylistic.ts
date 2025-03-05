@@ -108,7 +108,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
       },
     ],
     'style/space-in-parens': ['error', 'never'],
-    'style/space-infix-ops': ['error', { int32Hint: false }],
+    'style/space-infix-ops': ['error', { int32Hint: false, ignoreTypes: false }],
     'style/space-unary-ops': ['error', { words: true, nonwords: false }],
     'style/spaced-comment': ['error', 'always', { exceptions: ['-', '+', '*'], markers: ['/'] }],
     'style/switch-colon-spacing': ['error', { before: false, after: true }],
