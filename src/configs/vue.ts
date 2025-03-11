@@ -167,6 +167,26 @@ function vueDefaultOverrideRules(options: NonNullable<OptionsVue['ruleOptions']>
     'vue/v-on-event-hyphenation': ['error', 'always', { autofix: true, ignore: [] }],
 
     // Priority C: Recommended
+    'vue/attributes-order': [
+      'error',
+      {
+        order: [
+          'DEFINITION',
+          'LIST_RENDERING',
+          'CONDITIONALS',
+          'RENDER_MODIFIERS',
+          'GLOBAL',
+          'UNIQUE',
+          'SLOT',
+          'TWO_WAY_BINDING',
+          'OTHER_DIRECTIVES',
+          'OTHER_ATTR',
+          'EVENTS',
+          'CONTENT',
+        ],
+        alphabetical: true,
+      },
+    ],
     'vue/order-in-components': 'off',
   }
 }
