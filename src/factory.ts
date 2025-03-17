@@ -12,6 +12,8 @@ import {
   playwright,
   react,
   stylistic,
+  tanstackQuery,
+  tanstackRouter,
   typescript,
   unicorn,
   unocss,
@@ -95,6 +97,8 @@ export async function defineConfig(
     playwright: enablePlaywright = isPackageExists('@playwright/test'),
     unocss: enableUnocss = isPackageExists('unocss'),
     vitest: enableVitest = isPackageExists('vitest'),
+    tanstackQuery: enableTanStackQuery = isPackageExists('@tanstack/react-query'),
+    tanstackRouter: enableTanStackRouter = isPackageExists('@tanstack/react-router'),
   } = options
 
 
@@ -241,6 +245,26 @@ export async function defineConfig(
         isInEditor,
         ...typeof enableVitest !== 'boolean' && enableVitest,
       }),
+    )
+  }
+
+
+  /**
+   * TanStack Query
+   */
+  if (enableTanStackQuery) {
+    configs.push(
+      tanstackQuery(typeof enableTanStackQuery === 'boolean' ? {} : enableTanStackQuery),
+    )
+  }
+
+
+  /**
+   * TanStack Router
+   */
+  if (enableTanStackRouter) {
+    configs.push(
+      tanstackRouter(typeof enableTanStackRouter === 'boolean' ? {} : enableTanStackRouter),
     )
   }
 

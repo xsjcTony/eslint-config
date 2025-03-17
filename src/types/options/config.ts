@@ -9,6 +9,8 @@ import type {
   OptionsPlaywright,
   OptionsReact,
   OptionsStylistic,
+  OptionsTanStackQuery,
+  OptionsTanStackRouter,
   OptionsTypeScript,
   OptionsUnicorn,
   OptionsUnocss,
@@ -114,4 +116,14 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsIsInEditor {
    * Enable Vitest support.
    */
   vitest?: boolean | OptionsVitest
+
+  /**
+   * Enable TanStack Query support.
+   */
+  tanstackQuery?: boolean | OptionsTanStackQuery
+
+  /**
+   * Enable TanStack Router support.
+   */
+  tanstackRouter?: boolean | OptionsTanStackRouter
 }

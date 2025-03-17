@@ -48,6 +48,8 @@
   },
   "peerDependencies": {
     "@next/eslint-plugin-next": "^15.2.2",
+    "@tanstack/eslint-plugin-query": "^5.68.0",
+    "@tanstack/eslint-plugin-router": "^1.114.12",
     "@unocss/eslint-plugin": ">=65.5.0 <=100",
     "@vitest/eslint-plugin": "^1.1.37",
     "eslint": "^9.22.0",
@@ -105,6 +107,12 @@
     },
     "@vitest/eslint-plugin": {
       "optional": true
+    },
+    "@tanstack/eslint-plugin-query": {
+      "optional": true
+    },
+    "@tanstack/eslint-plugin-router": {
+      "optional": true
     }
   },
   "dependencies": {
@@ -129,6 +137,8 @@
     "@aelita-dev/eslint-config": "workspace:*",
     "@eslint/config-inspector": "^1.0.2",
     "@next/eslint-plugin-next": "^15.2.2",
+    "@tanstack/eslint-plugin-query": "^5.68.0",
+    "@tanstack/eslint-plugin-router": "^1.114.12",
     "@types/eslint": "^9.6.1",
     "@types/node": "^20.17.24",
     "@unocss/eslint-plugin": "^66.0.0",
