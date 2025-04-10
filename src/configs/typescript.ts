@@ -231,6 +231,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
     'error',
     {
       ignoreTernaryTests: true,
+      ignoreIfStatements: false,
       ignoreConditionalTests: true,
       ignoreMixedLogicalExpressions: true,
       ignorePrimitives: {
