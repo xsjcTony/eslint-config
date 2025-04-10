@@ -10,6 +10,8 @@ import {
   playwright,
   react,
   stylistic,
+  tanstackQuery,
+  tanstackRouter,
   typescript,
   unicorn,
   unocss,
@@ -39,6 +41,8 @@ const configs = await combine(
   playwright(),
   unocss(),
   vitest(),
+  tanstackQuery(),
+  tanstackRouter(),
 )
 
 
