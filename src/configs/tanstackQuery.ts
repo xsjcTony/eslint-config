@@ -9,6 +9,7 @@ const tanStackQueryRules: TypedFlatConfigItem['rules'] = {
   'tanstack-query/no-rest-destructuring': 'error',
   'tanstack-query/no-unstable-deps': 'error',
   'tanstack-query/infinite-query-property-order': 'error',
+  'tanstack-query/no-void-query-fn': 'error',
 }
 
 
