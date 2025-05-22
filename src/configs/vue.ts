@@ -19,10 +19,10 @@ function vueRules(
   ruleOptions: VueRuleOptions,
 ): TypedFlatConfigItem['rules'] {
   return {
-    ...eslintPlugin.configs.base.rules,
-    ...eslintPlugin.configs['flat/essential'].rules,
-    ...eslintPlugin.configs['flat/strongly-recommended'].rules,
-    ...eslintPlugin.configs['flat/recommended'].rules,
+    ...eslintPlugin.configs['flat/base'].at(-1)?.rules,
+    ...eslintPlugin.configs['flat/essential'].at(-1)?.rules,
+    ...eslintPlugin.configs['flat/strongly-recommended'].at(-1)?.rules,
+    ...eslintPlugin.configs['flat/recommended'].at(-1)?.rules,
 
 
     // Uncategorized
