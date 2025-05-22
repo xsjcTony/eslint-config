@@ -1,4 +1,11 @@
-import type { OptionsStylistic, OptionsVue, TypedFlatConfigItem } from '../types'
+import type {
+  OptionsStylistic,
+  OptionsVue,
+  TypedFlatConfigItem,
+  VueAccessibilityOptions,
+  VueRuleOptions,
+} from '../types'
+import type * as VuePlugin from 'eslint-plugin-vue'
 import { mergeProcessors } from 'eslint-merge-processors'
 import globals from 'globals'
 import { GLOB_VUE } from '../globs'
@@ -6,7 +13,11 @@ import { ensurePackages, interopDefault } from '../utils'
 import { resolveStylisticConfig } from './stylistic'
 
 
-function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['rules'] {
+function vueRules(
+  eslintPlugin: typeof VuePlugin,
+  options: OptionsVue,
+  ruleOptions: VueRuleOptions,
+): TypedFlatConfigItem['rules'] {
   return {
     ...eslintPlugin.configs.base.rules,
     ...eslintPlugin.configs['flat/essential'].rules,
@@ -83,6 +94,10 @@ function vueRules(eslintPlugin: any, options: OptionsVue): TypedFlatConfigItem['
     'vue/prefer-use-template-ref': 'error',
     'vue/slot-name-casing': ['error', 'camelCase'],
     'vue/no-import-compiler-macros': 'error',
+    'vue/define-props-destructuring': [
+      'error',
+      { destructure: ruleOptions.enablePropsDestructuring ? 'always' : 'never' },
+    ],
 
     // Extension Rules
     'vue/camelcase': [
@@ -114,7 +129,7 @@ const vueTypeScriptRules: TypedFlatConfigItem['rules'] = {
 }
 
 
-function vueDefaultOverrideRules(options: NonNullable<OptionsVue['ruleOptions']>): TypedFlatConfigItem['rules'] {
+function vueDefaultOverrideRules(options: VueRuleOptions): TypedFlatConfigItem['rules'] {
   return {
     // Priority A: Essential
     'vue/multi-word-component-names': [
@@ -274,9 +289,7 @@ function vueStylisticRules(options: Required<OptionsStylistic>): TypedFlatConfig
 }
 
 
-function vueAccessibilityRules(
-  options: NonNullable<Exclude<OptionsVue['accessibility'], boolean>>,
-): TypedFlatConfigItem['rules'] {
+function vueAccessibilityRules(options: VueAccessibilityOptions): TypedFlatConfigItem['rules'] {
   const {
     altText,
     anchorHasContent,
@@ -391,6 +404,10 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
     : _sfcBlocks ?? {}
 
 
+  ruleOptions.enablePropsDestructuring ??= true
+  ruleOptions.multiWordComponentNames ??= { ignores: [] }
+
+
   await ensurePackages([
     'eslint-plugin-vue',
     'vue-eslint-parser',
@@ -468,7 +485,7 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
         ])
         : pluginVue.processors['.vue'],
       rules: {
-        ...vueRules(pluginVue, options),
+        ...vueRules(pluginVue, options, ruleOptions),
         ...vueDefaultOverrideRules(ruleOptions),
         ...typescript && vueTypeScriptRules,
         ...stylistic && vueStylisticRules(stylistic),

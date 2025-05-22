@@ -55,7 +55,7 @@ export interface OptionsVue extends
 }
 
 
-interface VueRuleOptions {
+export interface VueRuleOptions {
   /**
    * For `vue/multi-word-component-names` rule.
    *
@@ -64,10 +64,15 @@ interface VueRuleOptions {
   multiWordComponentNames?: {
     ignores?: string[]
   }
+
+  /**
+   * @see https://eslint.vuejs.org/rules/define-props-destructuring.html
+   */
+  enablePropsDestructuring?: boolean
 }
 
 
-interface VueAccessibilityOptions {
+export interface VueAccessibilityOptions {
   /**
    * For `vue-a11y/alt-text` rule.
    *
