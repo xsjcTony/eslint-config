@@ -294,7 +294,14 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/unbound-method': ['error', { ignoreStatic: false }],
   'ts/prefer-find': 'error',
   'ts/no-unnecessary-template-expression': 'error',
-  'ts/only-throw-error': ['error', { allowThrowingAny: false, allowThrowingUnknown: false }],
+  'ts/only-throw-error': [
+    'error',
+    {
+      allowRethrowing: false,
+      allowThrowingAny: false,
+      allowThrowingUnknown: false,
+    },
+  ],
   'ts/no-deprecated': 'warn',
   'ts/related-getter-setter-pairs': 'error',
 }
