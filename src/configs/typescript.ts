@@ -223,7 +223,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
     },
   ],
   'ts/no-unnecessary-qualifier': 'error',
-  'ts/no-unnecessary-type-assertion': 'error',
+  'ts/no-unnecessary-type-assertion': ['error', { checkLiteralConstAssertions: false }],
   'ts/no-unnecessary-type-constraint': 'error',
   'ts/no-unsafe-unary-minus': 'error',
   'ts/prefer-includes': 'error',
