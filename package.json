@@ -18,9 +18,14 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.mts"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "main": "./dist/index.mjs",
@@ -48,13 +53,13 @@
   },
   "peerDependencies": {
     "@next/eslint-plugin-next": "^15.3.2",
-    "@tanstack/eslint-plugin-query": "^5.74.7",
+    "@tanstack/eslint-plugin-query": "^5.78.0",
     "@tanstack/eslint-plugin-router": "^1.115.0",
     "@unocss/eslint-plugin": ">=65.5.0 <=100",
-    "@vitest/eslint-plugin": "^1.2.0",
+    "@vitest/eslint-plugin": "^1.2.1",
     "eslint": "^9.27.0",
-    "eslint-import-resolver-typescript": "^4.3.5",
-    "eslint-plugin-import-x": "^4.12.2",
+    "eslint-import-resolver-typescript": "^4.4.1",
+    "eslint-plugin-import-x": "^4.13.3",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.5",
@@ -117,9 +122,9 @@
   },
   "dependencies": {
     "@antfu/install-pkg": "^1.1.0",
-    "@clack/prompts": "^0.10.1",
-    "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/types": "^8.32.1",
+    "@clack/prompts": "^0.11.0",
+    "@stylistic/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/types": "^8.33.0",
     "eslint-config-flat-gitignore": "2.1.0",
     "eslint-flat-config-utils": "^2.1.0",
     "eslint-import-resolver-node": "^0.3.9",
@@ -129,7 +134,7 @@
     "eslint-plugin-n": "^17.18.0",
     "eslint-plugin-unicorn": "^59.0.1",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "globals": "^16.1.0",
+    "globals": "^16.2.0",
     "local-pkg": "^1.1.1",
     "typescript-eslint": "^8.32.1"
   },
@@ -137,18 +142,18 @@
     "@aelita-dev/eslint-config": "workspace:*",
     "@eslint/config-inspector": "^1.0.2",
     "@next/eslint-plugin-next": "^15.3.2",
-    "@tanstack/eslint-plugin-query": "^5.74.7",
+    "@tanstack/eslint-plugin-query": "^5.78.0",
     "@tanstack/eslint-plugin-router": "^1.115.0",
     "@types/eslint": "^9.6.1",
     "@types/node": "^20.17.50",
     "@unocss/eslint-plugin": "^66.0.0",
-    "@vitest/eslint-plugin": "^1.2.0",
+    "@vitest/eslint-plugin": "^1.2.1",
     "bumpp": "^10.1.1",
     "bundle-require": "^5.1.0",
     "changelogithub": "^13.14.0",
     "eslint": "^9.27.0",
-    "eslint-import-resolver-typescript": "^4.3.5",
-    "eslint-plugin-import-x": "^4.12.2",
+    "eslint-import-resolver-typescript": "^4.4.1",
+    "eslint-plugin-import-x": "^4.13.3",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.5",
