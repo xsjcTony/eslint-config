@@ -1,7 +1,7 @@
 {
   "name": "@aelita-dev/eslint-config",
   "type": "module",
-  "version": "3.21.0",
+  "version": "3.22.0",
   "packageManager": "pnpm@10.12.4",
   "description": "Aelita's ESLint config",
   "author": "Aelita <https://github.com/xsjcTony>",
