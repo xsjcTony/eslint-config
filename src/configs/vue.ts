@@ -18,6 +18,7 @@ function vueRules(
   options: OptionsVue,
   ruleOptions: VueRuleOptions,
 ): TypedFlatConfigItem['rules'] {
+  // @ts-expect-error - conflicting between vue official dts and typegen
   return {
     ...eslintPlugin.configs['flat/base'].at(-1)?.rules,
     ...eslintPlugin.configs['flat/essential'].at(-1)?.rules,

@@ -22,7 +22,6 @@ export async function next(options: OptionsNext = {}): Promise<TypedFlatConfigIt
   await ensurePackages(['@next/eslint-plugin-next'])
 
 
-  // @ts-expect-error - no dts file available
   const pluginNext = await interopDefault(import('@next/eslint-plugin-next'))
 
 
