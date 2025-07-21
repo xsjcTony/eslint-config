@@ -93,7 +93,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
       { blankLine: 'always', prev: ['class', 'function', 'iife', 'interface'], next: '*' },
     ],
     'style/quote-props': ['error', 'as-needed', { keywords: true }],
-    'style/quotes': ['error', quotes, { avoidEscape: true, allowTemplateLiterals: true }],
+    'style/quotes': ['error', quotes, { avoidEscape: true, allowTemplateLiterals: 'always' }],
     'style/rest-spread-spacing': ['error', 'never'],
     'style/semi': ['error', semi ? 'always' : 'never'],
     'style/semi-spacing': ['error', { before: false, after: true }],
