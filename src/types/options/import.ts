@@ -33,8 +33,8 @@ interface ImportRuleOptions {
     pathGroups?: {
       pattern: string
       patternOptions?: Record<string, unknown | undefined>
-      group: ('builtin' | 'external' | 'internal' | 'unknown' | 'parent' | 'sibling' | 'index' | 'object' | 'type')
-      position?: ('after' | 'before')
+      group: 'builtin' | 'external' | 'internal' | 'unknown' | 'parent' | 'sibling' | 'index' | 'object' | 'type'
+      position?: 'after' | 'before'
     }[]
   }
 }
