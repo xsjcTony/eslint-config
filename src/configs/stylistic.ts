@@ -86,7 +86,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/nonblock-statement-body-position': ['error', 'below'],
     'style/object-curly-spacing': ['error', 'always'],
     'style/one-var-declaration-per-line': ['error', 'always'],
-    'style/operator-linebreak': ['error', 'before', { overrides: { '=': 'none' } }],
+    'style/operator-linebreak': ['error', 'before', { overrides: { '=': 'ignore' } }],
     'style/padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: '*', next: ['class', 'function', 'iife', 'interface'] },
