@@ -99,6 +99,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
     'unicorn/require-module-specifiers': 'error',
     'unicorn/prefer-import-meta-properties': 'error',
+    'unicorn/consistent-date-clone': 'error',
   }
 }
 
