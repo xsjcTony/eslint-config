@@ -72,7 +72,6 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsIsInEditor {
    *
    * @default true
    */
-  // eslint-disable-next-line style/no-extra-parens
   stylistic?: boolean | (
     & OptionsStylistic
     & OptionsOverrides
