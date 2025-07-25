@@ -97,6 +97,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/consistent-existence-index-check': 'error',
     'unicorn/prefer-class-fields': 'error',
     'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
+    'unicorn/require-module-specifiers': 'error',
   }
 }
 
