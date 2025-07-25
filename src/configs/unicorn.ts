@@ -26,7 +26,6 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-instanceof-builtins': ['error', { strategy: 'loose' }],
     'unicorn/no-invalid-fetch-options': 'error',
     'unicorn/no-invalid-remove-event-listener': 'error',
-    'unicorn/no-length-as-slice-end': 'error',
     'unicorn/no-lonely-if': 'error',
     'unicorn/no-magic-array-flat-depth': 'error',
     'unicorn/no-negated-condition': 'error',
