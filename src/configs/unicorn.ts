@@ -95,6 +95,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/prefer-global-this': 'error',
     'unicorn/prefer-math-min-max': 'error',
     'unicorn/consistent-existence-index-check': 'error',
+    'unicorn/prefer-class-fields': 'error',
   }
 }
 
