@@ -96,6 +96,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/prefer-math-min-max': 'error',
     'unicorn/consistent-existence-index-check': 'error',
     'unicorn/prefer-class-fields': 'error',
+    'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
   }
 }
 
