@@ -8,7 +8,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
   return {
     'unicorn/empty-brace-spaces': 'error',
     'unicorn/error-message': 'error',
-    'unicorn/escape-case': 'error',
+    'unicorn/escape-case': ['error', 'uppercase'],
     'unicorn/new-for-builtins': 'error',
     'unicorn/no-abusive-eslint-disable': 'error',
     'unicorn/no-anonymous-default-export': 'error',
