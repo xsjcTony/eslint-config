@@ -37,7 +37,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-useless-promise-resolve-reject': 'error',
     'unicorn/no-useless-spread': 'error',
     'unicorn/no-zero-fractions': 'error',
-    'unicorn/number-literal-case': 'error',
+    'unicorn/number-literal-case': ['error', { hexadecimalValue: 'uppercase' }],
     'unicorn/numeric-separators-style': 'error',
     'unicorn/prefer-array-find': 'error',
     'unicorn/prefer-array-flat-map': 'error',
