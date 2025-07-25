@@ -98,6 +98,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/prefer-class-fields': 'error',
     'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
     'unicorn/require-module-specifiers': 'error',
+    'unicorn/prefer-import-meta-properties': 'error',
   }
 }
 
