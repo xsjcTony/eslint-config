@@ -18,7 +18,6 @@ function vueRules(
   options: OptionsVue,
   ruleOptions: VueRuleOptions,
 ): TypedFlatConfigItem['rules'] {
-  // @ts-expect-error - conflicting between vue official dts and typegen
   return {
     ...eslintPlugin.configs['flat/base'].at(-1)?.rules,
     ...eslintPlugin.configs['flat/essential'].at(-1)?.rules,
@@ -277,6 +276,7 @@ function vueStylisticRules(options: Required<OptionsStylistic>): TypedFlatConfig
       {
         ignoreJSX: 'multi-line',
         nestedBinaryExpressions: false,
+        ternaryOperandBinaryExpressions: false,
       },
     ],
     'vue/object-curly-spacing': ['error', 'always'],
