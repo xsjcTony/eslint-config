@@ -201,7 +201,6 @@ function jsxRules(
         ignore: otherOptions.jsxPascalCaseIgnore ?? [],
       },
     ],
-    'style/jsx-props-no-multi-spaces': 'error',
     'style/jsx-self-closing-comp': ['error', { html: true, component: true }],
     'style/jsx-sort-props': [
       'error',
