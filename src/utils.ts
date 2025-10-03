@@ -8,6 +8,7 @@ import { isPackageExists } from 'local-pkg'
 export async function combine(
   ...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
 ): Promise<TypedFlatConfigItem[]> {
+  // eslint-disable-next-line ts/await-thenable
   return (await Promise.all(configs)).flat()
 }
 
