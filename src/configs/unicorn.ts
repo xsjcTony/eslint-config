@@ -24,6 +24,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-document-cookie': 'error',
     'unicorn/no-for-loop': 'error',
     'unicorn/no-hex-escape': 'error',
+    'unicorn/no-immediate-mutation': 'error',
     'unicorn/no-instanceof-builtins': ['error', { strategy: 'loose' }],
     'unicorn/no-invalid-fetch-options': 'error',
     'unicorn/no-invalid-remove-event-listener': 'error',
