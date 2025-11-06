@@ -85,7 +85,7 @@ function jsTsSharedRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
     'style/no-trailing-spaces': ['error', { ignoreComments: false, skipBlankLines: false }],
     'style/no-whitespace-before-property': 'error',
     'style/nonblock-statement-body-position': ['error', 'below'],
-    'style/object-curly-spacing': ['error', 'always'],
+    'style/object-curly-spacing': ['error', 'always', { emptyObjects: 'never' }],
     'style/one-var-declaration-per-line': ['error', 'always'],
     'style/operator-linebreak': ['error', 'before', { overrides: { '=': 'ignore' } }],
     'style/padding-line-between-statements': [
