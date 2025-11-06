@@ -39,6 +39,7 @@ function unicornRules(options: OptionsUnicorn): TypedFlatConfigItem['rules'] {
     'unicorn/no-thenable': 'error',
     'unicorn/no-this-assignment': 'error',
     'unicorn/no-typeof-undefined': 'error',
+    'unicorn/no-useless-collection-argument': 'error',
     'unicorn/no-useless-fallback-in-spread': 'error',
     'unicorn/no-useless-length-check': 'error',
     'unicorn/no-useless-promise-resolve-reject': 'error',
