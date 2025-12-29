@@ -305,6 +305,7 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/no-deprecated': 'warn',
   'ts/related-getter-setter-pairs': 'error',
   'ts/no-unnecessary-type-conversion': 'error',
+  'ts/no-useless-default-assignment': 'error',
 }
 
 
