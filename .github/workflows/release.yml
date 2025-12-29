@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  id-token: write
+
 jobs:
   release:
     permissions:
@@ -34,9 +37,6 @@ jobs:
 
       - name: Publish to npm
         run: pnpm publish-ci ${{ github.ref_name }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
 
       - name: Generate changelog
         run: npx changelogithub
