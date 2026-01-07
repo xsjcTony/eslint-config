@@ -143,19 +143,7 @@ function typescriptRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
         multilineDetection: 'brackets',
       },
     ],
-    'style/type-annotation-spacing': [
-      'error',
-      {
-        before: false,
-        after: true,
-        overrides: {
-          arrow: {
-            before: true,
-            after: true,
-          },
-        },
-      },
-    ],
+    'style/type-annotation-spacing': ['error', { before: false, after: true }],
     'style/type-generic-spacing': 'error',
     'style/type-named-tuple-spacing': 'error',
   }
