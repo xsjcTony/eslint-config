@@ -306,7 +306,6 @@ const typeAwareRules: TypedFlatConfigItem['rules'] = {
   'ts/related-getter-setter-pairs': 'error',
   'ts/no-unnecessary-type-conversion': 'error',
   'ts/no-useless-default-assignment': 'error',
-  'ts/strict-void-return': ['error', { allowReturnAny: false }],
 }
 
 
