@@ -149,7 +149,7 @@ function typescriptRules(config: FilledStylisticConfig): TypedFlatConfigItem['ru
         before: false,
         after: true,
         overrides: {
-          arrow: { before: true, after: true },
+          arrow: 'ignore',
         },
       },
     ],
