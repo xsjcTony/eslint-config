@@ -5,6 +5,7 @@ import { ensurePackages, interopDefault } from '../utils'
 
 const tanstackRouterRules: TypedFlatConfigItem['rules'] = {
   'tanstack-router/create-route-property-order': 'error',
+  'tanstack-router/route-param-names': 'error',
 }
 
 

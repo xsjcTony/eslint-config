@@ -148,6 +148,7 @@
     "@types/node": "^20.19.31",
     "@unocss/eslint-plugin": "^66.5.2",
     "@vitest/eslint-plugin": "^1.6.6",
+    "baseline-browser-mapping": "^2.9.19",
     "bumpp": "^10.4.0",
     "bundle-require": "^5.1.0",
     "changelogithub": "^14.0.0",
