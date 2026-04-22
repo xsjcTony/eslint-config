@@ -98,6 +98,7 @@ function vueRules(
       'error',
       { destructure: ruleOptions.enablePropsDestructuring ? 'always' : 'never' },
     ],
+    'vue/prefer-v-model': 'error',
 
     // Extension Rules
     'vue/camelcase': [

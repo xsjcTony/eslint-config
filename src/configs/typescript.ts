@@ -1,5 +1,4 @@
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types'
-import type { Linter } from 'eslint'
 import { GLOB_DTS, GLOB_TS, GLOB_TSX } from '../globs'
 import { interopDefault } from '../utils'
 
@@ -345,7 +344,7 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
       name: 'aelita:typescript:rules',
       files,
       languageOptions: {
-        parser: parserTypescript as Linter.Parser,
+        parser: parserTypescript,
         parserOptions: {
           ecmaVersion: 'latest',
           ecmaFeatures: { jsx: true },
